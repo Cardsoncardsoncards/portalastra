@@ -3,7 +3,7 @@ import Script from 'next/script'
 import './globals.css'
 
 // Replace with the real GA4 Measurement ID when available.
-const GA_MEASUREMENT_ID = 'G-PLACEHOLDER'
+const GA_MEASUREMENT_ID = 'G-QMJ074E2JZ'
 
 export const metadata: Metadata = {
   title: 'Portal Astra — Your daily cosmic guide',
