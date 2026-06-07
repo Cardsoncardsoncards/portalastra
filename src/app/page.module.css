@@ -797,3 +797,214 @@
   color: #7a7a90;
   line-height: 1.5;
 }
+
+.footerLink {
+  color: #b8a4ff;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.footerLink:hover {
+  color: #d4c4ff;
+  text-decoration: underline;
+}
+
+/* Legal / privacy page */
+.legalDate {
+  margin: 0 0 1.25rem;
+  font-size: 0.8rem;
+  color: #9a9ab0;
+}
+
+.legalH {
+  margin: 1.75rem 0 0.5rem;
+  font-size: 1.05rem;
+  color: #e8e8f0;
+  font-weight: 600;
+}
+
+/* Tarot */
+.tarotCardFace {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  border-radius: 14px;
+  border: 1px solid rgba(184, 164, 255, 0.18);
+  background: linear-gradient(135deg, rgba(184, 164, 255, 0.08), rgba(120, 90, 220, 0.04));
+  margin-bottom: 0.5rem;
+}
+
+.tarotEmoji {
+  font-size: 3.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.tarotName {
+  margin: 0 0 0.25rem;
+  font-size: 1.35rem;
+  color: #e8e8f0;
+}
+
+.tarotMeta {
+  margin: 0 0 0.6rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #b8a4ff;
+}
+
+.tarotOrient {
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(184, 164, 255, 0.35);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+}
+
+.tarotOrientReversed {
+  color: #ffb37a;
+  border-color: rgba(255, 179, 122, 0.4);
+  background: rgba(255, 179, 122, 0.1);
+}
+
+.tarotMeaning {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #e8e8f0;
+}
+
+.revealBtn {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid rgba(184, 164, 255, 0.35);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: #b8a4ff;
+  background: rgba(184, 164, 255, 0.06);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.revealBtn:hover {
+  background: rgba(184, 164, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.spreadGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.spreadCard {
+  text-align: center;
+  padding: 1.25rem 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.spreadPos {
+  margin: 0 0 0.6rem;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #9a9ab0;
+}
+
+.spreadEmoji {
+  font-size: 2.25rem;
+  line-height: 1;
+  margin: 0 0 0.5rem;
+}
+
+.spreadName {
+  margin: 0 0 0.3rem;
+  font-size: 0.95rem;
+  color: #e8e8f0;
+}
+
+.spreadOrient {
+  margin: 0 0 0.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b8a4ff;
+}
+
+.spreadMeaning {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #9a9ab0;
+}
+
+/* Life path calculator */
+.lifePath {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.lifePathRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.lifePathInput {
+  padding: 0.55rem 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(7, 7, 13, 0.5);
+  color: #e8e8f0;
+  font-size: 0.9rem;
+  outline: none;
+  color-scheme: dark;
+  transition: border-color 0.15s ease;
+}
+
+.lifePathInput:focus {
+  border-color: rgba(184, 164, 255, 0.55);
+}
+
+.lifePathResult {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-top: 1.25rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 14px;
+  border: 1px solid rgba(184, 164, 255, 0.18);
+  background: linear-gradient(135deg, rgba(184, 164, 255, 0.08), rgba(120, 90, 220, 0.04));
+}
+
+.lifePathNum {
+  font-size: 2.75rem;
+  font-weight: 300;
+  color: #b8a4ff;
+  line-height: 1;
+  min-width: 2.5rem;
+  text-align: center;
+}
+
+.lifePathTheme {
+  margin: 0 0 0.2rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #b8a4ff;
+}
+
+.lifePathMsg {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #e8e8f0;
+}
