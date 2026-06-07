@@ -124,6 +124,85 @@
   line-height: 1.45;
 }
 
+/* Email capture strip */
+.emailStrip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(184, 164, 255, 0.18);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(120, 90, 220, 0.07), rgba(184, 164, 255, 0.04));
+  flex-wrap: wrap;
+}
+
+.emailForm {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: 1;
+  min-width: 260px;
+  flex-wrap: wrap;
+}
+
+.emailInput {
+  flex: 1;
+  min-width: 180px;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(7, 7, 13, 0.5);
+  color: #e8e8f0;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.emailInput::placeholder {
+  color: #7a7a90;
+}
+
+.emailInput:focus {
+  border-color: rgba(184, 164, 255, 0.55);
+  background: rgba(7, 7, 13, 0.7);
+}
+
+.emailBtn {
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #07070d;
+  background: linear-gradient(135deg, #d4c4ff 0%, #b8a4ff 100%);
+  white-space: nowrap;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.emailBtn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.emailBtn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.emailNote {
+  margin: 0;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.emailNoteOk {
+  color: #8ee0a8;
+}
+
+.emailNoteErr {
+  color: #ff8d8d;
+}
+
 /* Tabs */
 .tabs {
   display: flex;
@@ -157,6 +236,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  animation: fadeUp 0.4s ease both;
 }
 
 .card {
@@ -226,6 +306,40 @@
   width: 100%;
   display: block;
   border-radius: 12px;
+  cursor: zoom-in;
+}
+
+/* APOD lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 1.25rem;
+  background: rgba(3, 3, 8, 0.92);
+  backdrop-filter: blur(6px);
+  cursor: zoom-out;
+  animation: fadeUp 0.25s ease both;
+}
+
+.lightboxImg {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.lightboxTitle {
+  margin: 0;
+  max-width: 60ch;
+  text-align: center;
+  font-size: 1rem;
+  color: #e8e8f0;
 }
 
 .apodOverlay {
@@ -494,6 +608,30 @@
   font-style: italic;
 }
 
+.copyBtn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgba(184, 164, 255, 0.3);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  color: #b8a4ff;
+  background: transparent;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.copyBtn:hover {
+  background: rgba(184, 164, 255, 0.08);
+}
+
+.copyBtnDone {
+  color: #8ee0a8;
+  border-color: rgba(142, 224, 168, 0.4);
+  background: rgba(142, 224, 168, 0.08);
+}
+
 /* Sky bridge */
 .skyGrid {
   display: grid;
@@ -560,6 +698,44 @@
   font-size: 0.95rem;
   line-height: 1.7;
   color: #e8e8f0;
+}
+
+/* Social share */
+.shareRow {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.shareBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  color: #e8e8f0;
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+
+.shareBtn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(184, 164, 255, 0.45);
+  background: rgba(184, 164, 255, 0.08);
+}
+
+.shareIcon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.shareBtnDone {
+  color: #8ee0a8;
+  border-color: rgba(142, 224, 168, 0.4);
+  background: rgba(142, 224, 168, 0.08);
 }
 
 /* NEOs */

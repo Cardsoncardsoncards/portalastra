@@ -38,10 +38,23 @@ export default function Home() {
   const [horoLoading, setHoroLoading] = useState(false)
   const [signPicked, setSignPicked] = useState(false)
 
+  // Email capture
+  const [email, setEmail] = useState('')
+  const [subscribing, setSubscribing] = useState(false)
+  const [subscribeNote, setSubscribeNote] = useState<{ ok: boolean; msg: string } | null>(null)
+
+  // UI bits
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [copiedReading, setCopiedReading] = useState(false)
+  const [sharedKind, setSharedKind] = useState<string | null>(null)
+
   const moon = getMoonPhase()
   const angelNum = getAngelNumber()
   const angelMeaning = ANGEL_NUMBER_MEANINGS[angelNum]
   const today = getTodayUTC()
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.portalastra.com'
+  const shareText = `Today is a ${angelNum} day — ${angelMeaning.theme}. Moon: ${moon.name}. ${siteUrl}`
 
   useEffect(() => {
     const saved = localStorage.getItem('pa_sign')
@@ -72,6 +85,47 @@ export default function Home() {
     setSignPicked(true)
     localStorage.setItem('pa_sign', s)
     fetchHoroscope(s)
+  }
+
+  const subscribe = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (subscribing) return
+    setSubscribing(true)
+    setSubscribeNote(null)
+    try {
+      const r = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      const d = await r.json()
+      if (r.ok) {
+        setSubscribeNote({ ok: true, msg: "You're in ✦" })
+        setEmail('')
+      } else {
+        setSubscribeNote({ ok: false, msg: d.error || 'Something went wrong.' })
+      }
+    } catch {
+      setSubscribeNote({ ok: false, msg: 'Network error — try again.' })
+    }
+    setSubscribing(false)
+  }
+
+  const copyReading = async () => {
+    if (!sign || !reading) return
+    try {
+      await navigator.clipboard.writeText(`${sign}\n\n${reading}`)
+      setCopiedReading(true)
+      setTimeout(() => setCopiedReading(false), 2000)
+    } catch {}
+  }
+
+  const copyShareLink = async () => {
+    try {
+      await navigator.clipboard.writeText(shareText)
+      setSharedKind('copy')
+      setTimeout(() => setSharedKind(null), 2000)
+    } catch {}
   }
 
   const TABS: { id: Tab; label: string }[] = [
@@ -108,6 +162,29 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Email capture strip */}
+        <div className={styles.emailStrip}>
+          <form className={styles.emailForm} onSubmit={subscribe}>
+            <input
+              type="email"
+              className={styles.emailInput}
+              placeholder="you@example.com"
+              aria-label="Email address"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+            />
+            <button type="submit" className={styles.emailBtn} disabled={subscribing}>
+              {subscribing ? 'Joining…' : 'Get the cosmos in your inbox weekly'}
+            </button>
+          </form>
+          {subscribeNote && (
+            <p className={`${styles.emailNote} ${subscribeNote.ok ? styles.emailNoteOk : styles.emailNoteErr}`}>
+              {subscribeNote.msg}
+            </p>
+          )}
+        </div>
+
         {/* Tabs */}
         <nav className={styles.tabs}>
           {TABS.map(t => (
@@ -134,6 +211,7 @@ export default function Home() {
                     src={apod.media_type === 'video' ? apod.thumbnail_url : apod.hdurl || apod.url}
                     alt={apod.title}
                     className={styles.apodImg}
+                    onClick={() => setLightboxOpen(true)}
                   />
                   <div className={styles.apodOverlay}>
                     <h2 className={styles.apodTitle}>{apod.title}</h2>
@@ -267,6 +345,14 @@ export default function Home() {
                   </div>
                   {horoLoading && <div className={styles.skeleton} style={{ height: 80 }} />}
                   {!horoLoading && reading && <p className={styles.reading}>{reading}</p>}
+                  {!horoLoading && reading && (
+                    <button
+                      className={`${styles.copyBtn} ${copiedReading ? styles.copyBtnDone : ''}`}
+                      onClick={copyReading}
+                    >
+                      {copiedReading ? '✓ Copied' : 'Copy reading'}
+                    </button>
+                  )}
                 </div>
               )}
             </div>
@@ -316,6 +402,31 @@ export default function Home() {
                   </p>
                 </div>
               )}
+              <div className={styles.shareRow}>
+                <a
+                  className={styles.shareBtn}
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className={styles.shareIcon}>𝕏</span> Share on X
+                </a>
+                <a
+                  className={styles.shareBtn}
+                  href={`https://wa.me/?text=${encodeURIComponent(shareText)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className={styles.shareIcon}>💬</span> WhatsApp
+                </a>
+                <button
+                  className={`${styles.shareBtn} ${sharedKind === 'copy' ? styles.shareBtnDone : ''}`}
+                  onClick={copyShareLink}
+                >
+                  <span className={styles.shareIcon}>{sharedKind === 'copy' ? '✓' : '🔗'}</span>
+                  {sharedKind === 'copy' ? 'Copied' : 'Copy Link'}
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -356,6 +467,18 @@ export default function Home() {
               <p className={styles.label}>What is &quot;hazardous&quot;?</p>
               <p className={styles.infoText}>A potentially hazardous asteroid is larger than ~140 metres and passes within 7.5 million km of Earth&apos;s orbit. This does not mean an impact is imminent — NASA tracks all such objects continuously and none currently pose a threat.</p>
             </div>
+          </div>
+        )}
+
+        {/* APOD lightbox */}
+        {lightboxOpen && apod && !apod.error && (
+          <div className={styles.lightbox} onClick={() => setLightboxOpen(false)}>
+            <img
+              src={apod.media_type === 'video' ? apod.thumbnail_url : apod.hdurl || apod.url}
+              alt={apod.title}
+              className={styles.lightboxImg}
+            />
+            <p className={styles.lightboxTitle}>{apod.title}</p>
           </div>
         )}
 
