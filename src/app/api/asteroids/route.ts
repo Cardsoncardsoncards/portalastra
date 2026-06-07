@@ -36,7 +36,10 @@ export async function GET() {
           Number(a.close_approach_data[0]?.miss_distance.kilometers ?? Infinity) -
           Number(b.close_approach_data[0]?.miss_distance.kilometers ?? Infinity),
       )
-    return NextResponse.json({ asteroids: sorted, count: data.element_count })
+    return NextResponse.json(
+      { asteroids: sorted, count: data.element_count },
+      { headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' } },
+    )
   } catch (err) {
     const message = err instanceof Error ? err.message : 'unknown error'
     return NextResponse.json({ error: message, asteroids: [] }, { status: 502 })

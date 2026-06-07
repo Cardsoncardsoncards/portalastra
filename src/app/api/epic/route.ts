@@ -9,6 +9,10 @@ interface EpicImage {
   centroid_coordinates: { lat: number; lon: number }
 }
 
+const SWR_HEADERS = {
+  'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+}
+
 export async function GET() {
   try {
     const data = await nasaFetch<EpicImage[]>('/EPIC/api/natural')
@@ -20,12 +24,15 @@ export async function GET() {
     const [year, month, day] = datePart.split('-')
     const imageUrl = `https://epic.gsfc.nasa.gov/archive/natural/${year}/${month}/${day}/png/${latest.image}.png`
 
-    return NextResponse.json({
-      imageUrl,
-      date: latest.date,
-      caption: latest.caption,
-      coords: latest.centroid_coordinates,
-    })
+    return NextResponse.json(
+      {
+        imageUrl,
+        date: latest.date,
+        caption: latest.caption,
+        coords: latest.centroid_coordinates,
+      },
+      { headers: SWR_HEADERS },
+    )
   } catch (err) {
     const message = err instanceof Error ? err.message : 'unknown error'
     return NextResponse.json({ error: message }, { status: 502 })

@@ -7,6 +7,13 @@ export async function POST(req: Request) {
     const body = await req.json().catch(() => ({}))
     const email = typeof body?.email === 'string' ? body.email.trim() : ''
 
+    // Honeypot: real users never fill this hidden field. If it's populated,
+    // silently accept (so bots get no signal) but do not subscribe.
+    const honeypot = typeof body?.website === 'string' ? body.website.trim() : ''
+    if (honeypot) {
+      return NextResponse.json({ ok: true })
+    }
+
     if (!EMAIL_RE.test(email)) {
       return NextResponse.json({ error: 'Please enter a valid email address.' }, { status: 400 })
     }

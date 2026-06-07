@@ -21,7 +21,8 @@ export function getAngelNumber(date?: Date) {
     ...d.getFullYear().toString().split('').map(Number),
   ]
   let sum = digits.reduce((a, b) => a + b, 0)
-  while (sum > 9) {
+  // Reduce to a single digit, but stop on the master numbers 11, 22, 33.
+  while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
     sum = sum.toString().split('').reduce((a, b) => a + parseInt(b), 0)
   }
   return sum
@@ -37,6 +38,9 @@ export const ANGEL_NUMBER_MEANINGS: Record<number, { theme: string; message: str
   7: { theme: 'Wisdom and intuition', message: 'The universe speaks in symbols. Listen to what the sky is telling you.' },
   8: { theme: 'Abundance and power', message: 'Cycles of prosperity align. The infinite loop of the cosmos turns in your favour.' },
   9: { theme: 'Completion and release', message: 'A chapter closes as another prepares to open. Release with gratitude.' },
+  11: { theme: 'Intuition and enlightenment', message: 'A master number. Heightened intuition lights your way — trust the inner spark of insight.' },
+  22: { theme: 'Master builder, turning dreams to reality', message: 'A master number. The power to turn grand visions into solid form is within your reach today.' },
+  33: { theme: 'Master teacher, compassion and guidance', message: 'A master number. Lead with compassion; your guidance uplifts everyone around you.' },
 }
 
 export function formatDate(dateStr: string) {

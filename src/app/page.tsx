@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { getMoonPhase, getAngelNumber, ANGEL_NUMBER_MEANINGS, formatDate, getTodayUTC, SIGNS } from '@/lib/utils'
 import { getDailyCard, getWeeklySpread } from '@/lib/tarot'
@@ -15,9 +15,27 @@ const INTENSITY_COLORS: Record<string, string> = {
   low: '#60d090',
 }
 
+// Open a share dialog in a small popup window instead of a full tab.
+function openSharePopup(shareUrl: string) {
+  window.open(shareUrl, '_blank', 'width=600,height=400,noopener,noreferrer')
+}
+
 // Coloured social share row, reused by every tab. Manages its own
-// "Copied" confirmation so multiple rows don't share state.
-function ShareButtons({ text, url }: { text: string; url: string }) {
+// "Copied" confirmation so multiple rows don't share state. Pinterest,
+// Reddit and the email subject are opt-in per tab.
+function ShareButtons({
+  text,
+  url,
+  emailSubject,
+  pinterest = false,
+  reddit = false,
+}: {
+  text: string
+  url: string
+  emailSubject: string
+  pinterest?: boolean
+  reddit?: boolean
+}) {
   const [copied, setCopied] = useState(false)
   const enc = encodeURIComponent
 
@@ -29,12 +47,16 @@ function ShareButtons({ text, url }: { text: string; url: string }) {
     } catch {}
   }
 
+  const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}&quote=${enc(text)}`
+  const xUrl = `https://twitter.com/intent/tweet?text=${enc(text)}`
+
   return (
     <div className={styles.shareRow}>
       <a
         className={styles.shareBtn}
         style={{ background: '#1877F2', borderColor: '#1877F2', color: '#fff' }}
-        href={`https://www.facebook.com/sharer/sharer.php?u=${enc(url)}&quote=${enc(text)}`}
+        href={fbUrl}
+        onClick={(e) => { e.preventDefault(); openSharePopup(fbUrl) }}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -43,7 +65,8 @@ function ShareButtons({ text, url }: { text: string; url: string }) {
       <a
         className={styles.shareBtn}
         style={{ background: '#000000', borderColor: '#000000', color: '#fff' }}
-        href={`https://twitter.com/intent/tweet?text=${enc(text)}`}
+        href={xUrl}
+        onClick={(e) => { e.preventDefault(); openSharePopup(xUrl) }}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -57,6 +80,35 @@ function ShareButtons({ text, url }: { text: string; url: string }) {
         rel="noopener noreferrer"
       >
         <span className={styles.shareIcon}>💬</span> WhatsApp
+      </a>
+      {pinterest && (
+        <a
+          className={styles.shareBtn}
+          style={{ background: '#E60023', borderColor: '#E60023', color: '#fff' }}
+          href={`https://pinterest.com/pin/create/button/?url=${enc(url)}&description=${enc(text)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span className={styles.shareIcon}>P</span> Pinterest
+        </a>
+      )}
+      {reddit && (
+        <a
+          className={styles.shareBtn}
+          style={{ background: '#FF4500', borderColor: '#FF4500', color: '#fff' }}
+          href={`https://www.reddit.com/submit?url=${enc(url)}&title=${enc(text)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span className={styles.shareIcon}>r</span> Reddit
+        </a>
+      )}
+      <a
+        className={styles.shareBtn}
+        style={{ background: '#666666', borderColor: '#666666', color: '#fff' }}
+        href={`mailto:?subject=${enc(emailSubject)}&body=${enc(text)}`}
+      >
+        <span className={styles.shareIcon}>✉</span> Email
       </a>
       <button
         className={styles.shareBtn}
@@ -77,9 +129,17 @@ function reduceToDigit(n: number): number {
   return n
 }
 
+// Final reduction that preserves the master numbers 11, 22 and 33.
+function reduceKeepMaster(n: number): number {
+  while (n > 9 && n !== 11 && n !== 22 && n !== 33) {
+    n = n.toString().split('').reduce((a, b) => a + Number(b), 0)
+  }
+  return n
+}
+
 function lifePathNumber(dateStr: string): number {
   const [y, m, d] = dateStr.split('-').map(Number)
-  return reduceToDigit(reduceToDigit(y) + reduceToDigit(m) + reduceToDigit(d))
+  return reduceKeepMaster(reduceToDigit(y) + reduceToDigit(m) + reduceToDigit(d))
 }
 
 export default function Home() {
@@ -109,6 +169,7 @@ export default function Home() {
 
   // Email capture
   const [email, setEmail] = useState('')
+  const [honeypot, setHoneypot] = useState('')
   const [subscribing, setSubscribing] = useState(false)
   const [subscribeNote, setSubscribeNote] = useState<{ ok: boolean; msg: string } | null>(null)
 
@@ -118,9 +179,16 @@ export default function Home() {
 
   // Tarot
   const [weeklyRevealed, setWeeklyRevealed] = useState(false)
+  const [tarotNoticeDismissed, setTarotNoticeDismissed] = useState(true)
+
+  // Footer "Share Portal Astra"
+  const [footerShared, setFooterShared] = useState(false)
 
   // Life path calculator
   const [birthDate, setBirthDate] = useState('')
+
+  // Parallax star background
+  const starsRef = useRef<HTMLDivElement>(null)
 
   const moon = getMoonPhase()
   const angelNum = getAngelNumber()
@@ -132,7 +200,8 @@ export default function Home() {
   const daily = getDailyCard(today)
   const weekly = getWeeklySpread(today)
 
-  const lifePath = birthDate ? lifePathNumber(birthDate) : null
+  const birthDateInFuture = !!birthDate && birthDate > today
+  const lifePath = birthDate && !birthDateInFuture ? lifePathNumber(birthDate) : null
   const lifePathMeaning = lifePath ? ANGEL_NUMBER_MEANINGS[lifePath] : null
 
   // Sky bridge sentence (also used for the Sky share text)
@@ -176,10 +245,26 @@ export default function Home() {
       fetchHoroscope(saved)
     }
 
+    // Tarot disclaimer shows once per browser session.
+    if (!sessionStorage.getItem('pa_tarot_notice')) {
+      setTarotNoticeDismissed(false)
+    }
+
     fetch('/api/apod').then(r => r.json()).then(setApod).catch(() => {}).finally(() => setApodLoading(false))
     fetch('/api/epic').then(r => r.json()).then(setEpic).catch(() => {}).finally(() => setEpicLoading(false))
     fetch('/api/donki').then(r => r.json()).then(d => setEvents(d.events || [])).catch(() => {}).finally(() => setDonkiLoading(false))
     fetch('/api/asteroids').then(r => r.json()).then(d => setAsteroids(d.asteroids || [])).catch(() => {}).finally(() => setAstLoading(false))
+  }, [])
+
+  // Parallax: drift the fixed star layer at 0.3x scroll speed
+  useEffect(() => {
+    const onScroll = () => {
+      if (starsRef.current) {
+        starsRef.current.style.transform = `translateY(${window.scrollY * 0.3}px)`
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   const fetchHoroscope = async (s: string) => {
@@ -208,7 +293,7 @@ export default function Home() {
       const r = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, website: honeypot }),
       })
       const d = await r.json()
       if (r.ok) {
@@ -232,6 +317,19 @@ export default function Home() {
     } catch {}
   }
 
+  const dismissTarotNotice = () => {
+    sessionStorage.setItem('pa_tarot_notice', '1')
+    setTarotNoticeDismissed(true)
+  }
+
+  const shareSite = async () => {
+    try {
+      await navigator.clipboard.writeText(siteUrl)
+      setFooterShared(true)
+      setTimeout(() => setFooterShared(false), 2000)
+    } catch {}
+  }
+
   const TABS: { id: Tab; label: string }[] = [
     { id: 'space', label: '🌌 Space' },
     { id: 'earth', label: '🌍 Earth' },
@@ -244,12 +342,12 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <div className={styles.stars} aria-hidden />
+      <div ref={starsRef} className={styles.stars} aria-hidden />
 
       <div className={styles.container}>
         <header className={styles.header}>
           <div>
-            <h1 className={styles.logo}>PORTAL<span className={styles.dot}>·</span>ASTRA</h1>
+            <h1 className={styles.logo} aria-label="Portal Astra">PORTAL<span className={styles.dot}>·</span>ASTRA</h1>
             <p className={styles.tagline}>The sky, both ways · {formatDate(today)}</p>
           </div>
           <div className={styles.moonBadge}>
@@ -270,6 +368,17 @@ export default function Home() {
         {/* Email capture strip */}
         <div className={styles.emailStrip}>
           <form className={styles.emailForm} onSubmit={subscribe}>
+            {/* Honeypot — hidden from real users, catches bots */}
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              value={honeypot}
+              onChange={e => setHoneypot(e.target.value)}
+              style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+            />
             <input
               type="email"
               className={styles.emailInput}
@@ -280,9 +389,12 @@ export default function Home() {
               required
             />
             <button type="submit" className={styles.emailBtn} disabled={subscribing}>
-              {subscribing ? 'Joining…' : 'Get the cosmos in your inbox weekly'}
+              {subscribing ? 'Joining...' : 'Get the cosmos in your inbox weekly'}
             </button>
           </form>
+          <p className={styles.consentNote}>
+            By subscribing you agree to our <Link href="/privacy">Privacy Policy</Link>.
+          </p>
           {subscribeNote && (
             <p className={`${styles.emailNote} ${subscribeNote.ok ? styles.emailNoteOk : styles.emailNoteErr}`}>
               {subscribeNote.msg}
@@ -309,7 +421,7 @@ export default function Home() {
             {apodLoading && <div className={styles.card}><div className={styles.skeleton} /></div>}
             {!apodLoading && apod && !apod.error && (
               <div className={styles.card}>
-                <p className={styles.label}>NASA · Picture of the Day</p>
+                <h2 className={styles.label} aria-label="NASA Astronomy Picture of the Day">NASA · Picture of the Day</h2>
                 <p className={styles.sublabel}>{formatDate(apod.date)}</p>
                 <div className={styles.apodWrap}>
                   <img
@@ -326,7 +438,13 @@ export default function Home() {
                 <p className={styles.apodText}>{apod.explanation}</p>
               </div>
             )}
-            <ShareButtons text={shareTexts.space} url={siteUrl} />
+            {!apodLoading && (!apod || apod.error) && (
+              <div className={`${styles.card} ${styles.fallbackCard}`}>
+                <p className={styles.fallbackEmoji}>🌌</p>
+                <p className={styles.fallbackMsg}>Imagery temporarily unavailable — check back shortly</p>
+              </div>
+            )}
+            <ShareButtons text={shareTexts.space} url={siteUrl} emailSubject="A view from Portal Astra" reddit />
           </div>
         )}
 
@@ -334,7 +452,7 @@ export default function Home() {
         {tab === 'earth' && (
           <div className={styles.panel}>
             <div className={styles.card}>
-              <p className={styles.label}>Earth · DSCOVR Satellite View</p>
+              <h2 className={styles.label} aria-label="Earth from the DSCOVR satellite">Earth · DSCOVR Satellite View</h2>
               <p className={styles.sublabel}>Daily full-disc image of Earth from 1.5 million km away</p>
               {epicLoading && <div className={styles.skeleton} />}
               {!epicLoading && epic && !epic.error && (
@@ -351,6 +469,7 @@ export default function Home() {
                     />
                   </div>
                   <p className={styles.epicDate}>{epic.date}</p>
+                  <p className={styles.epicNote}>EPIC imagery is typically 24–48 hours delayed</p>
                   {epic.caption && <p className={styles.apodText}>{epic.caption}</p>}
                   <div className={styles.epicStats}>
                     {epic.coords && (
@@ -376,7 +495,7 @@ export default function Home() {
                 <p className={styles.empty}>Earth imagery temporarily unavailable. NASA updates this daily.</p>
               )}
             </div>
-            <ShareButtons text={shareTexts.earth} url={siteUrl} />
+            <ShareButtons text={shareTexts.earth} url={siteUrl} emailSubject="Earth from space — Portal Astra" />
           </div>
         )}
 
@@ -384,7 +503,7 @@ export default function Home() {
         {tab === 'storm' && (
           <div className={styles.panel}>
             <div className={styles.card}>
-              <p className={styles.label}>Space Weather · Last 7 Days</p>
+              <h2 className={styles.label} aria-label="Space weather over the last 7 days">Space Weather · Last 7 Days</h2>
               <p className={styles.sublabel}>Solar flares, geomagnetic storms, and coronal mass ejections</p>
               {donkiLoading && <div className={styles.skeleton} />}
               {!donkiLoading && events.length === 0 && (
@@ -413,12 +532,12 @@ export default function Home() {
               ))}
             </div>
             <div className={styles.card}>
-              <p className={styles.label}>What does this mean?</p>
+              <h2 className={styles.label} aria-label="What does this mean?">What does this mean?</h2>
               <p className={styles.infoText}>
                 Solar flares are bursts of radiation from the sun&apos;s surface. Geomagnetic storms occur when solar energy interacts with Earth&apos;s magnetic field — they can cause aurora displays visible at lower latitudes. Many spiritual traditions interpret periods of high solar activity as times of heightened energy and sensitivity.
               </p>
             </div>
-            <ShareButtons text={shareTexts.storm} url={siteUrl} />
+            <ShareButtons text={shareTexts.storm} url={siteUrl} emailSubject="Space weather — Portal Astra" />
           </div>
         )}
 
@@ -426,7 +545,7 @@ export default function Home() {
         {tab === 'stars' && (
           <div className={styles.panel}>
             <div className={styles.card}>
-              <p className={styles.label}>Daily Horoscope</p>
+              <h2 className={styles.label} aria-label="Daily horoscope">Daily Horoscope</h2>
               <p className={styles.sublabel}>{moon.emoji} {moon.name} · {formatDate(today)}</p>
               {!signPicked && (
                 <>
@@ -464,7 +583,7 @@ export default function Home() {
                 </div>
               )}
             </div>
-            <ShareButtons text={shareTexts.stars} url={siteUrl} />
+            <ShareButtons text={shareTexts.stars} url={siteUrl} emailSubject="My horoscope today — Portal Astra" pinterest />
           </div>
         )}
 
@@ -472,7 +591,7 @@ export default function Home() {
         {tab === 'sky' && (
           <div className={styles.panel}>
             <div className={styles.card}>
-              <p className={styles.label}>The Sky Speaks</p>
+              <h2 className={styles.label} aria-label="The sky speaks">The Sky Speaks</h2>
               <p className={styles.sublabel}>Where astronomy meets astrology</p>
               <div className={styles.skyGrid}>
                 <div className={styles.skyItem}>
@@ -514,7 +633,7 @@ export default function Home() {
 
               {/* Life path number calculator */}
               <div className={styles.lifePath}>
-                <p className={styles.label}>Life Path Number</p>
+                <h2 className={styles.label} aria-label="Life path number calculator">Life Path Number</h2>
                 <p className={styles.sublabel}>Enter your birth date to find your core numerology number</p>
                 <div className={styles.lifePathRow}>
                   <input
@@ -526,6 +645,9 @@ export default function Home() {
                     onChange={e => setBirthDate(e.target.value)}
                   />
                 </div>
+                {birthDateInFuture && (
+                  <p className={styles.lifePathError}>Please enter a date in the past — your birth date can&apos;t be in the future.</p>
+                )}
                 {lifePath && lifePathMeaning && (
                   <div className={styles.lifePathResult}>
                     <span className={styles.lifePathNum}>{lifePath}</span>
@@ -537,15 +659,21 @@ export default function Home() {
                 )}
               </div>
             </div>
-            <ShareButtons text={shareTexts.sky} url={siteUrl} />
+            <ShareButtons text={shareTexts.sky} url={siteUrl} emailSubject="The sky speaks — Portal Astra" pinterest />
           </div>
         )}
 
         {/* TAROT */}
         {tab === 'tarot' && (
           <div className={styles.panel}>
+            {!tarotNoticeDismissed && (
+              <div className={styles.tarotNotice}>
+                <p className={styles.tarotNoticeText}>Tarot readings are for entertainment and personal reflection only.</p>
+                <button className={styles.tarotNoticeClose} onClick={dismissTarotNotice} aria-label="Dismiss notice">✕</button>
+              </div>
+            )}
             <div className={styles.card}>
-              <p className={styles.label}>Tarot · Card of the Day</p>
+              <h2 className={styles.label} aria-label="Tarot card of the day">Tarot · Card of the Day</h2>
               <p className={styles.sublabel}>{formatDate(today)} · everyone draws the same card today</p>
               <div className={styles.tarotCardFace}>
                 <span className={styles.tarotEmoji}>{daily.emoji}</span>
@@ -562,10 +690,11 @@ export default function Home() {
                   <p className={styles.tarotMeaning}>{daily.meaning}</p>
                 </div>
               </div>
+              <p className={styles.tarotNote}>Today&apos;s card is drawn collectively. Your personal interpretation is what matters.</p>
             </div>
 
             <div className={styles.card}>
-              <p className={styles.label}>Weekly Spread · Past · Present · Future</p>
+              <h2 className={styles.label} aria-label="Weekly tarot spread">Weekly Spread · Past · Present · Future</h2>
               <p className={styles.sublabel}>One reading for the whole week</p>
               {!weeklyRevealed && (
                 <button className={styles.revealBtn} onClick={() => setWeeklyRevealed(true)}>
@@ -586,7 +715,7 @@ export default function Home() {
                 </div>
               )}
             </div>
-            <ShareButtons text={shareTexts.tarot} url={siteUrl} />
+            <ShareButtons text={shareTexts.tarot} url={siteUrl} emailSubject="Today's tarot — Portal Astra" pinterest />
           </div>
         )}
 
@@ -594,7 +723,7 @@ export default function Home() {
         {tab === 'neos' && (
           <div className={styles.panel}>
             <div className={styles.card}>
-              <p className={styles.label}>Near-Earth Objects · Today</p>
+              <h2 className={styles.label} aria-label="Near-Earth objects today">Near-Earth Objects · Today</h2>
               <p className={styles.sublabel}>Sorted by closest approach distance</p>
               {astLoading && <div className={styles.skeleton} />}
               {!astLoading && asteroids.length === 0 && <p className={styles.empty}>No close approaches today.</p>}
@@ -623,10 +752,10 @@ export default function Home() {
               })}
             </div>
             <div className={styles.card}>
-              <p className={styles.label}>What is &quot;hazardous&quot;?</p>
+              <h2 className={styles.label} aria-label="What is a hazardous asteroid?">What is &quot;hazardous&quot;?</h2>
               <p className={styles.infoText}>A potentially hazardous asteroid is larger than ~140 metres and passes within 7.5 million km of Earth&apos;s orbit. This does not mean an impact is imminent — NASA tracks all such objects continuously and none currently pose a threat.</p>
             </div>
-            <ShareButtons text={shareTexts.neos} url={siteUrl} />
+            <ShareButtons text={shareTexts.neos} url={siteUrl} emailSubject="Near-Earth objects — Portal Astra" />
           </div>
         )}
 
@@ -645,7 +774,18 @@ export default function Home() {
         <footer className={styles.footer}>
           <p>Astronomy data: NASA Open APIs (APOD, NeoWs, DONKI, EPIC) · Horoscope: freehoroscopeapi</p>
           <p>Horoscope, tarot, and spiritual content is for entertainment and personal reflection only.</p>
-          <p><Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link></p>
+          <p>
+            <Link href="/about" className={styles.footerLink}>About</Link>
+            {' · '}
+            <Link href="/blog" className={styles.footerLink}>Blog</Link>
+            {' · '}
+            <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link>
+          </p>
+          <p>
+            <button className={styles.footerShareBtn} onClick={shareSite}>
+              {footerShared ? '✓ Link copied' : '🔗 Share Portal Astra'}
+            </button>
+          </p>
         </footer>
       </div>
     </main>

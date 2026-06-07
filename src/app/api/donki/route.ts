@@ -111,7 +111,10 @@ export async function GET() {
 
     events.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
 
-    return NextResponse.json({ events: events.slice(0, 30) })
+    return NextResponse.json(
+      { events: events.slice(0, 30) },
+      { headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' } },
+    )
   } catch (err) {
     const message = err instanceof Error ? err.message : 'unknown error'
     return NextResponse.json({ error: message, events: [] }, { status: 502 })

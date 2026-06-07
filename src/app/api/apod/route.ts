@@ -12,10 +12,14 @@ interface ApodResponse {
   copyright?: string
 }
 
+const SWR_HEADERS = {
+  'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+}
+
 export async function GET() {
   try {
     const data = await nasaFetch<ApodResponse>('/planetary/apod', { thumbs: 'true' })
-    return NextResponse.json(data)
+    return NextResponse.json(data, { headers: SWR_HEADERS })
   } catch (err) {
     const message = err instanceof Error ? err.message : 'unknown error'
     return NextResponse.json({ error: message }, { status: 502 })
