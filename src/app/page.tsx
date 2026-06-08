@@ -40,16 +40,19 @@ function ShareButtons({
   const [copied, setCopied] = useState(false)
   const enc = encodeURIComponent
 
+  // Platforms that don't take a separate URL field need it inside the text.
+  const textWithUrl = `${text} ${url}`
+
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(text)
+      await navigator.clipboard.writeText(textWithUrl)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {}
   }
 
   const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}&quote=${enc(text)}`
-  const xUrl = `https://twitter.com/intent/tweet?text=${enc(text)}`
+  const xUrl = `https://twitter.com/intent/tweet?text=${enc(textWithUrl)}`
 
   return (
     <div className={styles.shareRow}>
@@ -76,7 +79,7 @@ function ShareButtons({
       <a
         className={styles.shareBtn}
         style={{ background: '#25D366', borderColor: '#25D366', color: '#fff' }}
-        href={`https://wa.me/?text=${enc(text)}`}
+        href={`https://wa.me/?text=${enc(textWithUrl)}`}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -107,7 +110,7 @@ function ShareButtons({
       <a
         className={styles.shareBtn}
         style={{ background: '#666666', borderColor: '#666666', color: '#fff' }}
-        href={`mailto:?subject=${enc(emailSubject)}&body=${enc(text)}`}
+        href={`mailto:?subject=${enc(emailSubject)}&body=${enc(textWithUrl)}`}
       >
         <span className={styles.shareIcon}>✉</span> Email
       </a>
@@ -205,38 +208,20 @@ export default function Home() {
   const lifePath = birthDate && !birthDateInFuture ? lifePathNumber(birthDate) : null
   const lifePathMeaning = lifePath ? ANGEL_NUMBER_MEANINGS[lifePath] : null
 
-  // Sky bridge sentence (also used for the Sky share text)
-  const bridgeText = apod && !apod.error
-    ? `Tonight NASA shows us "${apod.title}". ${angelMeaning.message} ${events.length > 0 ? `The sun has been active this week — ${events[0].description.toLowerCase()}` : 'The sun is calm, grounding energy is available.'}`
-    : ''
+  // Social sharing: always link to the canonical site, with a title that
+  // reflects whichever tab is currently active.
+  const shareUrl = 'https://portalastra.com'
 
-  const closest = asteroids[0]
-  const closestDist = closest
-    ? (+closest.close_approach_data[0].miss_distance.kilometers).toLocaleString('en-AU', { maximumFractionDigits: 0 })
-    : ''
-
-  // Per-tab share text
-  const shareTexts: Record<Tab, string> = {
-    space: apod && !apod.error
-      ? `NASA Astronomy Picture of the Day: "${apod.title}" (${formatDate(apod.date)}). ${siteUrl}`
-      : `Daily NASA imagery at ${siteUrl}`,
-    earth: epic && !epic.error
-      ? `Earth from a million miles away — DSCOVR satellite view, ${epic.date}. ${siteUrl}`
-      : `See Earth from deep space at ${siteUrl}`,
-    storm: events.length > 0
-      ? `Space weather: ${events.length} event${events.length > 1 ? 's' : ''} in the last 7 days — latest ${events[0].type} (${events[0].intensity} intensity). ${siteUrl}`
-      : `The sun is quiet — no major space weather this week. ${siteUrl}`,
-    stars: sign && reading
-      ? `My ${sign} reading today: ${reading} ${siteUrl}`
-      : `Daily horoscopes at ${siteUrl}`,
-    sky: bridgeText
-      ? `${bridgeText} ${siteUrl}`
-      : `Today is a ${angelNum} day — ${angelMeaning.theme}. Moon: ${moon.name}. ${siteUrl}`,
-    tarot: `Today's tarot card is ${daily.name} (${daily.orientation}) — ${daily.meaning} ${siteUrl}`,
-    neos: closest
-      ? `Closest asteroid to Earth today: ${closest.name.replace(/[()]/g, '')} at ${closestDist} km away. ${siteUrl}`
-      : `Track near-Earth asteroids at ${siteUrl}`,
+  const TAB_SHARE: Record<Tab, string> = {
+    space: "Check out NASA's Picture of the Day on Portal Astra",
+    earth: 'See Earth from a million miles away on Portal Astra',
+    storm: 'Space Weather live on Portal Astra',
+    stars: "Check out today's Horoscope on Portal Astra",
+    sky: 'Check out the Moon Phase on Portal Astra',
+    tarot: 'Pull your daily Tarot card on Portal Astra',
+    neos: 'Track Near-Earth asteroids on Portal Astra',
   }
+  const shareTitle = TAB_SHARE[tab]
 
   useEffect(() => {
     const saved = localStorage.getItem('pa_sign')
@@ -445,9 +430,7 @@ export default function Home() {
                 <p className={styles.fallbackEmoji}>🌌</p>
                 <p className={styles.fallbackMsg}>Imagery temporarily unavailable — check back shortly</p>
               </div>
-            )}
-            <ShareButtons text={shareTexts.space} url={siteUrl} emailSubject="A view from Portal Astra" reddit />
-          </div>
+            )}          </div>
         )}
 
         {/* EARTH — EPIC */}
@@ -496,9 +479,7 @@ export default function Home() {
               {!epicLoading && (!epic || epic.error) && (
                 <p className={styles.empty}>Earth imagery temporarily unavailable. NASA updates this daily.</p>
               )}
-            </div>
-            <ShareButtons text={shareTexts.earth} url={siteUrl} emailSubject="Earth from space — Portal Astra" />
-          </div>
+            </div>          </div>
         )}
 
         {/* SOLAR — DONKI */}
@@ -538,9 +519,7 @@ export default function Home() {
               <p className={styles.infoText}>
                 Solar flares are bursts of radiation from the sun&apos;s surface. Geomagnetic storms occur when solar energy interacts with Earth&apos;s magnetic field — they can cause aurora displays visible at lower latitudes. Many spiritual traditions interpret periods of high solar activity as times of heightened energy and sensitivity.
               </p>
-            </div>
-            <ShareButtons text={shareTexts.storm} url={siteUrl} emailSubject="Space weather — Portal Astra" />
-          </div>
+            </div>          </div>
         )}
 
         {/* STARS — Horoscope */}
@@ -584,9 +563,7 @@ export default function Home() {
                   )}
                 </div>
               )}
-            </div>
-            <ShareButtons text={shareTexts.stars} url={siteUrl} emailSubject="My horoscope today — Portal Astra" pinterest />
-          </div>
+            </div>          </div>
         )}
 
         {/* SKY — Bridge */}
@@ -660,9 +637,7 @@ export default function Home() {
                   </div>
                 )}
               </div>
-            </div>
-            <ShareButtons text={shareTexts.sky} url={siteUrl} emailSubject="The sky speaks — Portal Astra" pinterest />
-          </div>
+            </div>          </div>
         )}
 
         {/* TAROT */}
@@ -716,9 +691,7 @@ export default function Home() {
                   ))}
                 </div>
               )}
-            </div>
-            <ShareButtons text={shareTexts.tarot} url={siteUrl} emailSubject="Today's tarot — Portal Astra" pinterest />
-          </div>
+            </div>          </div>
         )}
 
         {/* NEOs */}
@@ -757,9 +730,11 @@ export default function Home() {
               <h2 className={styles.label} aria-label="What is a hazardous asteroid?">What is &quot;hazardous&quot;?</h2>
               <p className={styles.infoText}>A potentially hazardous asteroid is larger than ~140 metres and passes within 7.5 million km of Earth&apos;s orbit. This does not mean an impact is imminent — NASA tracks all such objects continuously and none currently pose a threat.</p>
             </div>
-            <ShareButtons text={shareTexts.neos} url={siteUrl} emailSubject="Near-Earth objects — Portal Astra" />
           </div>
         )}
+
+        {/* Share row — reflects the active tab, rendered at the bottom of every panel */}
+        <ShareButtons text={shareTitle} url={shareUrl} emailSubject={shareTitle} />
 
         {/* APOD lightbox */}
         {lightboxOpen && apod && !apod.error && (
