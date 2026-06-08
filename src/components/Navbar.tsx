@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import styles from './Navbar.module.css'
 
 // Shared top navigation used on every page. No hooks, so it works inside
@@ -8,7 +7,7 @@ export default function Navbar() {
   return (
     <nav className={styles.navbar} aria-label="Primary">
       <Link href="/" className={styles.brand} aria-label="Portal Astra home">
-        <Image src="/images/portal-astra-logo-horizontal.png" alt="Portal Astra" width={420} height={140} className={styles.logoImg} priority />
+        <span className={styles.logoText}>PORTAL ASTRA</span>
       </Link>
       <div className={styles.tagline}>Where science meets the stars</div>
       <div className={styles.links}>
