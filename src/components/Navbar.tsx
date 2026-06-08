@@ -10,7 +10,7 @@ export default function Navbar() {
       {/* Left: logo */}
       <Link href="/" className={styles.brand} aria-label="Portal Astra home">
         <Image
-          src="/images/portal-astra-logo-horizontal.png"
+          src="/images/portal-astra-logo-square-dark.png"
           alt="Portal Astra"
           width={520}
           height={140}
