@@ -1,0 +1,347 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  background: #0a0a0f;
+  color: #e8e8f0;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.25rem 4rem;
+}
+
+.section {
+  margin-top: 3rem;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 3rem 1rem 1rem;
+}
+.heroTitle {
+  margin: 0 0 0.5rem;
+  font-size: 2.4rem;
+  font-weight: 700;
+  font-family: Georgia, 'Times New Roman', serif;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+}
+.heroSub {
+  margin: 0;
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.sectionHeading {
+  margin: 0 0 1.25rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  font-family: Georgia, serif;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+}
+
+.loading {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+  padding: 2rem;
+  font-size: 0.9rem;
+}
+
+/* Calendar */
+.calendar {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+.calHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+.calTitle {
+  margin: 0;
+  font-size: 1.2rem;
+  font-family: Georgia, serif;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+}
+.calNavBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  color: #C9A84C;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.calNavBtn:hover {
+  background: rgba(201, 168, 76, 0.12);
+  border-color: rgba(201, 168, 76, 0.5);
+}
+.weekLabels,
+.calGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(40px, 1fr));
+  gap: 0.4rem;
+}
+.weekLabel {
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  padding-bottom: 0.5rem;
+}
+.calGrid {
+  margin-top: 0.25rem;
+}
+.dayCell {
+  min-height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+}
+.dayCellEmpty {
+  min-height: 56px;
+}
+.dayNum {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-variant-numeric: tabular-nums;
+}
+.dayEmoji {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+.dayToday {
+  border: 2px solid #C9A84C;
+  box-shadow: 0 0 12px rgba(201, 168, 76, 0.25);
+}
+.dayFull {
+  background: rgba(123, 94, 167, 0.18);
+  box-shadow: 0 0 16px rgba(123, 94, 167, 0.4);
+}
+.dayNew {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: #050507;
+}
+
+/* Upcoming events strip */
+.events {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.eventCard {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 1.25rem;
+  text-align: center;
+}
+.eventEmoji {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+.eventName {
+  margin: 0 0 0.3rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #C9A84C;
+}
+.eventDate {
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+  color: #ffffff;
+  font-family: Georgia, serif;
+}
+.eventCountdown {
+  margin: 0;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Carousel */
+.carouselWrap {
+  position: relative;
+}
+.carouselViewport {
+  overflow: hidden;
+}
+.carouselTrack {
+  display: flex;
+  gap: 1rem;
+  transition: transform 0.4s ease;
+}
+.carouselCard {
+  flex: 0 0 280px;
+  min-width: 280px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+.cardName {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  font-family: Georgia, serif;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+}
+.cardDesc {
+  margin: 0 0 0.85rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.7);
+}
+.cardSci {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: rgba(201, 168, 76, 0.85);
+  letter-spacing: 0.02em;
+}
+
+/* Moon visuals (pure CSS) */
+.vizBase {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto 1.25rem;
+  background: #e8e8f0;
+  box-shadow: 0 0 30px rgba(232, 232, 240, 0.25);
+}
+.vizNew {
+  background: #15151c;
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+.vizWaxCres { box-shadow: inset 84px 0 0 -6px #0d0d14; }
+.vizFirstQ { box-shadow: inset 60px 0 0 0 #0d0d14; }
+.vizWaxGib { box-shadow: inset 34px 0 0 0 #0d0d14; }
+.vizFull { box-shadow: 0 0 45px rgba(232, 232, 240, 0.55); }
+.vizWanGib { box-shadow: inset -34px 0 0 0 #0d0d14; }
+.vizLastQ { box-shadow: inset -60px 0 0 0 #0d0d14; }
+.vizWanCres { box-shadow: inset -84px 0 0 -6px #0d0d14; }
+.vizSuper {
+  width: 150px;
+  height: 150px;
+  box-shadow: 0 0 60px rgba(232, 232, 240, 0.6);
+}
+.vizEclipse {
+  background: radial-gradient(circle at 50% 50%, #2a0808 35%, #8a2a2a 65%, #1a0404 100%);
+  box-shadow: 0 0 35px rgba(138, 42, 42, 0.45);
+}
+.vizVoid {
+  background: transparent;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  box-shadow: none;
+}
+
+.carouselControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+.carouselBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  color: #C9A84C;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.carouselBtn:hover {
+  background: rgba(201, 168, 76, 0.12);
+  border-color: rgba(201, 168, 76, 0.5);
+}
+.dots {
+  display: flex;
+  gap: 0.4rem;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.dotActive {
+  background: #C9A84C;
+  transform: scale(1.3);
+}
+
+/* Astronomical data grid */
+.dataGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+.dataCard {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 1.5rem;
+  text-align: center;
+}
+.dataLabel {
+  margin: 0 0 0.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+.dataValue {
+  margin: 0;
+  font-size: 1.5rem;
+  font-family: Georgia, serif;
+  color: #C9A84C;
+}
+
+/* Footer */
+.footer {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: center;
+}
+.footerLink {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.2s;
+}
+.footerLink:hover {
+  color: #C9A84C;
+}
+
+@media (max-width: 640px) {
+  .heroTitle { font-size: 1.7rem; }
+  .dayCell, .dayCellEmpty { min-height: 44px; }
+  .dayEmoji { font-size: 0.85rem; }
+}
