@@ -6,19 +6,36 @@
   position: relative;
   z-index: 10;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  min-height: 100px;
 }
 
 .brand {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  gap: 1rem;
   text-decoration: none;
-  line-height: 0;
 }
 
 .logoImg {
-  height: 140px;
+  height: 80px;
   width: auto;
   display: block;
+}
+
+.logoName {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: #ffffff;
+}
+
+.logoSub {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  color: rgba(201, 168, 76, 0.8);
+  margin-top: 2px;
 }
 
 .tagline {

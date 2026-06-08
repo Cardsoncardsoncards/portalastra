@@ -9,14 +9,11 @@ export default function Navbar() {
     <nav className={styles.navbar} aria-label="Primary">
       {/* Left: logo */}
       <Link href="/" className={styles.brand} aria-label="Portal Astra home">
-        <Image
-          src="/images/portal-astra-logo-square-dark.png"
-          alt="Portal Astra"
-          width={420}
-          height={140}
-          className={styles.logoImg}
-          priority
-        />
+        <Image src="/images/portal-astra-icon.png" alt="" width={80} height={80} className={styles.logoImg} priority />
+        <div className={styles.logoText}>
+          <span className={styles.logoName}>PORTAL ASTRA</span>
+          <span className={styles.logoSub}>ASTRONOMY · GUIDANCE · DISCOVERY</span>
+        </div>
       </Link>
 
       {/* Center: tagline */}
