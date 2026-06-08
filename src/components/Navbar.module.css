@@ -2,69 +2,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 2rem;
+  padding: 0 2rem;
   position: relative;
   z-index: 10;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   min-height: 100px;
 }
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  text-decoration: none;
-}
-
-.logoImg {
-  height: 80px;
-  width: auto;
-  display: block;
-}
-
-.logoName {
-  display: block;
-  font-size: 1.6rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  color: #ffffff;
-}
-
-.logoSub {
-  display: block;
-  font-size: 0.65rem;
-  letter-spacing: 0.18em;
-  color: rgba(201, 168, 76, 0.8);
-  margin-top: 2px;
-}
-
-.tagline {
-  flex: 1;
-  text-align: center;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.45);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  pointer-events: none;
-}
-
-.links {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-}
-
-.link {
-  padding: 0.4rem 0.9rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  color: #9a9ab0;
-  text-decoration: none;
-  transition: color 0.15s ease, background 0.15s ease;
-}
-
-.link:hover {
-  color: #e8e8f0;
-  background: rgba(184, 164, 255, 0.1);
+.brand { display: flex; align-items: center; text-decoration: none; }
+.logoImg { height: 100px; width: auto; display: block; }
+.tagline { flex: 1; text-align: center; font-size: 0.8rem; color: rgba(255,255,255,0.45); letter-spacing: 0.18em; text-transform: uppercase; pointer-events: none; }
+.links { display: flex; align-items: center; gap: 2rem; }
+.link { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; letter-spacing: 0.05em; transition: color 0.2s; }
+.link:hover { color: #C9A84C; }
+@media (max-width: 640px) {
+  .logoImg { height: 60px; }
+  .tagline { display: none; }
+  .navbar { padding: 0.75rem 1rem; }
 }

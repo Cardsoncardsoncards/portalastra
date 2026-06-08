@@ -1327,6 +1327,12 @@
   text-decoration: underline;
 }
 
+/* ===== Hero header ===== */
+.heroText { display: flex; flex-direction: column; gap: 0.25rem; }
+.heroTitle { font-size: 1.6rem; font-weight: 600; color: #ffffff; letter-spacing: 0.05em; margin: 0; }
+.heroSub { font-size: 0.7rem; letter-spacing: 0.2em; color: #C9A84C; margin: 0; }
+.heroDate { font-size: 0.8rem; color: rgba(255,255,255,0.4); margin: 0; margin-top: 0.25rem; }
+
 .articleBody {
   font-size: 1rem;
   line-height: 1.75;

@@ -334,6 +334,11 @@ export default function Home() {
         <Navbar />
         <h1 className={styles.srOnly}>Portal Astra — your daily cosmic guide</h1>
         <header className={styles.header}>
+          <div className={styles.heroText}>
+            <h2 className={styles.heroTitle}>Where Science Meets the Stars</h2>
+            <p className={styles.heroSub}>ASTRONOMY · GUIDANCE · DISCOVERY</p>
+            <p className={styles.heroDate}>{formatDate(today)}</p>
+          </div>
           <div className={styles.moonBadge}>
             <span className={styles.moonEmoji}>{moon.emoji}</span>
             <span className={styles.moonName}>{moon.name}</span>
