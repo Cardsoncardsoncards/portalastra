@@ -10,8 +10,10 @@ export interface BlogPost {
 
 // Body convention: blocks separated by a blank line. A block beginning with
 // "## " is rendered as a section heading; everything else is a paragraph.
-// Internal links are plain-text mentions of other post titles (the template
-// resolves related posts algorithmically). No HTML inside body strings.
+// Cross-references to other posts are plain-text title mentions (the template
+// resolves related posts algorithmically). Inline <a href="...">label</a> anchor
+// tags ARE permitted for internal links (e.g. to /moon or /nasa-data) — the
+// [slug] template parses them into real links via its renderInline helper.
 
 export const BLOG_POSTS: BlogPost[] = [
   {

@@ -126,6 +126,18 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           <div className={styles.articleBody}>{renderBody(post.body)}</div>
         </article>
 
+        <div className={styles.shareRow}>
+          <a
+            className={styles.shareBtn}
+            style={{ background: '#E60023', borderColor: '#E60023', color: '#fff' }}
+            href={`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(`${SITE_URL}/blog/${post.slug}`)}&description=${encodeURIComponent(`${post.title} on Portal Astra`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className={styles.shareIcon}>P</span> Pin it
+          </a>
+        </div>
+
         {related.length > 0 && (
           <section className={styles.relatedSection}>
             <p className={styles.label}>Related reading</p>

@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { getMoonPhase, getAngelNumber, ANGEL_NUMBER_MEANINGS, formatDate, getTodayUTC, SIGNS } from '@/lib/utils'
-import { getDailyCard, getWeeklySpread } from '@/lib/tarot'
+import { getDailyCard, getWeeklySpread, TAROT_DECK, type DrawnCard } from '@/lib/tarot'
 import Navbar from '@/components/Navbar'
 import styles from './page.module.css'
 
@@ -24,19 +24,7 @@ function openSharePopup(shareUrl: string) {
 // Coloured social share row, reused by every tab. Manages its own
 // "Copied" confirmation so multiple rows don't share state. Pinterest,
 // Reddit and the email subject are opt-in per tab.
-function ShareButtons({
-  text,
-  url,
-  emailSubject,
-  pinterest = false,
-  reddit = false,
-}: {
-  text: string
-  url: string
-  emailSubject: string
-  pinterest?: boolean
-  reddit?: boolean
-}) {
+function ShareButtons({ text, url }: { text: string; url: string }) {
   const [copied, setCopied] = useState(false)
   const enc = encodeURIComponent
 
@@ -45,7 +33,7 @@ function ShareButtons({
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(textWithUrl)
+      await navigator.clipboard.writeText(window.location.href)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {}
@@ -53,6 +41,7 @@ function ShareButtons({
 
   const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}&quote=${enc(text)}`
   const xUrl = `https://twitter.com/intent/tweet?text=${enc(textWithUrl)}`
+  const redditUrl = `https://www.reddit.com/submit?url=${enc(url)}&title=${enc(text)}`
 
   return (
     <div className={styles.shareRow}>
@@ -85,41 +74,21 @@ function ShareButtons({
       >
         <span className={styles.shareIcon}>💬</span> WhatsApp
       </a>
-      {pinterest && (
-        <a
-          className={styles.shareBtn}
-          style={{ background: '#E60023', borderColor: '#E60023', color: '#fff' }}
-          href={`https://pinterest.com/pin/create/button/?url=${enc(url)}&description=${enc(text)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span className={styles.shareIcon}>P</span> Pinterest
-        </a>
-      )}
-      {reddit && (
-        <a
-          className={styles.shareBtn}
-          style={{ background: '#FF4500', borderColor: '#FF4500', color: '#fff' }}
-          href={`https://www.reddit.com/submit?url=${enc(url)}&title=${enc(text)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span className={styles.shareIcon}>r</span> Reddit
-        </a>
-      )}
       <a
         className={styles.shareBtn}
-        style={{ background: '#666666', borderColor: '#666666', color: '#fff' }}
-        href={`mailto:?subject=${enc(emailSubject)}&body=${enc(textWithUrl)}`}
+        style={{ background: '#FF4500', borderColor: '#FF4500', color: '#fff' }}
+        href={redditUrl}
+        target="_blank"
+        rel="noopener noreferrer"
       >
-        <span className={styles.shareIcon}>✉</span> Email
+        <span className={styles.shareIcon}>r</span> Reddit
       </a>
       <button
         className={styles.shareBtn}
         style={{ background: '#b8a4ff', borderColor: '#b8a4ff', color: '#07070d' }}
         onClick={copy}
       >
-        <span className={styles.shareIcon}>{copied ? '✓' : '🔗'}</span> {copied ? 'Copied' : 'Copy Link'}
+        <span className={styles.shareIcon}>{copied ? '✓' : '🔗'}</span> {copied ? 'Copied!' : 'Copy Link'}
       </button>
     </div>
   )
@@ -144,6 +113,26 @@ function reduceKeepMaster(n: number): number {
 function lifePathNumber(dateStr: string): number {
   const [y, m, d] = dateStr.split('-').map(Number)
   return reduceKeepMaster(reduceToDigit(y) + reduceToDigit(m) + reduceToDigit(d))
+}
+
+// Draw 3 unique random cards (each random orientation), excluding any names
+// already used by today's daily card and the weekly spread.
+function drawPersonal(exclude: Set<string>): DrawnCard[] {
+  const pool = TAROT_DECK.filter((c) => !exclude.has(c.name))
+  const picked: DrawnCard[] = []
+  const used = new Set<string>()
+  while (picked.length < 3 && used.size < pool.length) {
+    const card = pool[Math.floor(Math.random() * pool.length)]
+    if (used.has(card.name)) continue
+    used.add(card.name)
+    const reversed = Math.random() < 0.5
+    picked.push({
+      ...card,
+      orientation: reversed ? 'Reversed' : 'Upright',
+      meaning: reversed ? card.reversed : card.upright,
+    })
+  }
+  return picked
 }
 
 export default function Home() {
@@ -184,6 +173,7 @@ export default function Home() {
   // Tarot
   const [weeklyRevealed, setWeeklyRevealed] = useState(false)
   const [tarotNoticeDismissed, setTarotNoticeDismissed] = useState(true)
+  const [personalDraw, setPersonalDraw] = useState<DrawnCard[] | null>(null)
 
   // Footer "Share Portal Astra"
   const [footerShared, setFooterShared] = useState(false)
@@ -212,16 +202,18 @@ export default function Home() {
   const lifePath = birthDate && !birthDateInFuture ? lifePathNumber(birthDate) : null
   const lifePathMeaning = lifePath ? ANGEL_NUMBER_MEANINGS[lifePath] : null
 
-  // Social sharing: title reflects whichever tab is currently active;
-  // shareUrl (above) is the live canonical URL.
+  // Social sharing: title reflects whichever tab is currently active (and its
+  // live data); shareUrl (above) is the live canonical URL.
   const TAB_SHARE: Record<Tab, string> = {
-    space: "Check out NASA's Picture of the Day on Portal Astra",
+    space: "Check out today's NASA Picture of the Day on Portal Astra",
     earth: 'See Earth from a million miles away on Portal Astra',
-    storm: 'Space Weather live on Portal Astra',
-    stars: "Check out today's Horoscope on Portal Astra",
-    sky: 'Check out the Moon Phase on Portal Astra',
-    tarot: 'Pull your daily Tarot card on Portal Astra',
-    neos: 'Track Near-Earth asteroids on Portal Astra',
+    storm: 'Live space weather on Portal Astra',
+    stars: sign
+      ? `I just read my ${sign} horoscope on Portal Astra`
+      : 'I just read my horoscope on Portal Astra',
+    sky: `Tonight is a ${moon.name} moon — Portal Astra`,
+    tarot: `I drew ${daily.name} in my tarot reading on Portal Astra`,
+    neos: 'Tracking near-Earth asteroids live on Portal Astra',
   }
   const shareTitle = TAB_SHARE[tab]
 
@@ -353,6 +345,7 @@ export default function Home() {
           <div>
             <p className={styles.angelTheme}>Today&apos;s number · {angelMeaning.theme}</p>
             <p className={styles.angelMsg}>{angelMeaning.message}</p>
+            <Link href="/calendars#birth" className={styles.lifePathLink}>Discover your life path number →</Link>
           </div>
         </div>
 
@@ -695,7 +688,49 @@ export default function Home() {
                   ))}
                 </div>
               )}
-            </div>          </div>
+            </div>
+
+            <div className={styles.card}>
+              <h2 className={styles.label} aria-label="Your personal tarot draw">Your Personal Draw · Draw Any Time</h2>
+              <p className={styles.sublabel}>Three cards drawn for you alone. Redraw whenever you feel called.</p>
+              {!personalDraw && (
+                <button
+                  className={styles.revealBtn}
+                  onClick={() => setPersonalDraw(drawPersonal(new Set([daily.name, weekly.past.name, weekly.present.name, weekly.future.name])))}
+                >
+                  🃏 Draw my cards
+                </button>
+              )}
+              {personalDraw && (
+                <>
+                  <div className={styles.spreadGrid}>
+                    {personalDraw.map((c, i) => (
+                      <div key={i} className={styles.spreadCard}>
+                        <p className={styles.spreadPos}>Card {i + 1}</p>
+                        <p className={styles.spreadEmoji}>{c.emoji}</p>
+                        <p className={styles.spreadName}>{c.name}</p>
+                        <p className={styles.spreadOrient}>{c.orientation}</p>
+                        <p className={styles.spreadMeaning}>{c.meaning}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    className={styles.revealBtn}
+                    style={{ marginTop: '1rem' }}
+                    onClick={() => setPersonalDraw(drawPersonal(new Set([daily.name, weekly.past.name, weekly.present.name, weekly.future.name])))}
+                  >
+                    🔄 Redraw
+                  </button>
+                  <div style={{ marginTop: '1rem' }}>
+                    <ShareButtons
+                      text={`I just drew ${personalDraw[0].name}, ${personalDraw[1].name} and ${personalDraw[2].name} in my personal tarot reading on Portal Astra`}
+                      url={shareUrl}
+                    />
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
         )}
 
         {/* NEOs */}
@@ -738,7 +773,7 @@ export default function Home() {
         )}
 
         {/* Share row — reflects the active tab, rendered at the bottom of every panel */}
-        <ShareButtons text={shareTitle} url={shareUrl} emailSubject={shareTitle} />
+        <ShareButtons text={shareTitle} url={shareUrl} />
 
         {/* APOD lightbox */}
         {lightboxOpen && apod && !apod.error && (

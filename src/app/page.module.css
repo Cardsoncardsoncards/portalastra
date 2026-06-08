@@ -125,6 +125,20 @@
   line-height: 1.45;
 }
 
+.lifePathLink {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: #C9A84C;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.lifePathLink:hover {
+  color: #e8c96a;
+}
+
 /* Email capture strip */
 .emailStrip {
   display: flex;

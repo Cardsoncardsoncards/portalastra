@@ -5,10 +5,11 @@ import Link from 'next/link'
 import styles from './Footer.module.css'
 
 // Shared site footer with share buttons that point at the current URL.
-export default function Footer({ title = 'Portal Astra' }: { title?: string }) {
+export default function Footer({ title = 'Portal Astra', shareText }: { title?: string; shareText?: string }) {
   const [url, setUrl] = useState('')
   const [copied, setCopied] = useState(false)
   const enc = encodeURIComponent
+  const text = shareText || title
 
   // Read the live URL only on the client to avoid an SSR/hydration mismatch.
   useEffect(() => {
@@ -36,7 +37,7 @@ export default function Footer({ title = 'Portal Astra' }: { title?: string }) {
         </a>
         <a
           className={styles.shareBtn}
-          href={`https://twitter.com/intent/tweet?url=${enc(url)}&text=${enc(title)}`}
+          href={`https://twitter.com/intent/tweet?url=${enc(url)}&text=${enc(text)}`}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -44,14 +45,19 @@ export default function Footer({ title = 'Portal Astra' }: { title?: string }) {
         </a>
         <a
           className={styles.shareBtn}
-          href={`https://wa.me/?text=${enc(title)}%20${enc(url)}`}
+          href={`https://wa.me/?text=${enc(text)}%20${enc(url)}`}
           target="_blank"
           rel="noopener noreferrer"
         >
           WhatsApp
         </a>
-        <a className={styles.shareBtn} href={`mailto:?subject=${enc(title)}&body=${enc(url)}`}>
-          Email
+        <a
+          className={styles.shareBtn}
+          href={`https://www.reddit.com/submit?url=${enc(url)}&title=${enc(text)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Reddit
         </a>
         <button className={styles.shareBtn} onClick={copy}>
           {copied ? 'Copied!' : 'Copy Link'}

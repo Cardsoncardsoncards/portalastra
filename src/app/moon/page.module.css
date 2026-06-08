@@ -459,6 +459,23 @@
   color: #C9A84C;
 }
 
+.pinBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid #E60023;
+  background: #E60023;
+  color: #fff;
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.pinBtn:hover {
+  opacity: 0.85;
+}
+
 /* Footer */
 .footer {
   margin-top: 3.5rem;

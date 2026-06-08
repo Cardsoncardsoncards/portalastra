@@ -6,19 +6,28 @@ import './globals.css'
 const GA_MEASUREMENT_ID = 'G-QMJ074E2JZ'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.portalastra.com'),
+  metadataBase: new URL('https://portalastra.com'),
   title: 'Portal Astra — Your daily cosmic guide',
   description: 'Space science meets celestial wisdom. Daily NASA imagery, horoscopes, moon phases, angel numbers and more.',
+  keywords: [
+    'moon phases', 'lunar calendar', 'astrology', 'horoscope', 'space weather', 'NASA',
+    'tarot', 'angel numbers', 'moon phase calendar', 'life path number', 'cosmic guide',
+  ],
+  alternates: {
+    canonical: 'https://portalastra.com',
+  },
   openGraph: {
     title: 'Portal Astra',
     description: 'Where science meets the stars. Live NASA data meets ancient cosmic wisdom.',
-    url: 'https://www.portalastra.com',
+    url: 'https://portalastra.com',
     siteName: 'Portal Astra',
     type: 'website',
+    locale: 'en_AU',
     images: ['/images/portal-astra-logo-horizontal.png'],
   },
   twitter: {
     card: 'summary_large_image',
+    site: '@portalastra',
     title: 'Portal Astra',
     description: 'Your daily portal to the cosmos.',
   },
