@@ -7,6 +7,7 @@ import styles from './Navbar.module.css'
 export default function Navbar() {
   return (
     <nav className={styles.navbar} aria-label="Primary">
+      {/* Left: logo */}
       <Link href="/" className={styles.brand} aria-label="Portal Astra home">
         <Image
           src="/images/portal-astra-logo-horizontal.png"
@@ -17,6 +18,11 @@ export default function Navbar() {
           priority
         />
       </Link>
+
+      {/* Center: tagline */}
+      <div className={styles.tagline}>Where science meets the stars</div>
+
+      {/* Right: links */}
       <div className={styles.links}>
         <Link href="/" className={styles.link}>Home</Link>
         <Link href="/blog" className={styles.link}>Blog</Link>
