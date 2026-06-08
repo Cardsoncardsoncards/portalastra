@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { getMoonPhase, getAngelNumber, ANGEL_NUMBER_MEANINGS, formatDate, getTodayUTC, SIGNS } from '@/lib/utils'
 import { getDailyCard, getWeeklySpread } from '@/lib/tarot'
+import Navbar from '@/components/Navbar'
 import styles from './page.module.css'
 
 type Tab = 'space' | 'earth' | 'storm' | 'stars' | 'sky' | 'tarot' | 'neos'
@@ -345,9 +346,10 @@ export default function Home() {
       <div ref={starsRef} className={styles.stars} aria-hidden />
 
       <div className={styles.container}>
+        <Navbar />
+        <h1 className={styles.srOnly}>Portal Astra — your daily cosmic guide</h1>
         <header className={styles.header}>
           <div>
-            <h1 className={styles.logo} aria-label="Portal Astra">PORTAL<span className={styles.dot}>·</span>ASTRA</h1>
             <p className={styles.tagline}>The sky, both ways · {formatDate(today)}</p>
           </div>
           <div className={styles.moonBadge}>

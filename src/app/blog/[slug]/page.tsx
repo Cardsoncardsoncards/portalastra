@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { getPost, getAllPosts, getRelatedPosts } from '@/lib/posts'
 import { formatDate } from '@/lib/utils'
 import ReadingProgress from './ReadingProgress'
+import Navbar from '@/components/Navbar'
 import styles from '../../page.module.css'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.portalastra.com').replace(/\/$/, '')
@@ -86,6 +87,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       />
 
       <div className={styles.container}>
+        <Navbar />
         <p>
           <Link href="/blog" className={styles.footerLink}>← All articles</Link>
         </p>

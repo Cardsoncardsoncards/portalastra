@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllPosts } from '@/lib/posts'
 import BlogIndex from './BlogIndex'
+import Navbar from '@/components/Navbar'
 import styles from '../page.module.css'
 
 export const metadata: Metadata = {
@@ -25,14 +26,8 @@ export default function BlogPage() {
       <div className={styles.stars} aria-hidden />
 
       <div className={styles.container}>
-        <header className={styles.header}>
-          <div>
-            <h1 className={styles.logo} aria-label="Portal Astra">
-              PORTAL<span className={styles.dot}>·</span>ASTRA
-            </h1>
-            <p className={styles.tagline}>The Blog · the sky, both ways</p>
-          </div>
-        </header>
+        <Navbar />
+        <h1 className={styles.pageTitle}>The Blog</h1>
 
         <p className={styles.blogIntro}>
           Plain-spoken guides to astronomy and the symbolism people have always read into the sky.

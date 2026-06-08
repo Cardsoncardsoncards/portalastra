@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Navbar from '@/components/Navbar'
 import styles from '../page.module.css'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.portalastra.com').replace(/\/$/, '')
@@ -37,14 +38,8 @@ export default function AboutPage() {
       />
 
       <div className={styles.container}>
-        <header className={styles.header}>
-          <div>
-            <h1 className={styles.logo} aria-label="Portal Astra">
-              PORTAL<span className={styles.dot}>·</span>ASTRA
-            </h1>
-            <p className={styles.tagline}>About</p>
-          </div>
-        </header>
+        <Navbar />
+        <h1 className={styles.pageTitle}>About Portal Astra</h1>
 
         <div className={styles.card}>
           <h2 className={styles.legalH} style={{ marginTop: 0 }}>What Portal Astra is</h2>

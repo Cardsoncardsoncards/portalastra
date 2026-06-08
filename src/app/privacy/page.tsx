@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Navbar from '@/components/Navbar'
 import styles from '../page.module.css'
 
 export const metadata: Metadata = {
@@ -16,12 +17,8 @@ export default function PrivacyPage() {
       <div className={styles.stars} aria-hidden />
 
       <div className={styles.container}>
-        <header className={styles.header}>
-          <div>
-            <h1 className={styles.logo}>PORTAL<span className={styles.dot}>·</span>ASTRA</h1>
-            <p className={styles.tagline}>Privacy Policy</p>
-          </div>
-        </header>
+        <Navbar />
+        <h1 className={styles.pageTitle}>Privacy Policy</h1>
 
         <div className={styles.card}>
           <p className={styles.legalDate}>Last updated: 7 June 2026</p>

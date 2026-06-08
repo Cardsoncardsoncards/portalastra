@@ -1,0 +1,24 @@
+import Link from 'next/link'
+import styles from './Navbar.module.css'
+
+// Shared top navigation used on every page. No hooks, so it works inside
+// both server and client component trees.
+export default function Navbar() {
+  return (
+    <nav className={styles.navbar} aria-label="Primary">
+      <Link href="/" className={styles.brand} aria-label="Portal Astra home">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/portal-astra-logo-horizontal.png"
+          alt="Portal Astra"
+          className={styles.logoImg}
+        />
+      </Link>
+      <div className={styles.links}>
+        <Link href="/" className={styles.link}>Home</Link>
+        <Link href="/blog" className={styles.link}>Blog</Link>
+        <Link href="/about" className={styles.link}>About</Link>
+      </div>
+    </nav>
+  )
+}

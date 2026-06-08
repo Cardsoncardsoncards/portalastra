@@ -1141,6 +1141,27 @@
   transform: translateY(-1px);
 }
 
+/* Shared page title + screen-reader-only heading */
+.pageTitle {
+  margin: 0 0 1.25rem;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ===== Blog ===== */
 .blogIntro {
   margin: 0 0 1.5rem;
