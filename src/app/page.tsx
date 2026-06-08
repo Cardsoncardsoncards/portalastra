@@ -201,6 +201,10 @@ export default function Home() {
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.portalastra.com'
 
+  // Share the live canonical URL (set on client) rather than a hardcoded host.
+  const [shareUrl, setShareUrl] = useState('https://portalastra.com')
+  useEffect(() => { setShareUrl(window.location.href) }, [])
+
   const daily = getDailyCard(today)
   const weekly = getWeeklySpread(today)
 
@@ -208,10 +212,8 @@ export default function Home() {
   const lifePath = birthDate && !birthDateInFuture ? lifePathNumber(birthDate) : null
   const lifePathMeaning = lifePath ? ANGEL_NUMBER_MEANINGS[lifePath] : null
 
-  // Social sharing: always link to the canonical site, with a title that
-  // reflects whichever tab is currently active.
-  const shareUrl = 'https://portalastra.com'
-
+  // Social sharing: title reflects whichever tab is currently active;
+  // shareUrl (above) is the live canonical URL.
   const TAB_SHARE: Record<Tab, string> = {
     space: "Check out NASA's Picture of the Day on Portal Astra",
     earth: 'See Earth from a million miles away on Portal Astra',

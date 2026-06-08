@@ -80,6 +80,8 @@ There is one more subtlety worth knowing. Although the Moon always shows us the 
 
 ## From astronomy to meaning
 
+Explore our interactive <a href='/moon'>Moon Phase Calendar</a> to track the current lunar cycle.
+
 For thousands of years, cultures attached significance to this dependable rhythm, planting and harvesting and holding festivals by the Moon. That cultural layer is where astronomy hands off to interpretation. If the symbolic side interests you, our guide Moon Phase Rituals for Each Lunar Stage maps simple practices to each part of the cycle, and Your Zodiac Sign: What It Really Means explains how the Moon's position among the constellations feeds into astrology. We keep the two clearly separated — the orbital mechanics here are settled science; the meaning people draw from them is personal reflection.
 
 Frequently asked questions:
@@ -336,6 +338,8 @@ To turn Kp into a real plan you need three more ingredients beyond a high number
 
 The aurora is the beautiful face of space weather, but the same storms have a serious side. Strong geomagnetic storms can induce currents in long power lines and pipelines, disturb GPS accuracy, increase radiation exposure on polar flights, and degrade satellite operations. The famous 1989 storm knocked out the power grid across Quebec for hours. This is why agencies like NOAA and NASA monitor the Sun continuously and why "space weather forecasting" is a real, funded discipline rather than a novelty. The Kp index you check for aurora is the same number grid operators watch to protect infrastructure.
 
+All space weather data on Portal Astra comes directly from NASA. <a href='/nasa-data'>Learn about our data sources</a>.
+
 For most of us, though, the index is a window into a genuinely cosmic process: the connection between a storm on the Sun and a glow over our own heads a couple of days later. Watching the number climb after a big CME, and then stepping outside to see the result, is one of the most direct experiences of the solar system you can have without a telescope. It is the same Sun whose position the DSCOVR satellite watches from deep space in Earth From a Million Miles: The EPIC Camera, and the same Sun whose light makes visible the rocky visitors we track in Near-Earth Objects: Should We Worry? — three different windows onto one busy neighbourhood.
 
 Frequently asked questions:
@@ -382,6 +386,8 @@ The metadata Portal Astra shows alongside the image — the date and the centroi
 ## The bigger picture: a daily portrait of home
 
 EPIC sits in a lineage that began in 1972 with the famous Blue Marble photograph taken by the Apollo 17 crew, the first time humans had photographed the whole round Earth themselves. What was once a once-in-a-mission rarity is now a daily routine: a fresh full-disc portrait of the planet, every single day, freely available to anyone. There is real scientific value — climate and atmospheric monitoring — but there is also something harder to quantify. Seeing the entire planet hang alone in black space, with no borders and no labels, is the kind of perspective that reframes how you think about it. The view that connects most directly to that feeling is the one in Moon Phases Explained, where the same sunlight that lights the Moon for us is here lighting the whole face of our world.
+
+This imagery comes from the NASA EPIC API. <a href='/nasa-data'>Learn how we use NASA data</a>.
 
 NASA and NOAA keep DSCOVR running as both a climate observatory and a space-weather sentinel, a rare two-in-one mission. Next time you open the Earth tab and see today's planet — clouds, oceans, the curve of the terminator at the edge — remember that you are looking through a camera a million miles away, at a photograph of literally everyone you have ever known.
 
@@ -433,6 +439,8 @@ Here is the most reassuring part, and it is recent. In 2022, NASA's DART mission
 That combination — comprehensive tracking plus a demonstrated deflection method — is why the scientific consensus is calm. The strategy is to find threats early, because even a tiny orbital change applied years in advance is enough to turn a hit into a miss. Agencies like NASA publish their risk assessments openly, and you can read them; there is no hidden list of imminent dangers.
 
 ## So, should we worry?
+
+Our asteroid data is sourced directly from NASA NeoWs. <a href='/nasa-data'>See all our data sources</a>.
 
 For the timescale of your life, the honest answer is no. The risk from any individual catalogued asteroid is vanishingly small, the large dangerous objects are nearly all found and none threaten us, and we now have both the surveillance and the technology to respond to the rare object that might. What is worth doing instead is appreciating the science. The asteroids drifting past on the NEOs tab are ancient fragments older than any planet's surface, and watching them is a front-row seat to the architecture of the solar system. For the storms that pose a more routine, if still harmless, kind of cosmic weather, The Kp Index and Space Weather, Explained covers the Sun's contribution to our daily sky.
 
@@ -494,6 +502,8 @@ The final thin crescent before the next new moon is the cycle's exhale. The symb
 ## Building your own simple practice
 
 You do not need elaborate tools, special objects, or any particular belief to follow this rhythm. A notebook and a willingness to check in four times a month is enough. Many people simply mark four moments — new, first quarter, full, last quarter — and spend ten minutes journalling at each: intentions at the new moon, action at the first quarter, gratitude at the full moon, release at the last quarter. Portal Astra shows the current phase on its dashboard so you always know where you are in the cycle, and you can let the symbolic side sit comfortably alongside the science. If you enjoy structured symbolic reflection like this, the imagery-based approach in How to Read a Tarot Card for Beginners makes a natural companion practice.
+
+Track every phase of the lunar cycle in real time on our <a href='/moon'>Moon Phase Calendar</a>.
 
 The deeper value is consistency. Any recurring ritual that prompts honest self-reflection tends to be good for you, and the Moon offers the oldest, most dependable schedule there is — visible in the sky, free, and impossible to forget once you start looking up.
 

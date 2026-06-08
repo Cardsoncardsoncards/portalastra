@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 import styles from './page.module.css'
 
 const CYCLE = 29.53059
@@ -30,7 +30,6 @@ interface Phase {
   frac: number
 }
 
-// Standard lunar-cycle calculation from a known new-moon reference.
 function getMoonPhase(date: Date): Phase {
   const days = (date.getTime() - KNOWN_NEW_MOON) / 86400000
   let age = days % CYCLE
@@ -41,19 +40,16 @@ function getMoonPhase(date: Date): Phase {
   return { name: PHASE_NAMES[index], emoji: PHASE_EMOJIS[index], index, illumination, age, frac }
 }
 
-// Approximate Earth–Moon distance from the synodic phase (356,500–406,700 km).
 function phaseDistanceKm(frac: number): number {
   return Math.round(381600 - 25100 * Math.cos(frac * 2 * Math.PI))
 }
 
-// Anomalistic-month distance, used only to estimate when a full moon is a supermoon.
 function anomDistanceKm(date: Date): number {
   let p = ((date.getTime() - KNOWN_PERIGEE) / 86400000) % ANOM
   if (p < 0) p += ANOM
   return Math.round(385000 - 28500 * Math.cos((p / ANOM) * 2 * Math.PI))
 }
 
-// Next date (after `from`) where the moon reaches a given age in the cycle.
 function nextPhase(from: Date, targetAge: number): Date {
   const days = (from.getTime() - KNOWN_NEW_MOON) / 86400000
   let age = days % CYCLE
@@ -78,7 +74,15 @@ const ECLIPSES = [
   { date: '2025-09-07', label: 'Total Lunar Eclipse' },
 ]
 
-const CAROUSEL = [
+interface GuideCard {
+  name: string
+  viz: string
+  desc: string
+  sci: string
+  locked?: boolean
+}
+
+const GUIDE: GuideCard[] = [
   { name: 'New Moon', viz: 'vizNew', desc: 'The slate is wiped clean. Set intentions, plant seeds, begin new projects. Illumination: 0%', sci: 'The Moon sits between Earth and Sun; its lit side faces away from us.' },
   { name: 'Waxing Crescent', viz: 'vizWaxCres', desc: 'Momentum builds. Take first steps toward your intentions. Energy is gathering.', sci: 'A thin sliver appears in the western evening sky, one to seven days after new.' },
   { name: 'First Quarter', viz: 'vizFirstQ', desc: 'Decision point. Push through resistance. Action is required now.', sci: 'Exactly half the disc is lit; the Moon is a quarter of the way through its cycle.' },
@@ -90,13 +94,22 @@ const CAROUSEL = [
   { name: 'Supermoon', viz: 'vizSuper', desc: 'A full moon at perigee, up to 14% larger and 30% brighter. Emotions and energy amplified.', sci: 'Occurs when a full moon coincides with perigee, about 356,500 km away.' },
   { name: 'Eclipse', viz: 'vizEclipse', desc: 'A rare cosmic alignment. Solar eclipses bring sudden change. Lunar eclipses bring emotional revelation.', sci: 'Happens only when Sun, Earth and Moon align near the lunar nodes.' },
   { name: 'Void of Course', viz: 'vizVoid', desc: 'The moon between signs. Avoid major decisions. Rest, reflect, do routine tasks only.', sci: 'An astrological term: the Moon makes no major aspect before changing sign.' },
+  { name: 'Daily Ritual Prompts', viz: 'vizFull', desc: 'Personalised journaling and intention-setting for every phase of the lunar cycle.', sci: '', locked: true },
+  { name: 'Planting Calendar', viz: 'vizFull', desc: 'Best days to sow, prune, and harvest based on lunar cycles. Trusted by gardeners and farmers for centuries.', sci: '', locked: true },
 ]
 
+const durStyle = (d: string): React.CSSProperties => ({ ['--dur']: d } as React.CSSProperties)
+
 export default function MoonClient() {
-  // Date-dependent state is set after mount to avoid SSR/hydration mismatch.
   const [now, setNow] = useState<Date | null>(null)
   const [viewDate, setViewDate] = useState<Date | null>(null)
-  const [carouselIndex, setCarouselIndex] = useState(0)
+  const [eventsPaused, setEventsPaused] = useState(false)
+  const [guidePaused, setGuidePaused] = useState(false)
+
+  // Subscribe form
+  const [email, setEmail] = useState('')
+  const [subscribing, setSubscribing] = useState(false)
+  const [subNote, setSubNote] = useState<{ ok: boolean; msg: string } | null>(null)
 
   useEffect(() => {
     const d = new Date()
@@ -107,7 +120,6 @@ export default function MoonClient() {
   const todayPhase = now ? getMoonPhase(now) : null
   const distance = todayPhase ? phaseDistanceKm(todayPhase.frac) : null
 
-  // Upcoming events
   let events: { name: string; date: Date; emoji: string }[] = []
   if (now) {
     const nextNew = nextPhase(now, 0)
@@ -130,14 +142,13 @@ export default function MoonClient() {
     ]
   }
 
-  // Calendar cells for the viewed month
   let calendarCells: (Date | null)[] = []
   let calTitle = ''
   if (viewDate) {
     const year = viewDate.getFullYear()
     const month = viewDate.getMonth()
     calTitle = `${MONTH_NAMES[month]} ${year}`
-    const startOffset = (new Date(year, month, 1).getDay() + 6) % 7 // Monday-first
+    const startOffset = (new Date(year, month, 1).getDay() + 6) % 7
     const daysInMonth = new Date(year, month + 1, 0).getDate()
     for (let i = 0; i < startOffset; i++) calendarCells.push(null)
     for (let d = 1; d <= daysInMonth; d++) calendarCells.push(new Date(year, month, d))
@@ -151,9 +162,55 @@ export default function MoonClient() {
     setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + delta, 1))
   }
 
-  const maxIndex = CAROUSEL.length - 1
-  const goPrev = () => setCarouselIndex((i) => Math.max(0, i - 1))
-  const goNext = () => setCarouselIndex((i) => Math.min(maxIndex, i + 1))
+  const subscribe = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (subscribing) return
+    setSubscribing(true)
+    setSubNote(null)
+    try {
+      const r = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      const d = await r.json()
+      if (r.ok) {
+        setSubNote({ ok: true, msg: "You're in ✦" })
+        setEmail('')
+      } else {
+        setSubNote({ ok: false, msg: d.error || 'Something went wrong.' })
+      }
+    } catch {
+      setSubNote({ ok: false, msg: 'Network error — try again.' })
+    }
+    setSubscribing(false)
+  }
+
+  const renderGuideCard = (card: GuideCard, i: number) => {
+    if (card.locked) {
+      return (
+        <div key={`${card.name}-${i}`} className={`${styles.carouselCard} ${styles.lockedCard}`}>
+          <div className={styles.lockedContent}>
+            <div className={`${styles.vizBase} ${styles.vizFull}`} aria-hidden />
+            <h3 className={styles.cardName}>{card.name}</h3>
+            <p className={styles.cardDesc}>{card.desc}</p>
+          </div>
+          <div className={styles.lockOverlay}>
+            <span className={styles.lockIcon}>🔒</span>
+            <span className={styles.lockLabel}>Coming Soon — Premium</span>
+          </div>
+        </div>
+      )
+    }
+    return (
+      <div key={`${card.name}-${i}`} className={styles.carouselCard}>
+        <div className={`${styles.vizBase} ${styles[card.viz as keyof typeof styles]}`} aria-hidden />
+        <h3 className={styles.cardName}>{card.name}</h3>
+        <p className={styles.cardDesc}>{card.desc}</p>
+        <p className={styles.cardSci}>Scientific note: {card.sci}</p>
+      </div>
+    )
+  }
 
   return (
     <main className={styles.page}>
@@ -166,13 +223,21 @@ export default function MoonClient() {
           <p className={styles.heroSub}>Track the lunar cycle. Understand its rhythms.</p>
         </section>
 
+        {/* Intro */}
+        <p className={styles.intro}>
+          The moon completes its cycle every 29.5 days, passing through eight distinct phases. Each
+          phase carries its own energy and meaning — scientific, spiritual, and practical. Use this
+          calendar to track where we are in the current cycle.
+        </p>
+
         {/* Calendar */}
         <section className={styles.section}>
+          <h2 className={styles.sectionHeading}>This Month</h2>
           {viewDate ? (
             <div className={styles.calendar}>
               <div className={styles.calHeader}>
                 <button className={styles.calNavBtn} onClick={() => shiftMonth(-1)} aria-label="Previous month">‹</button>
-                <h2 className={styles.calTitle}>{calTitle}</h2>
+                <h3 className={styles.calTitle}>{calTitle}</h3>
                 <button className={styles.calNavBtn} onClick={() => shiftMonth(1)} aria-label="Next month">›</button>
               </div>
               <div className={styles.weekLabels}>
@@ -202,64 +267,78 @@ export default function MoonClient() {
           )}
         </section>
 
-        {/* Upcoming events */}
+        {/* Upcoming events — auto-scroll carousel */}
         <section className={styles.section}>
           <h2 className={styles.sectionHeading}>Upcoming Events</h2>
           {now ? (
-            <div className={styles.events}>
-              {events.map((ev) => (
-                <div key={ev.name} className={styles.eventCard}>
-                  <span className={styles.eventEmoji}>{ev.emoji}</span>
-                  <p className={styles.eventName}>{ev.name}</p>
-                  <p className={styles.eventDate}>{fmtDate(ev.date)}</p>
-                  <p className={styles.eventCountdown}>in {daysBetween(ev.date, now)} days</p>
+            <div className={styles.carouselWrap}>
+              <button className={styles.pauseBtn} onClick={() => setEventsPaused((p) => !p)}>
+                {eventsPaused ? '▶ Play' : '⏸ Pause'}
+              </button>
+              <div className={styles.carouselOuter} style={durStyle('25s')}>
+                <div className={styles.carouselTrack} style={{ animationPlayState: eventsPaused ? 'paused' : undefined }}>
+                  {[...events, ...events].map((ev, i) => (
+                    <div key={`${ev.name}-${i}`} className={styles.eventCard}>
+                      <span className={styles.eventEmoji}>{ev.emoji}</span>
+                      <p className={styles.eventName}>{ev.name}</p>
+                      <p className={styles.eventDate}>{fmtDate(ev.date)}</p>
+                      <p className={styles.eventCountdown}>in {daysBetween(ev.date, now)} days</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           ) : (
             <p className={styles.loading}>Loading events…</p>
           )}
         </section>
 
-        {/* Phase guide carousel */}
+        {/* Phase guide — auto-scroll carousel */}
         <section className={styles.section}>
           <h2 className={styles.sectionHeading}>Phase Guide</h2>
           <div className={styles.carouselWrap}>
-            <div className={styles.carouselViewport}>
-              <div
-                className={styles.carouselTrack}
-                style={{ transform: `translateX(calc(-${carouselIndex} * (280px + 1rem)))` }}
-              >
-                {CAROUSEL.map((card) => (
-                  <div key={card.name} className={styles.carouselCard}>
-                    <div className={`${styles.vizBase} ${styles[card.viz as keyof typeof styles]}`} aria-hidden />
-                    <h3 className={styles.cardName}>{card.name}</h3>
-                    <p className={styles.cardDesc}>{card.desc}</p>
-                    <p className={styles.cardSci}>Scientific note: {card.sci}</p>
-                  </div>
-                ))}
+            <button className={styles.pauseBtn} onClick={() => setGuidePaused((p) => !p)}>
+              {guidePaused ? '▶ Play' : '⏸ Pause'}
+            </button>
+            <div className={styles.carouselOuter} style={durStyle('55s')}>
+              <div className={styles.carouselTrack} style={{ animationPlayState: guidePaused ? 'paused' : undefined }}>
+                {[...GUIDE, ...GUIDE].map((card, i) => renderGuideCard(card, i))}
               </div>
             </div>
-            <div className={styles.carouselControls}>
-              <button className={styles.carouselBtn} onClick={goPrev} aria-label="Previous phase">‹</button>
-              <div className={styles.dots}>
-                {CAROUSEL.map((card, i) => (
-                  <button
-                    key={card.name}
-                    className={`${styles.dot} ${i === carouselIndex ? styles.dotActive : ''}`}
-                    onClick={() => setCarouselIndex(i)}
-                    aria-label={`Go to ${card.name}`}
-                  />
-                ))}
-              </div>
-              <button className={styles.carouselBtn} onClick={goNext} aria-label="Next phase">›</button>
-            </div>
+          </div>
+        </section>
+
+        {/* Subscribe CTA */}
+        <section className={styles.section}>
+          <div className={styles.subscribe}>
+            <h2 className={styles.subscribeHeading}>Get the cosmos in your inbox</h2>
+            <p className={styles.subscribeText}>
+              Every Sunday evening, a weekly cosmic digest — moon phases, space weather, and
+              astronomical highlights for the week ahead.
+            </p>
+            <form className={styles.subscribeForm} onSubmit={subscribe}>
+              <input
+                type="email"
+                className={styles.subscribeInput}
+                placeholder="you@example.com"
+                aria-label="Email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <button type="submit" className={styles.subscribeBtn} disabled={subscribing}>
+                {subscribing ? 'Joining...' : 'Subscribe'}
+              </button>
+            </form>
+            {subNote && (
+              <p className={subNote.ok ? styles.subscribeOk : styles.subscribeErr}>{subNote.msg}</p>
+            )}
           </div>
         </section>
 
         {/* Astronomical data */}
         <section className={styles.section}>
-          <h2 className={styles.sectionHeading}>Today&apos;s Data</h2>
+          <h2 className={styles.sectionHeading}>Today&apos;s Lunar Data</h2>
           {todayPhase && distance !== null ? (
             <div className={styles.dataGrid}>
               <div className={styles.dataCard}>
@@ -283,19 +362,9 @@ export default function MoonClient() {
             <p className={styles.loading}>Loading data…</p>
           )}
         </section>
-
-        <footer className={styles.footer}>
-          <p>
-            <Link href="/" className={styles.footerLink}>Home</Link>
-            {'  ·  '}
-            <Link href="/blog" className={styles.footerLink}>Blog</Link>
-            {'  ·  '}
-            <Link href="/about" className={styles.footerLink}>About</Link>
-            {'  ·  '}
-            <Link href="/privacy" className={styles.footerLink}>Privacy</Link>
-          </p>
-        </footer>
       </div>
+
+      <Footer title="Moon Phase Calendar" />
     </main>
   )
 }

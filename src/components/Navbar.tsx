@@ -33,6 +33,7 @@ export default function Navbar() {
         <div className={styles.links}>
           <Link href="/" className={styles.link}>Home</Link>
           <Link href="/blog" className={styles.link}>Blog</Link>
+          <Link href="/moon" className={styles.link}>Moon</Link>
           <Link href="/about" className={styles.link}>About</Link>
         </div>
       </div>

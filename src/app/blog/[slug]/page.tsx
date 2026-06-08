@@ -5,6 +5,7 @@ import { getPost, getAllPosts, getRelatedPosts } from '@/lib/posts'
 import { formatDate } from '@/lib/utils'
 import ReadingProgress from './ReadingProgress'
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 import styles from '../../page.module.css'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.portalastra.com').replace(/\/$/, '')
@@ -28,19 +29,41 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
+// Parse inline <a href='...'>label</a> tags in body text into real links.
+function renderInline(text: string) {
+  const re = /<a href=['"]([^'"]+)['"]>(.*?)<\/a>/g
+  const out: React.ReactNode[] = []
+  let last = 0
+  let key = 0
+  let m: RegExpExecArray | null
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) out.push(text.slice(last, m.index))
+    const href = m[1]
+    const label = m[2]
+    if (href.startsWith('/')) {
+      out.push(<Link key={key++} href={href} className={styles.bodyLink}>{label}</Link>)
+    } else {
+      out.push(<a key={key++} href={href} className={styles.bodyLink} target="_blank" rel="noopener noreferrer">{label}</a>)
+    }
+    last = re.lastIndex
+  }
+  if (last < text.length) out.push(text.slice(last))
+  return out
+}
+
 // Render the plain-text body: "## " blocks become headings, others paragraphs.
 function renderBody(body: string) {
   return body.split(/\n\n+/).map((block, i) => {
     if (block.startsWith('## ')) {
       return (
         <h2 key={i} className={styles.bodyH2}>
-          {block.slice(3)}
+          {renderInline(block.slice(3))}
         </h2>
       )
     }
     return (
       <p key={i} className={styles.bodyP}>
-        {block}
+        {renderInline(block)}
       </p>
     )
   })
@@ -118,11 +141,8 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           </section>
         )}
 
-        <footer className={styles.footer}>
-          <p><Link href="/" className={styles.footerLink}>Portal Astra</Link> · <Link href="/about" className={styles.footerLink}>About</Link> · <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link></p>
-          <p>Spiritual content is for entertainment and personal reflection only.</p>
-        </footer>
       </div>
+      <Footer title="Portal Astra" />
     </main>
   )
 }

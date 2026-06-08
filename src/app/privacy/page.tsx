@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 import styles from '../page.module.css'
 
 export const metadata: Metadata = {
@@ -89,7 +89,7 @@ export default function PrivacyPage() {
 
           <h2 className={styles.legalH}>Contact</h2>
           <p className={styles.infoText}>
-            Questions about this policy can be sent to privacy@portalastra.com.
+            Questions about this policy can be sent to theportalastra@gmail.com.
           </p>
 
           <p className={styles.infoText} style={{ marginTop: '1.5rem' }}>
@@ -98,12 +98,8 @@ export default function PrivacyPage() {
           </p>
         </div>
 
-        <footer className={styles.footer}>
-          <p>
-            <Link href="/" className={styles.footerLink}>← Back to Portal Astra</Link>
-          </p>
-        </footer>
       </div>
+      <Footer title="Portal Astra" />
     </main>
   )
 }

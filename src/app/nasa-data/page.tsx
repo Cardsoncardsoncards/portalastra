@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 import styles from '../page.module.css'
 
 export const metadata: Metadata = {
@@ -61,18 +61,8 @@ export default function NasaDataPage() {
           for educational and informational purposes.
         </p>
 
-        <footer className={styles.footer}>
-          <p>
-            <Link href="/" className={styles.footerLink}>Home</Link>
-            {' · '}
-            <Link href="/blog" className={styles.footerLink}>Blog</Link>
-            {' · '}
-            <Link href="/about" className={styles.footerLink}>About</Link>
-            {' · '}
-            <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link>
-          </p>
-        </footer>
       </div>
+      <Footer title="Portal Astra" />
     </main>
   )
 }

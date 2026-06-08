@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 import styles from '../page.module.css'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.portalastra.com').replace(/\/$/, '')
@@ -95,16 +95,8 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <footer className={styles.footer}>
-          <p>
-            <Link href="/" className={styles.footerLink}>← Back to Portal Astra</Link>
-            {' · '}
-            <Link href="/blog" className={styles.footerLink}>Blog</Link>
-            {' · '}
-            <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link>
-          </p>
-        </footer>
       </div>
+      <Footer title="Portal Astra" />
     </main>
   )
 }

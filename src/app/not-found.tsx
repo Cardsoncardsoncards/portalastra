@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default function NotFound() {
           <Link href="/" className={styles.notFoundLink}>← Return to Portal Astra</Link>
         </div>
       </div>
+      <Footer title="Portal Astra" />
     </main>
   )
 }
