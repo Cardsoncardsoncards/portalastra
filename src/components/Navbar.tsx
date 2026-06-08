@@ -11,8 +11,8 @@ export default function Navbar() {
         <Image
           src="/images/portal-astra-logo-horizontal.png"
           alt="Portal Astra"
-          width={234}
-          height={52}
+          width={280}
+          height={62}
           className={styles.logoImg}
           priority
         />
