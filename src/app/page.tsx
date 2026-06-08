@@ -335,7 +335,7 @@ export default function Home() {
         <h1 className={styles.srOnly}>Portal Astra — your daily cosmic guide</h1>
         <header className={styles.header}>
           <div>
-            <p className={styles.tagline}>The sky, both ways · {formatDate(today)}</p>
+            <p className={styles.tagline}>Where science meets the stars · {formatDate(today)}</p>
           </div>
           <div className={styles.moonBadge}>
             <span className={styles.moonEmoji}>{moon.emoji}</span>
