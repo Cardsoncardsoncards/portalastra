@@ -163,7 +163,7 @@ Format exactly as shown. Each section on its own line starting with the label in
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model:      'claude-sonnet-4-20250514',
+        model:      'claude-sonnet-4-5',
         max_tokens: 1000,
         messages:   [{ role: 'user', content: prompt }],
       }),
