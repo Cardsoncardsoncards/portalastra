@@ -57,15 +57,28 @@ const INTENSITY_LABELS = {
 
 // ─── Data fetching ───────────────────────────────────────────────────────────
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+// Retry up to 3 times with 500ms delays. NASA's APOD endpoint returns transient
+// 5xx errors with non-JSON bodies fairly often, so we retry on a 5xx status or
+// an invalid-JSON response (same idea as the retry in src/lib/nasa.ts).
 async function fetchAPOD() {
-  try {
-    const r = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${NASA_KEY}`)
-    const d = await r.json()
-    return { title: d.title || 'Unknown', explanation: d.explanation || '', date: d.date || '' }
-  } catch (e) {
-    console.error('APOD fetch failed:', e.message)
-    return { title: 'Unavailable', explanation: '', date: '' }
+  const url = `https://api.nasa.gov/planetary/apod?api_key=${NASA_KEY}`
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const r = await fetch(url)
+      if (r.status >= 500) throw new Error(`APOD responded ${r.status}`)
+      const d = await r.json() // throws if the body isn't valid JSON
+      return { title: d.title || 'Unknown', explanation: d.explanation || '', date: d.date || '' }
+    } catch (e) {
+      console.error(`APOD fetch attempt ${attempt + 1} failed:`, e.message)
+      if (attempt < 2) await sleep(500)
+    }
   }
+  console.error('APOD fetch failed after 3 attempts')
+  return { title: 'Unavailable', explanation: '', date: '' }
 }
 
 async function fetchDONKI() {
@@ -156,7 +169,16 @@ Format exactly as shown. Each section on its own line starting with the label in
       }),
     })
     const d = await r.json()
-    return d.content?.[0]?.text || null
+    if (!r.ok) {
+      console.error('Claude API error:', r.status, JSON.stringify(d).slice(0, 300))
+      return null
+    }
+    const text = d.content?.[0]?.text?.trim()
+    if (!text) {
+      console.error('Claude returned an empty response:', JSON.stringify(d).slice(0, 300))
+      return null
+    }
+    return text
   } catch (e) {
     console.error('Claude generation failed:', e.message)
     return null
