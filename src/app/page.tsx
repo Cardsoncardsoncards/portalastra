@@ -394,9 +394,9 @@ export default function Home() {
         <header className={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <img
-              src="/images/portalastraicon.png"
+              src="/images/portalastralogosquare.png"
               alt="Portal Astra"
-              style={{ width: 48, height: 48, objectFit: 'contain', flexShrink: 0, filter: 'drop-shadow(0 0 8px rgba(155,138,255,0.5))' }}
+              style={{ width: 48, height: 48, objectFit: 'contain', flexShrink: 0, filter: 'drop-shadow(0 0 8px rgba(155,138,255,0.5))', borderRadius: '8px' }}
             />
             <div className={styles.heroText}>
               <h2 className={styles.heroTitle}>Where Science Meets the Stars</h2>
