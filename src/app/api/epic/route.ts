@@ -22,7 +22,7 @@ export async function GET() {
     const latest = data[data.length - 1]
     const [datePart] = latest.date.split(' ')
     const [year, month, day] = datePart.split('-')
-    const imageUrl = `https://epic.gsfc.nasa.gov/archive/natural/${year}/${month}/${day}/png/${latest.image}.png`
+    const imageUrl = `https://epic.gsfc.nasa.gov/archive/natural/${year}/${month}/${day}/jpg/${latest.image}.jpg`
 
     return NextResponse.json(
       {

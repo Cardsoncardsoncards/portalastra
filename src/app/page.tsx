@@ -60,7 +60,7 @@ function humaniseSolarEvent(ev: { type?: string; intensity?: string; description
   if (!ev) return 'The sun is calm. Grounding energy is available.'
 
   const typeName = ev.type
-    ? (EVENT_TYPE_NAMES[ev.type.toUpperCase()] || 'Solar activity')
+    ? (EVENT_TYPE_NAMES[ev.type.toUpperCase()] || ev.type)
     : 'Solar activity'
 
   const intensityLabel = ev.intensity
@@ -77,7 +77,7 @@ function humaniseSolarEvent(ev: { type?: string; intensity?: string; description
 // Short label for the Sky grid tile (one line only)
 function solarTileLabel(ev: { type?: string } | null): string {
   if (!ev || !ev.type) return 'Solar activity'
-  return EVENT_TYPE_NAMES[ev.type.toUpperCase()] || 'Solar activity'
+  return EVENT_TYPE_NAMES[ev.type.toUpperCase()] || ev.type
 }
 
 // Open a share dialog in a small popup window instead of a full tab.
@@ -396,7 +396,7 @@ export default function Home() {
             <img
               src="/images/portalastraicon.png"
               alt="Portal Astra"
-              style={{ width: 48, height: 48, objectFit: 'contain', flexShrink: 0 }}
+              style={{ width: 48, height: 48, objectFit: 'contain', flexShrink: 0, filter: 'drop-shadow(0 0 8px rgba(155,138,255,0.5))' }}
             />
             <div className={styles.heroText}>
               <h2 className={styles.heroTitle}>Where Science Meets the Stars</h2>
