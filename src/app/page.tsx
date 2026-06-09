@@ -16,6 +16,70 @@ const INTENSITY_COLORS: Record<string, string> = {
   low: '#60d090',
 }
 
+// Plain English names for NASA DONKI event type codes
+const EVENT_TYPE_NAMES: Record<string, string> = {
+  CME: 'Coronal Mass Ejection',
+  FLR: 'Solar Flare',
+  GST: 'Geomagnetic Storm',
+  IPS: 'Interplanetary Shockwave',
+  MPC: 'Magnetopause Crossing',
+  RBE: 'Radiation Belt Enhancement',
+  HSS: 'High-Speed Solar Wind',
+  SEP: 'Solar Energetic Particles',
+  WSA: 'Solar Wind Event',
+}
+
+// Plain English for intensity levels and NOAA scales
+const INTENSITY_LABELS: Record<string, string> = {
+  low:      'mild — no significant impact on daily life',
+  moderate: 'moderate — minor effects on satellites and radio signals possible',
+  high:     'strong — auroras may be visible at higher latitudes',
+  extreme:  'severe — potential disruptions to GPS and power grids',
+  // NOAA geomagnetic storm scale
+  G1: 'minor geomagnetic storm',
+  G2: 'moderate geomagnetic storm — auroras possible at high latitudes',
+  G3: 'strong geomagnetic storm — auroras may reach mid-latitudes',
+  G4: 'severe geomagnetic storm — widespread aurora and GPS disruption possible',
+  G5: 'extreme geomagnetic storm — rare, major infrastructure impacts possible',
+  // NOAA solar radiation scale
+  S1: 'minor solar radiation storm',
+  S2: 'moderate solar radiation storm — some satellite issues possible',
+  S3: 'strong solar radiation storm — passengers on polar flights may receive elevated radiation',
+  S4: 'severe solar radiation storm — satellite damage possible',
+  S5: 'extreme solar radiation storm — very rare, widespread satellite disruption',
+  // NOAA radio blackout scale
+  R1: 'minor radio blackout — brief HF radio disruption',
+  R2: 'moderate radio blackout — limited shortwave radio impact',
+  R3: 'strong radio blackout — shortwave radio outages on sunlit side of Earth',
+  R4: 'severe radio blackout — significant disruption to navigation and communication',
+  R5: 'extreme radio blackout — complete HF radio blackout possible',
+}
+
+// Solar humaniser — converts a raw DONKI event into a plain English sentence
+function humaniseSolarEvent(ev: { type?: string; intensity?: string; description?: string } | null): string {
+  if (!ev) return 'The sun is calm. Grounding energy is available.'
+
+  const typeName = ev.type
+    ? (EVENT_TYPE_NAMES[ev.type.toUpperCase()] || 'Solar activity')
+    : 'Solar activity'
+
+  const intensityLabel = ev.intensity
+    ? (INTENSITY_LABELS[ev.intensity] || ev.intensity)
+    : null
+
+  if (!intensityLabel) {
+    return `${typeName} was detected in the past 7 days. Intensity not yet classified by NASA.`
+  }
+
+  return `${typeName} was detected in the past 7 days — ${intensityLabel}.`
+}
+
+// Short label for the Sky grid tile (one line only)
+function solarTileLabel(ev: { type?: string } | null): string {
+  if (!ev || !ev.type) return 'Solar activity'
+  return EVENT_TYPE_NAMES[ev.type.toUpperCase()] || 'Solar activity'
+}
+
 // Open a share dialog in a small popup window instead of a full tab.
 function openSharePopup(shareUrl: string) {
   window.open(shareUrl, '_blank', 'width=600,height=400,noopener,noreferrer')
@@ -328,10 +392,17 @@ export default function Home() {
         <Navbar />
         <h1 className={styles.srOnly}>Portal Astra — your daily cosmic guide</h1>
         <header className={styles.header}>
-          <div className={styles.heroText}>
-            <h2 className={styles.heroTitle}>Where Science Meets the Stars</h2>
-            <p className={styles.heroSub}>ASTRONOMY · GUIDANCE · DISCOVERY</p>
-            <p className={styles.heroDate}>{formatDate(today)}</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <img
+              src="/images/portalastraicon.png"
+              alt="Portal Astra"
+              style={{ width: 48, height: 48, objectFit: 'contain', flexShrink: 0 }}
+            />
+            <div className={styles.heroText}>
+              <h2 className={styles.heroTitle}>Where Science Meets the Stars</h2>
+              <p className={styles.heroSub}>ASTRONOMY · GUIDANCE · DISCOVERY</p>
+              <p className={styles.heroDate}>{formatDate(today)}</p>
+            </div>
           </div>
           <div className={styles.moonBadge}>
             <span className={styles.moonEmoji}>{moon.emoji}</span>
@@ -499,13 +570,13 @@ export default function Home() {
                   <div className={styles.eventBody}>
                     <div className={styles.eventHeader}>
                       <span className={styles.eventEmoji}>{ev.emoji}</span>
-                      <span className={styles.eventType}>{ev.type}</span>
+                      <span className={styles.eventType}>{EVENT_TYPE_NAMES[ev.type?.toUpperCase()] || ev.type}</span>
                       <span className={styles.eventClass}>{ev.class}</span>
                       <span className={styles.intensityBadge} style={{ color: INTENSITY_COLORS[ev.intensity], borderColor: INTENSITY_COLORS[ev.intensity] + '40', background: INTENSITY_COLORS[ev.intensity] + '15' }}>
                         {ev.intensity}
                       </span>
                     </div>
-                    <p className={styles.eventDesc}>{ev.description}</p>
+                    <p className={styles.eventDesc}>{humaniseSolarEvent(ev)}</p>
                     <p className={styles.eventTime}>{new Date(ev.time).toLocaleString('en-AU', { dateStyle: 'medium', timeStyle: 'short' })}</p>
                   </div>
                 </div>
@@ -558,6 +629,12 @@ export default function Home() {
                       {copiedReading ? '✓ Copied' : 'Copy reading'}
                     </button>
                   )}
+                  {!horoLoading && !reading && (
+                    <div style={{ textAlign: 'center', padding: '24px 0' }}>
+                      <p className={styles.quietMsg} style={{ marginBottom: 14 }}>Today&apos;s reading is resting between the stars. Try again in a moment.</p>
+                      <button className={styles.changeBtn} style={{ margin: '0 auto' }} onClick={() => fetchHoroscope(sign!)}>Retry</button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>          </div>
@@ -594,7 +671,7 @@ export default function Home() {
                   <div className={styles.skyItem}>
                     <p className={styles.skyItemLabel}>Solar Activity</p>
                     <p className={styles.skyBigEmoji}>☀️</p>
-                    <p className={styles.skyItemName}>{events[0].type}</p>
+                    <p className={styles.skyItemName}>{solarTileLabel(events[0])}</p>
                     <p className={styles.skyItemSub}>{events[0].intensity} intensity</p>
                   </div>
                 )}
@@ -602,7 +679,7 @@ export default function Home() {
               {apod && (
                 <div className={styles.skyBridge}>
                   <p className={styles.skyBridgeText}>
-                    Tonight NASA shows us <em>&quot;{apod.title}&quot;</em>. {angelMeaning.message} {events.length > 0 ? `The sun has been active this week — ${events[0].description.toLowerCase()}` : 'The sun is calm, grounding energy is available.'}
+                    Tonight NASA shows us <em>&quot;{apod.title}&quot;</em>. {angelMeaning.message} {events.length > 0 ? humaniseSolarEvent(events[0]) : 'The sun is calm, grounding energy is available.'}
                   </p>
                 </div>
               )}
