@@ -31,28 +31,28 @@ const EVENT_TYPE_NAMES: Record<string, string> = {
 
 // Plain English for intensity levels and NOAA scales
 const INTENSITY_LABELS: Record<string, string> = {
-  low:      'mild — no significant impact on daily life',
-  moderate: 'moderate — minor effects on satellites and radio signals possible',
-  high:     'strong — auroras may be visible at higher latitudes',
-  extreme:  'severe — potential disruptions to GPS and power grids',
+  low:      'mild \u2014 no significant impact on daily life',
+  moderate: 'moderate \u2014 minor effects on satellites and radio signals possible',
+  high:     'strong \u2014 auroras may be visible at higher latitudes',
+  extreme:  'severe \u2014 potential disruptions to GPS and power grids',
   // NOAA geomagnetic storm scale
   G1: 'minor geomagnetic storm',
-  G2: 'moderate geomagnetic storm — auroras possible at high latitudes',
-  G3: 'strong geomagnetic storm — auroras may reach mid-latitudes',
-  G4: 'severe geomagnetic storm — widespread aurora and GPS disruption possible',
-  G5: 'extreme geomagnetic storm — rare, major infrastructure impacts possible',
+  G2: 'moderate geomagnetic storm \u2014 auroras possible at high latitudes',
+  G3: 'strong geomagnetic storm \u2014 auroras may reach mid-latitudes',
+  G4: 'severe geomagnetic storm \u2014 widespread aurora and GPS disruption possible',
+  G5: 'extreme geomagnetic storm \u2014 rare, major infrastructure impacts possible',
   // NOAA solar radiation scale
   S1: 'minor solar radiation storm',
-  S2: 'moderate solar radiation storm — some satellite issues possible',
-  S3: 'strong solar radiation storm — passengers on polar flights may receive elevated radiation',
-  S4: 'severe solar radiation storm — satellite damage possible',
-  S5: 'extreme solar radiation storm — very rare, widespread satellite disruption',
+  S2: 'moderate solar radiation storm \u2014 some satellite issues possible',
+  S3: 'strong solar radiation storm \u2014 passengers on polar flights may receive elevated radiation',
+  S4: 'severe solar radiation storm \u2014 satellite damage possible',
+  S5: 'extreme solar radiation storm \u2014 very rare, widespread satellite disruption',
   // NOAA radio blackout scale
-  R1: 'minor radio blackout — brief HF radio disruption',
-  R2: 'moderate radio blackout — limited shortwave radio impact',
-  R3: 'strong radio blackout — shortwave radio outages on sunlit side of Earth',
-  R4: 'severe radio blackout — significant disruption to navigation and communication',
-  R5: 'extreme radio blackout — complete HF radio blackout possible',
+  R1: 'minor radio blackout \u2014 brief HF radio disruption',
+  R2: 'moderate radio blackout \u2014 limited shortwave radio impact',
+  R3: 'strong radio blackout \u2014 shortwave radio outages on sunlit side of Earth',
+  R4: 'severe radio blackout \u2014 significant disruption to navigation and communication',
+  R5: 'extreme radio blackout \u2014 complete HF radio blackout possible',
 }
 
 // Solar humaniser — converts a raw DONKI event into a plain English sentence
@@ -71,7 +71,7 @@ function humaniseSolarEvent(ev: { type?: string; intensity?: string; description
     return `${typeName} was detected in the past 7 days. Intensity not yet classified by NASA.`
   }
 
-  return `${typeName} was detected in the past 7 days — ${intensityLabel}.`
+  return `${typeName} was detected in the past 7 days \u2014 ${intensityLabel}.`
 }
 
 // Short label for the Sky grid tile (one line only)
@@ -275,7 +275,7 @@ export default function Home() {
     stars: sign
       ? `I just read my ${sign} horoscope on Portal Astra`
       : 'I just read my horoscope on Portal Astra',
-    sky: `Tonight is a ${moon.name} moon — Portal Astra`,
+    sky: `Tonight is a ${moon.name} moon \u2014 Portal Astra`,
     tarot: `I drew ${daily.name} in my tarot reading on Portal Astra`,
     neos: 'Tracking near-Earth asteroids live on Portal Astra',
   }
@@ -347,7 +347,7 @@ export default function Home() {
         setSubscribeNote({ ok: false, msg: d.error || 'Something went wrong.' })
       }
     } catch {
-      setSubscribeNote({ ok: false, msg: 'Network error — try again.' })
+      setSubscribeNote({ ok: false, msg: 'Network error \u2014 try again.' })
     }
     setSubscribing(false)
   }
@@ -390,7 +390,7 @@ export default function Home() {
 
       <div className={styles.container}>
         <Navbar />
-        <h1 className={styles.srOnly}>Portal Astra — your daily cosmic guide</h1>
+        <h1 className={styles.srOnly}>Portal Astra &mdash; your daily cosmic guide</h1>
         <header className={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <img
@@ -496,7 +496,7 @@ export default function Home() {
             {!apodLoading && (!apod || apod.error) && (
               <div className={`${styles.card} ${styles.fallbackCard}`}>
                 <p className={styles.fallbackEmoji}>🌌</p>
-                <p className={styles.fallbackMsg}>Imagery temporarily unavailable — check back shortly</p>
+                <p className={styles.fallbackMsg}>Imagery temporarily unavailable &mdash; check back shortly</p>
               </div>
             )}          </div>
         )}
@@ -522,7 +522,7 @@ export default function Home() {
                     />
                   </div>
                   <p className={styles.epicDate}>{epic.date}</p>
-                  <p className={styles.epicNote}>EPIC imagery is typically 24–48 hours delayed</p>
+                  <p className={styles.epicNote}>EPIC imagery is typically 24&ndash;48 hours delayed</p>
                   {epic.caption && <p className={styles.apodText}>{epic.caption}</p>}
                   <div className={styles.epicStats}>
                     {epic.coords && (
@@ -585,7 +585,7 @@ export default function Home() {
             <div className={styles.card}>
               <h2 className={styles.label} aria-label="What does this mean?">What does this mean?</h2>
               <p className={styles.infoText}>
-                Solar flares are bursts of radiation from the sun&apos;s surface. Geomagnetic storms occur when solar energy interacts with Earth&apos;s magnetic field — they can cause aurora displays visible at lower latitudes. Many spiritual traditions interpret periods of high solar activity as times of heightened energy and sensitivity.
+                Solar flares are bursts of radiation from the sun&apos;s surface. Geomagnetic storms occur when solar energy interacts with Earth&apos;s magnetic field &mdash; they can cause aurora displays visible at lower latitudes. Many spiritual traditions interpret periods of high solar activity as times of heightened energy and sensitivity.
               </p>
             </div>          </div>
         )}
@@ -679,7 +679,8 @@ export default function Home() {
               {apod && (
                 <div className={styles.skyBridge}>
                   <p className={styles.skyBridgeText}>
-                    Tonight NASA shows us <em>&quot;{apod.title}&quot;</em>. {angelMeaning.message} {events.length > 0 ? humaniseSolarEvent(events[0]) : 'The sun is calm, grounding energy is available.'}
+                    {apod && apod.title ? <>Tonight NASA shows us <em>&quot;{apod.title}&quot;</em>. </> : null}
+                    {angelMeaning.message} {events.length > 0 ? humaniseSolarEvent(events[0]) : 'The sun is calm, grounding energy is available.'}
                   </p>
                 </div>
               )}
@@ -699,7 +700,7 @@ export default function Home() {
                   />
                 </div>
                 {birthDateInFuture && (
-                  <p className={styles.lifePathError}>Please enter a date in the past — your birth date can&apos;t be in the future.</p>
+                  <p className={styles.lifePathError}>Please enter a date in the past &mdash; your birth date can&apos;t be in the future.</p>
                 )}
                 {lifePath && lifePathMeaning && (
                   <div className={styles.lifePathResult}>
@@ -814,7 +815,7 @@ export default function Home() {
         {tab === 'neos' && (
           <div className={styles.panel}>
             <div className={styles.card}>
-              <h2 className={styles.label} aria-label="Near-Earth objects today">Near-Earth Objects · Today</h2>
+              <h2 className={styles.label} aria-label="Near-Earth objects today">Near-Earth Objects · {asteroids.length > 0 ? formatDate(asteroids[0].close_approach_data[0].close_approach_date) : formatDate(today)}</h2>
               <p className={styles.sublabel}>Sorted by closest approach distance</p>
               {astLoading && <div className={styles.skeleton} />}
               {!astLoading && asteroids.length === 0 && <p className={styles.empty}>No close approaches today.</p>}
@@ -844,7 +845,7 @@ export default function Home() {
             </div>
             <div className={styles.card}>
               <h2 className={styles.label} aria-label="What is a hazardous asteroid?">What is &quot;hazardous&quot;?</h2>
-              <p className={styles.infoText}>A potentially hazardous asteroid is larger than ~140 metres and passes within 7.5 million km of Earth&apos;s orbit. This does not mean an impact is imminent — NASA tracks all such objects continuously and none currently pose a threat.</p>
+              <p className={styles.infoText}>A potentially hazardous asteroid is larger than ~140 metres and passes within 7.5 million km of Earth&apos;s orbit. This does not mean an impact is imminent &mdash; NASA tracks all such objects continuously and none currently pose a threat.</p>
             </div>
           </div>
         )}
@@ -865,7 +866,7 @@ export default function Home() {
         )}
 
         <footer className={styles.footer}>
-          <p>Astronomy data: NASA Open APIs (APOD, NeoWs, DONKI, EPIC) · Horoscope: freehoroscopeapi</p>
+          <p>Astronomy data: NASA Open APIs (APOD, NeoWs, DONKI, EPIC) · Horoscope: third-party astrology feed</p>
           <p>Horoscope, tarot, and spiritual content is for entertainment and personal reflection only.</p>
           <p>
             <Link href="/about" className={styles.footerLink}>About</Link>

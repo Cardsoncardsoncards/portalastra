@@ -38,7 +38,7 @@ export const ANGEL_NUMBER_MEANINGS: Record<number, { theme: string; message: str
   7: { theme: 'Wisdom and intuition', message: 'The universe speaks in symbols. Listen to what the sky is telling you.' },
   8: { theme: 'Abundance and power', message: 'Cycles of prosperity align. The infinite loop of the cosmos turns in your favour.' },
   9: { theme: 'Completion and release', message: 'A chapter closes as another prepares to open. Release with gratitude.' },
-  11: { theme: 'Intuition and enlightenment', message: 'A master number. Heightened intuition lights your way — trust the inner spark of insight.' },
+  11: { theme: 'Intuition and enlightenment', message: 'A master number. Heightened intuition lights your way \u2014 trust the inner spark of insight.' },
   22: { theme: 'Master builder, turning dreams to reality', message: 'A master number. The power to turn grand visions into solid form is within your reach today.' },
   33: { theme: 'Master teacher, compassion and guidance', message: 'A master number. Lead with compassion; your guidance uplifts everyone around you.' },
 }
@@ -59,16 +59,16 @@ export function getTodayUTC() {
 }
 
 export const SIGNS = [
-  { name: 'Aries',       emoji: '♈', dates: 'Mar 21 – Apr 19', element: 'Fire',  ruling: 'Mars'    },
-  { name: 'Taurus',      emoji: '♉', dates: 'Apr 20 – May 20', element: 'Earth', ruling: 'Venus'   },
-  { name: 'Gemini',      emoji: '♊', dates: 'May 21 – Jun 20', element: 'Air',   ruling: 'Mercury' },
-  { name: 'Cancer',      emoji: '♋', dates: 'Jun 21 – Jul 22', element: 'Water', ruling: 'Moon'    },
-  { name: 'Leo',         emoji: '♌', dates: 'Jul 23 – Aug 22', element: 'Fire',  ruling: 'Sun'     },
-  { name: 'Virgo',       emoji: '♍', dates: 'Aug 23 – Sep 22', element: 'Earth', ruling: 'Mercury' },
-  { name: 'Libra',       emoji: '♎', dates: 'Sep 23 – Oct 22', element: 'Air',   ruling: 'Venus'   },
-  { name: 'Scorpio',     emoji: '♏', dates: 'Oct 23 – Nov 21', element: 'Water', ruling: 'Pluto'   },
-  { name: 'Sagittarius', emoji: '♐', dates: 'Nov 22 – Dec 21', element: 'Fire',  ruling: 'Jupiter' },
-  { name: 'Capricorn',   emoji: '♑', dates: 'Dec 22 – Jan 19', element: 'Earth', ruling: 'Saturn'  },
-  { name: 'Aquarius',    emoji: '♒', dates: 'Jan 20 – Feb 18', element: 'Air',   ruling: 'Uranus'  },
-  { name: 'Pisces',      emoji: '♓', dates: 'Feb 19 – Mar 20', element: 'Water', ruling: 'Neptune' },
+  { name: 'Aries',       emoji: '♈', dates: 'Mar 21 \u2013 Apr 19', element: 'Fire',  ruling: 'Mars'    },
+  { name: 'Taurus',      emoji: '♉', dates: 'Apr 20 \u2013 May 20', element: 'Earth', ruling: 'Venus'   },
+  { name: 'Gemini',      emoji: '♊', dates: 'May 21 \u2013 Jun 20', element: 'Air',   ruling: 'Mercury' },
+  { name: 'Cancer',      emoji: '♋', dates: 'Jun 21 \u2013 Jul 22', element: 'Water', ruling: 'Moon'    },
+  { name: 'Leo',         emoji: '♌', dates: 'Jul 23 \u2013 Aug 22', element: 'Fire',  ruling: 'Sun'     },
+  { name: 'Virgo',       emoji: '♍', dates: 'Aug 23 \u2013 Sep 22', element: 'Earth', ruling: 'Mercury' },
+  { name: 'Libra',       emoji: '♎', dates: 'Sep 23 \u2013 Oct 22', element: 'Air',   ruling: 'Venus'   },
+  { name: 'Scorpio',     emoji: '♏', dates: 'Oct 23 \u2013 Nov 21', element: 'Water', ruling: 'Pluto'   },
+  { name: 'Sagittarius', emoji: '♐', dates: 'Nov 22 \u2013 Dec 21', element: 'Fire',  ruling: 'Jupiter' },
+  { name: 'Capricorn',   emoji: '♑', dates: 'Dec 22 \u2013 Jan 19', element: 'Earth', ruling: 'Saturn'  },
+  { name: 'Aquarius',    emoji: '♒', dates: 'Jan 20 \u2013 Feb 18', element: 'Air',   ruling: 'Uranus'  },
+  { name: 'Pisces',      emoji: '♓', dates: 'Feb 19 \u2013 Mar 20', element: 'Water', ruling: 'Neptune' },
 ]
