@@ -41,7 +41,7 @@ export default function Navbar() {
       </div>
       <div className={styles.navStrip}>
         <div className={styles.stripDate}>
-          <span className={styles.stripDateLabel}>Today</span>
+          <span className={styles.stripDateLabel}>Date</span>
           <span className={styles.stripDateValue} suppressHydrationWarning>{new Date().toLocaleDateString('en-AU', {weekday:'long', day:'numeric', month:'long', year:'numeric'})}</span>
         </div>
         <span className={styles.stripStar}>✦</span>

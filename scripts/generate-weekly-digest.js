@@ -32,12 +32,15 @@ function formatDateAEST() {
   })
 }
 
-// Next Sunday at 19:00 AEST in UTC for MailerLite schedule
+// Next Sunday at 09:00 UTC (= 7pm AEST) for MailerLite schedule
 function getScheduleTime() {
-  const now    = new Date()
-  const sunday = new Date(now)
-  sunday.setUTCHours(9, 0, 0, 0) // 9am UTC = 7pm AEST
-  return sunday.toISOString()
+  const now = new Date()
+  const day = now.getUTCDay() // 0=Sun, 1=Mon ... 6=Sat
+  const daysUntilSunday = day === 0 ? 7 : 7 - day
+  const next = new Date(now)
+  next.setUTCDate(now.getUTCDate() + daysUntilSunday)
+  next.setUTCHours(9, 0, 0, 0)
+  return next.toISOString()
 }
 
 const EVENT_TYPE_NAMES = {
