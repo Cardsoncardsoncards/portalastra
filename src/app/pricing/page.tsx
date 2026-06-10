@@ -65,9 +65,8 @@ export default function PricingPage() {
             <span className={styles.badge}>Founder Pricing</span>
             <h2 className={styles.tierName}>Astra Premium ✦</h2>
             <p className={styles.tierPrice}>AUD $7.95<span className={styles.tierPer}>/month</span></p>
-            <p className={styles.tierFounder}>First 100 members, locked in forever</p>
+            <p className={styles.tierFounder}>Founder pricing, locked in forever</p>
             <p className={styles.tierStandard}>Usually AUD $9.95/month or $79/year</p>
-            <p className={styles.tierSpots}>Founder spots remaining: 100</p>
             <ul className={styles.featureList}>
               {PREMIUM_FEATURES.map((f) => (
                 <li key={f} className={styles.feature}><span className={styles.checkGold}>✦</span> {f}</li>
