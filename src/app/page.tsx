@@ -107,6 +107,7 @@ function ShareButtons({ text, url }: { text: string; url: string }) {
   const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}&quote=${enc(text)}`
   const xUrl = `https://twitter.com/intent/tweet?text=${enc(textWithUrl)}`
   const redditUrl = `https://www.reddit.com/submit?url=${enc(url)}&title=${enc(text)}`
+  const pinUrl = `https://pinterest.com/pin/create/button/?url=${enc(url)}&description=${enc(text)}`
 
   return (
     <div className={styles.shareRow}>
@@ -147,6 +148,24 @@ function ShareButtons({ text, url }: { text: string; url: string }) {
         rel="noopener noreferrer"
       >
         <span className={styles.shareIcon}>r</span> Reddit
+      </a>
+      <a
+        className={styles.shareBtn}
+        style={{ background: '#E60023', borderColor: '#E60023', color: '#fff' }}
+        href={pinUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span className={styles.shareIcon}>P</span> Pinterest
+      </a>
+      <a
+        className={styles.shareBtn}
+        style={{ background: '#E1306C', borderColor: '#E1306C', color: '#fff' }}
+        href="https://www.instagram.com/portalastra"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span className={styles.shareIcon}>📷</span> Instagram
       </a>
       <button
         className={styles.shareBtn}
@@ -668,7 +687,7 @@ export default function Home() {
               {apod && (
                 <div className={styles.skyBridge}>
                   <p className={styles.skyBridgeText}>
-                    {apod && apod.title ? <>Tonight NASA shows us <em>&quot;{apod.title}&quot;</em>. </> : null}
+                    {apod && apod.title ? <>Today NASA shows us <em>&quot;{apod.title}&quot;</em>. </> : null}
                     {angelMeaning.message} {events.length > 0 ? humaniseSolarEvent(events[0]) : 'The sun is calm, grounding energy is available.'}
                   </p>
                 </div>
