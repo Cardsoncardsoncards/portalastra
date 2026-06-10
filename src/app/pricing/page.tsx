@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import WaitlistForm from './WaitlistForm'
+import { CheckoutBanners, CheckoutButton } from './CheckoutClient'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
@@ -46,6 +47,10 @@ export default function PricingPage() {
         <h1 className={styles.title}>Choose Your Cosmic Journey</h1>
         <p className={styles.subtitle}>Start free, upgrade when you&apos;re ready.</p>
 
+        <Suspense fallback={null}>
+          <CheckoutBanners />
+        </Suspense>
+
         <div className={styles.tiers}>
           {/* Free */}
           <div className={styles.tierCard}>
@@ -72,12 +77,8 @@ export default function PricingPage() {
                 <li key={f} className={styles.feature}><span className={styles.checkGold}>✦</span> {f}</li>
               ))}
             </ul>
-            <WaitlistForm
-              buttonText="Join the waitlist"
-              successText="You're on the list! We'll notify you at launch."
-              source="premium-waitlist"
-            />
-            <p className={styles.finePrint}>No credit card required. We&apos;ll email you when Premium launches.</p>
+            <CheckoutButton />
+            <p className={styles.finePrint}>Secure checkout via Stripe. Cancel anytime.</p>
           </div>
         </div>
       </div>
