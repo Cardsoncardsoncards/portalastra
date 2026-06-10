@@ -29,6 +29,7 @@ export default function Footer({ title = 'Portal Astra', shareText }: { title?: 
       <div className={styles.shareRow}>
         <a
           className={styles.shareBtn}
+          style={{ background: '#1877F2', color: '#fff', border: 'none' }}
           href={`https://www.facebook.com/sharer/sharer.php?u=${enc(url)}`}
           target="_blank"
           rel="noopener noreferrer"
@@ -37,6 +38,7 @@ export default function Footer({ title = 'Portal Astra', shareText }: { title?: 
         </a>
         <a
           className={styles.shareBtn}
+          style={{ background: '#1a1a1a', color: '#fff', border: 'none' }}
           href={`https://twitter.com/intent/tweet?url=${enc(url)}&text=${enc(text)}`}
           target="_blank"
           rel="noopener noreferrer"
@@ -45,6 +47,7 @@ export default function Footer({ title = 'Portal Astra', shareText }: { title?: 
         </a>
         <a
           className={styles.shareBtn}
+          style={{ background: '#25D366', color: '#fff', border: 'none' }}
           href={`https://wa.me/?text=${enc(text)}%20${enc(url)}`}
           target="_blank"
           rel="noopener noreferrer"
@@ -53,6 +56,7 @@ export default function Footer({ title = 'Portal Astra', shareText }: { title?: 
         </a>
         <a
           className={styles.shareBtn}
+          style={{ background: '#FF4500', color: '#fff', border: 'none' }}
           href={`https://www.reddit.com/submit?url=${enc(url)}&title=${enc(text)}`}
           target="_blank"
           rel="noopener noreferrer"
@@ -61,6 +65,7 @@ export default function Footer({ title = 'Portal Astra', shareText }: { title?: 
         </a>
         <a
           className={styles.shareBtn}
+          style={{ background: '#E60023', color: '#fff', border: 'none' }}
           href={`https://pinterest.com/pin/create/button/?url=${enc(url)}&description=${enc(text)}`}
           target="_blank"
           rel="noopener noreferrer"
@@ -69,13 +74,18 @@ export default function Footer({ title = 'Portal Astra', shareText }: { title?: 
         </a>
         <a
           className={styles.shareBtn}
+          style={{ background: '#E1306C', color: '#fff', border: 'none' }}
           href="https://www.instagram.com/portalastra"
           target="_blank"
           rel="noopener noreferrer"
         >
           Instagram
         </a>
-        <button className={styles.shareBtn} onClick={copy}>
+        <button
+          className={styles.shareBtn}
+          style={{ background: '#7B5EA7', color: '#fff', border: 'none' }}
+          onClick={copy}
+        >
           {copied ? 'Copied!' : 'Copy Link'}
         </button>
       </div>
@@ -92,6 +102,8 @@ export default function Footer({ title = 'Portal Astra', shareText }: { title?: 
         <Link href="/privacy" className={styles.link}>Privacy</Link>
       </nav>
 
+      <p className={styles.attribution}>Astronomy data: NASA Open APIs (APOD, NeoWs, DONKI, EPIC) · Horoscope: third-party astrology feed</p>
+      <p className={styles.attribution}>Horoscope, tarot, and spiritual content is for entertainment and personal reflection only.</p>
       <p className={styles.copyright}>© 2026 Portal Astra. All rights reserved.</p>
     </footer>
   )

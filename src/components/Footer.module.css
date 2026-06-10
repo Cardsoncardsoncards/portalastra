@@ -63,6 +63,14 @@
   font-size: 0.8rem;
 }
 
+.attribution {
+  font-size: 10px;
+  color: rgba(232, 224, 255, 0.2);
+  letter-spacing: 0.06em;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
 .copyright {
   margin: 0;
   font-size: 0.72rem;

@@ -154,7 +154,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         )}
 
       </div>
-      <Footer title="Portal Astra" />
+      <Footer title="Portal Astra" shareText={`${post.title} — portalastra.com`} />
     </main>
   )
 }

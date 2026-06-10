@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { getMoonPhase, getAngelNumber, ANGEL_NUMBER_MEANINGS, formatDate, getTodayUTC, SIGNS } from '@/lib/utils'
 import { getDailyCard, getWeeklySpread, TAROT_DECK, type DrawnCard } from '@/lib/tarot'
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 import styles from './page.module.css'
 
 type Tab = 'space' | 'earth' | 'storm' | 'stars' | 'sky' | 'tarot' | 'neos'
@@ -239,9 +240,6 @@ export default function Home() {
   const [tarotNoticeDismissed, setTarotNoticeDismissed] = useState(true)
   const [personalDraw, setPersonalDraw] = useState<DrawnCard[] | null>(null)
 
-  // Footer "Share Portal Astra"
-  const [footerShared, setFooterShared] = useState(false)
-
   // Life path calculator
   const [birthDate, setBirthDate] = useState('')
 
@@ -252,8 +250,6 @@ export default function Home() {
   const angelNum = getAngelNumber()
   const angelMeaning = ANGEL_NUMBER_MEANINGS[angelNum]
   const today = getTodayUTC()
-
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.portalastra.com'
 
   // Share the live canonical URL (set on client) rather than a hardcoded host.
   const [shareUrl, setShareUrl] = useState('https://portalastra.com')
@@ -364,14 +360,6 @@ export default function Home() {
   const dismissTarotNotice = () => {
     sessionStorage.setItem('pa_tarot_notice', '1')
     setTarotNoticeDismissed(true)
-  }
-
-  const shareSite = async () => {
-    try {
-      await navigator.clipboard.writeText(siteUrl)
-      setFooterShared(true)
-      setTimeout(() => setFooterShared(false), 2000)
-    } catch {}
   }
 
   const TABS: { id: Tab; label: string }[] = [
@@ -865,23 +853,8 @@ export default function Home() {
           </div>
         )}
 
-        <footer className={styles.footer}>
-          <p>Astronomy data: NASA Open APIs (APOD, NeoWs, DONKI, EPIC) · Horoscope: third-party astrology feed</p>
-          <p>Horoscope, tarot, and spiritual content is for entertainment and personal reflection only.</p>
-          <p>
-            <Link href="/about" className={styles.footerLink}>About</Link>
-            {' · '}
-            <Link href="/blog" className={styles.footerLink}>Blog</Link>
-            {' · '}
-            <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link>
-          </p>
-          <p>
-            <button className={styles.footerShareBtn} onClick={shareSite}>
-              {footerShared ? '✓ Link copied' : '🔗 Share Portal Astra'}
-            </button>
-          </p>
-        </footer>
       </div>
+      <Footer />
     </main>
   )
 }
