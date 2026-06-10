@@ -152,61 +152,6 @@
   border-color: rgba(201, 168, 76, 0.5);
 }
 
-/* Waitlist form */
-.waitForm {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.waitInput {
-  flex: 1;
-  min-width: 160px;
-  padding: 0.7rem 1rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(0, 0, 0, 0.3);
-  color: #e8e8f0;
-  font-size: 0.88rem;
-  outline: none;
-}
-
-.waitInput:focus {
-  border-color: rgba(201, 168, 76, 0.6);
-}
-
-.waitBtn {
-  padding: 0.7rem 1.4rem;
-  border-radius: 999px;
-  border: none;
-  background: linear-gradient(135deg, #e8c96a, #C9A84C);
-  color: #0a0a0f;
-  font-size: 0.88rem;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: opacity 0.2s;
-}
-
-.waitBtn:disabled {
-  opacity: 0.6;
-  cursor: default;
-}
-
-.waitOk {
-  width: 100%;
-  margin: 0.6rem 0 0;
-  font-size: 0.85rem;
-  color: #8ee0a8;
-}
-
-.waitErr {
-  width: 100%;
-  margin: 0.6rem 0 0;
-  font-size: 0.85rem;
-  color: #ff8d8d;
-}
-
 .finePrint {
   margin: 1rem 0 0;
   font-size: 0.75rem;
