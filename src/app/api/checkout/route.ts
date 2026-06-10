@@ -20,7 +20,6 @@ function getStripe(): Stripe {
 
 export async function POST(request: Request) {
   try {
-    console.log('STRIPE_KEY_EXISTS:', !!process.env.STRIPE_SECRET_KEY, 'KEY_PREFIX:', process.env.STRIPE_SECRET_KEY?.slice(0,7))
     const { email } = await request.json()
 
     const session = await getStripe().checkout.sessions.create({
