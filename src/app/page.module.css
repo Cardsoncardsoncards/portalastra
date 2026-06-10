@@ -798,21 +798,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Footer */
-.footer {
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  text-align: center;
-}
-
-.footer p {
-  margin: 0.25rem 0;
-  font-size: 0.75rem;
-  color: #7a7a90;
-  line-height: 1.5;
-}
-
+/* Inline link style, used by about and blog post pages */
 .footerLink {
   color: #b8a4ff;
   text-decoration: none;
@@ -1097,22 +1083,6 @@
 .tarotNoticeClose:hover {
   background: rgba(255, 255, 255, 0.08);
   color: #fff;
-}
-
-/* Footer share button */
-.footerShareBtn {
-  margin-top: 0.5rem;
-  padding: 0.45rem 1rem;
-  border: 1px solid rgba(184, 164, 255, 0.3);
-  border-radius: 999px;
-  font-size: 0.78rem;
-  color: #b8a4ff;
-  background: rgba(184, 164, 255, 0.06);
-  transition: background 0.15s ease;
-}
-
-.footerShareBtn:hover {
-  background: rgba(184, 164, 255, 0.12);
 }
 
 /* Consent note */

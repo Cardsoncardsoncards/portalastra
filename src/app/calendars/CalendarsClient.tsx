@@ -110,6 +110,7 @@ export default function CalendarsClient() {
   const [result, setResult] = useState<null | {
     num: number; info: LifePathInfo; birthstone: string; flower: string; element: string; sign: string
   }>(null)
+  const [copiedProfile, setCopiedProfile] = useState(false)
 
   // Planting waitlist
   const [pEmail, setPEmail] = useState('')
@@ -291,6 +292,20 @@ export default function CalendarsClient() {
                     <span className={styles.resultItemValue}>{result.element} ({result.sign})</span>
                   </div>
                 </div>
+
+                <button
+                  className={styles.shareBtn}
+                  style={{ background: '#b8a4ff', color: '#0a0a0f', margin: '0.75rem auto 0', display: 'block' }}
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(`My Portal Astra cosmic profile: Life Path ${result.num}, ${result.sign}, ${result.element} element, ${result.birthstone} birthstone — portalastra.com`)
+                      setCopiedProfile(true)
+                      setTimeout(() => setCopiedProfile(false), 2000)
+                    } catch {}
+                  }}
+                >
+                  {copiedProfile ? 'Copied!' : 'Share my cosmic profile'}
+                </button>
 
                 <a
                   className={styles.amazonLink}

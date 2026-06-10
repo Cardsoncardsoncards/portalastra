@@ -239,6 +239,7 @@ export default function Home() {
   const [weeklyRevealed, setWeeklyRevealed] = useState(false)
   const [tarotNoticeDismissed, setTarotNoticeDismissed] = useState(true)
   const [personalDraw, setPersonalDraw] = useState<DrawnCard[] | null>(null)
+  const [copiedTarot, setCopiedTarot] = useState(false)
 
   // Life path calculator
   const [birthDate, setBirthDate] = useState('')
@@ -730,6 +731,19 @@ export default function Home() {
                   <p className={styles.tarotMeaning}>{daily.meaning}</p>
                 </div>
               </div>
+              <button
+                className={styles.changeBtn}
+                style={{ margin: '0.75rem auto 0', display: 'block' }}
+                onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(`I drew the ${daily.name} on Portal Astra today — portalastra.com`)
+                    setCopiedTarot(true)
+                    setTimeout(() => setCopiedTarot(false), 2000)
+                  } catch {}
+                }}
+              >
+                {copiedTarot ? 'Copied!' : 'Share this card'}
+              </button>
               <p className={styles.tarotNote}>Today&apos;s card is drawn collectively. Your personal interpretation is what matters.</p>
             </div>
 
