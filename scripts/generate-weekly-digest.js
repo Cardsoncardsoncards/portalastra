@@ -356,28 +356,25 @@ async function createAndScheduleCampaign(subject, htmlContent, scheduledAt) {
   const campaignId = campaign.data.id
   console.log(`Campaign created: ${campaignId}`)
 
-  // Step 2 — Mark campaign as ready before scheduling
-  const readyRes = await fetch(`https://connect.mailerlite.com/api/campaigns/${campaignId}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type':  'application/json',
-      'Authorization': `Bearer ${MAILERLITE_KEY}`,
-    },
-    body: JSON.stringify({ status: 'ready' }),
-  })
-  if (!readyRes.ok) {
-    console.warn('Status-ready PATCH returned', readyRes.status, await readyRes.text())
-  }
-  await sleep(1000)
-
-  // Step 3 — Schedule campaign
+  // Step 2 — Schedule campaign. Scheduling transitions the campaign from
+  // draft to ready/sent automatically, so no separate status update is needed.
+  // MailerLite requires schedule.date, schedule.hours and schedule.minutes as
+  // separate fields (not a single ISO datetime string).
+  const scheduleDate = new Date(scheduledAt)
   const scheduleRes = await fetch(`https://connect.mailerlite.com/api/campaigns/${campaignId}/schedule`, {
     method: 'POST',
     headers: {
       'Content-Type':  'application/json',
       'Authorization': `Bearer ${MAILERLITE_KEY}`,
     },
-    body: JSON.stringify({ delivery: 'scheduled', schedule: { date: scheduledAt } }),
+    body: JSON.stringify({
+      delivery: 'scheduled',
+      schedule: {
+        date:    scheduleDate.toISOString().split('T')[0],
+        hours:   String(scheduleDate.getUTCHours()).padStart(2, '0'),
+        minutes: String(scheduleDate.getUTCMinutes()).padStart(2, '0'),
+      },
+    }),
   })
 
   const scheduled = await scheduleRes.json()
