@@ -2,6 +2,13 @@ import { NextResponse } from 'next/server'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+// Simple in-memory rate limiting: max 3 submissions per IP per 60 minutes.
+// Best-effort only (per server instance, resets on cold start), but enough to
+// blunt automated abuse of the subscribe endpoint.
+const RATE_LIMIT = 3
+const RATE_WINDOW_MS = 60 * 60 * 1000
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
+
 export async function POST(req: Request) {
   try {
     const body = await req.json().catch(() => ({}))
@@ -16,6 +23,18 @@ export async function POST(req: Request) {
 
     if (!EMAIL_RE.test(email)) {
       return NextResponse.json({ error: 'Please enter a valid email address.' }, { status: 400 })
+    }
+
+    // Rate limit per IP before doing any MailerLite work.
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+    const now = Date.now()
+    const entry = rateLimitMap.get(ip)
+    if (!entry || now > entry.resetAt) {
+      rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS })
+    } else if (entry.count >= RATE_LIMIT) {
+      return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 })
+    } else {
+      entry.count += 1
     }
 
     const apiKey = process.env.MAILERLITE_API_KEY

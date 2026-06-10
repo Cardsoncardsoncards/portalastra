@@ -225,6 +225,8 @@ export default function Home() {
   // APOD
   const [apod, setApod] = useState<any>(null)
   const [apodLoading, setApodLoading] = useState(true)
+  const [apodSimple, setApodSimple] = useState<string | null>(null)
+  const [showFullApod, setShowFullApod] = useState(false)
 
   // EPIC
   const [epic, setEpic] = useState<any>(null)
@@ -311,6 +313,7 @@ export default function Home() {
     }
 
     fetch('/api/apod').then(r => r.json()).then(setApod).catch(() => {}).finally(() => setApodLoading(false))
+    fetch('/api/apod-simple').then(r => r.json()).then(d => setApodSimple(d?.simple || null)).catch(() => {})
     fetch('/api/epic').then(r => r.json()).then(setEpic).catch(() => {}).finally(() => setEpicLoading(false))
     fetch('/api/donki').then(r => r.json()).then(d => setEvents(d.events || [])).catch(() => {}).finally(() => setDonkiLoading(false))
     fetch('/api/asteroids').then(r => r.json()).then(d => setAsteroids(d.asteroids || [])).catch(() => {}).finally(() => setAstLoading(false))
@@ -498,7 +501,21 @@ export default function Home() {
                     {apod.copyright && <p className={styles.apodCopyright}>© {apod.copyright.trim()}</p>}
                   </div>
                 </div>
-                <p className={styles.apodText}>{apod.explanation}</p>
+                {apodSimple ? (
+                  <>
+                    <p className={styles.apodText}>{showFullApod ? apod.explanation : apodSimple}</p>
+                    <button
+                      type="button"
+                      className={styles.lifePathLink}
+                      style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+                      onClick={() => setShowFullApod(v => !v)}
+                    >
+                      {showFullApod ? 'Show simplified version ↑' : 'Show original NASA text ↓'}
+                    </button>
+                  </>
+                ) : (
+                  <p className={styles.apodText}>{apod.explanation}</p>
+                )}
               </div>
             )}
             {!apodLoading && (!apod || apod.error) && (
