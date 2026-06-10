@@ -59,6 +59,22 @@ export default function Footer({ title = 'Portal Astra', shareText }: { title?: 
         >
           Reddit
         </a>
+        <a
+          className={styles.shareBtn}
+          href={`https://pinterest.com/pin/create/button/?url=${enc(url)}&description=${enc(text)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Pinterest
+        </a>
+        <a
+          className={styles.shareBtn}
+          href="https://www.instagram.com/portalastra"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Instagram
+        </a>
         <button className={styles.shareBtn} onClick={copy}>
           {copied ? 'Copied!' : 'Copy Link'}
         </button>

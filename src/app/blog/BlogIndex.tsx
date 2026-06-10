@@ -5,6 +5,9 @@ import Link from 'next/link'
 import { formatDate } from '@/lib/utils'
 import styles from '../page.module.css'
 
+// Fixed, ordered filter list so the pills stay consistent regardless of posts.
+const CATEGORIES = ['All', 'Moon', 'Astrology', 'Angel Numbers', 'Space & NASA', 'Spiritual']
+
 export interface BlogCard {
   slug: string
   title: string
@@ -17,11 +20,6 @@ export interface BlogCard {
 export default function BlogIndex({ posts }: { posts: BlogCard[] }) {
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState('All')
-
-  const categories = useMemo(
-    () => ['All', ...Array.from(new Set(posts.map((p) => p.category)))],
-    [posts],
-  )
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -48,7 +46,7 @@ export default function BlogIndex({ posts }: { posts: BlogCard[] }) {
       />
 
       <div className={styles.pills}>
-        {categories.map((c) => (
+        {CATEGORIES.map((c) => (
           <button
             key={c}
             className={`${styles.pill} ${category === c ? styles.pillActive : ''}`}

@@ -3,7 +3,7 @@ export interface BlogPost {
   title: string
   excerpt: string
   date: string // ISO yyyy-mm-dd
-  category: 'Astronomy' | 'Spiritual'
+  category: 'Moon' | 'Astrology' | 'Angel Numbers' | 'Space & NASA' | 'Spiritual'
   tags: string[]
   body: string
 }
@@ -22,7 +22,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       'The full lunar cycle, from new moon to waning crescent — the science behind why the Moon changes shape, and how to track it yourself.',
     date: '2026-05-02',
-    category: 'Astronomy',
+    category: 'Moon',
     tags: ['moon', 'astronomy', 'observing', 'lunar cycle'],
     body: `Look up on two nights a week apart and the Moon will not be the same. One night it is a thin silver fingernail low in the west; another it is a flat white disc flooding the whole sky with light. This changing shape is the single most reliable celestial event in human experience, and for most of history it was also our calendar, our clock, and our tide table. Understanding moon phases is the gateway to understanding almost everything else in the night sky.
 
@@ -103,7 +103,7 @@ A: The four "shaped" phases — the crescents and gibbous stages — each last a
     excerpt:
       'What angel numbers are, where the idea comes from, how each core number is traditionally read, and an honest look at why we notice them.',
     date: '2026-05-09',
-    category: 'Spiritual',
+    category: 'Angel Numbers',
     tags: ['angel numbers', 'numerology', 'symbolism', 'reflection'],
     body: `You glance at the clock and it says 11:11. The next day your coffee comes to $3.33, and that evening you are stuck behind a car whose plate ends in 222. For some people this is pure coincidence; for others it is an angel number — a repeating sequence felt as a small nudge or message. Whatever you believe, the experience is extremely common, and it is worth understanding both the tradition behind it and the very real psychology underneath.
 
@@ -247,7 +247,7 @@ A: Tarot is a deck of symbolic images; on its own it carries no inherent power. 
     excerpt:
       'Sun signs, elements, modalities, and the difference between the constellations and the zodiac — a grounded guide to what your sign does and does not say.',
     date: '2026-05-23',
-    category: 'Spiritual',
+    category: 'Astrology',
     tags: ['zodiac', 'astrology', 'sun sign', 'elements'],
     body: `Almost everyone knows their zodiac sign, and almost everyone has, at some point, read a horoscope and felt a flicker of recognition. But "what's your sign?" hides a surprising amount of structure — and a few genuine misunderstandings about astronomy that are worth clearing up. This guide explains what your sun sign actually is, the system of elements and modalities that gives astrology its internal logic, and an honest account of where the science ends and the symbolism begins.
 
@@ -310,7 +310,7 @@ A: No. Controlled studies have not found that sun signs predict personality or e
     excerpt:
       'What the Kp index measures, how solar storms reach Earth, and how to use the number to forecast your own chance of seeing the aurora.',
     date: '2026-05-30',
-    category: 'Astronomy',
+    category: 'Space & NASA',
     tags: ['space weather', 'aurora', 'kp index', 'sun', 'solar storms'],
     body: `If you have ever chased the northern or southern lights, you have met the Kp index — the single number every aurora forecast revolves around. It runs from 0 to 9, it updates every few hours, and it quietly governs whether the sky will stay dark or erupt in green and purple curtains. Understanding it turns aurora-watching from luck into something you can actually plan, and it is the key to reading the space-weather data on Portal Astra's Solar tab.
 
@@ -361,7 +361,7 @@ A: No. Earth's atmosphere and magnetic field protect those of us on the surface.
     excerpt:
       'How NASA photographs the whole sunlit Earth every day from deep space, what the DSCOVR satellite is doing out there, and how to read the images.',
     date: '2026-06-01',
-    category: 'Astronomy',
+    category: 'Space & NASA',
     tags: ['earth', 'epic', 'dscovr', 'satellite', 'nasa'],
     body: `Every day, a camera a million miles from home takes a photograph of the entire sunlit face of our planet — a single frame containing all the weather, all the oceans, and very nearly every living thing we know of. The instrument is called EPIC, the spacecraft carrying it is DSCOVR, and the images it returns are some of the most quietly profound pictures in all of science. Portal Astra pulls the latest EPIC image onto its Earth tab, and this guide explains what you are actually looking at.
 
@@ -410,7 +410,7 @@ A: L1 is a gravitational balance point about 1.5 million kilometres from Earth, 
     excerpt:
       'What near-Earth objects are, what "potentially hazardous" really means, how NASA tracks them, and a level-headed answer to the obvious question.',
     date: '2026-06-03',
-    category: 'Astronomy',
+    category: 'Space & NASA',
     tags: ['asteroids', 'neo', 'planetary defense', 'nasa'],
     body: `Every day, Portal Astra's NEOs tab lists asteroids making their closest approach to Earth, complete with distances, speeds, and the occasional alarming red "hazardous" label. It is natural to look at that and feel a flicker of worry. So let us answer the question directly and then back it up: no, you do not need to lie awake over it — but the topic is genuinely fascinating, and the work being done to track these objects is one of the quiet success stories of modern science.
 
@@ -463,7 +463,7 @@ A: With enough warning, yes — and this is no longer just theory. NASA's 2022 D
     excerpt:
       'A gentle, grounded guide to aligning simple reflective practices — intention-setting, review, release — with each stage of the lunar cycle.',
     date: '2026-06-05',
-    category: 'Spiritual',
+    category: 'Moon',
     tags: ['moon', 'rituals', 'reflection', 'lunar cycle', 'intention'],
     body: `For as long as people have watched the sky, the Moon's steady rhythm has been used to mark time and structure reflection. Long before calendars and productivity apps, the waxing and waning of the Moon gave human beings a built-in monthly cycle: a natural prompt to begin, to build, to celebrate, and to let go. Moon phase rituals are simply the practice of aligning small reflective habits with that cycle, and you do not need to believe the Moon exerts any mystical force to find them genuinely useful.
 
@@ -519,6 +519,356 @@ A: It does not matter. The cycle comes around every 29.5 days, and the dates are
 
 Q: How do I know which phase the Moon is in right now?
 A: You can tell roughly by eye — a growing crescent in the evening is waxing, a shrinking one before dawn is waning — and the full mechanics are explained in Moon Phases Explained. For an exact reading, Portal Astra displays the current phase and approximate illumination on its main dashboard every day.`,
+  },
+  {
+    slug: 'angel-number-111-meaning',
+    title: 'Angel Number 111: The Universe Is Listening',
+    excerpt:
+      'Seeing 111 repeatedly is no coincidence. Here is what this powerful number is trying to tell you.',
+    date: '2026-06-10',
+    category: 'Angel Numbers',
+    tags: ['angel numbers', '111', 'numerology', 'manifestation'],
+    body: `You keep seeing 111. It shows up on the clock at exactly 1:11, on a parking receipt, on the page you happened to open. The first time is forgettable. By the third or fourth, it stops feeling like chance and starts to feel like something is trying to get your attention. In modern numerology, 111 is one of the most discussed angel numbers, and its traditional message is clear and encouraging: your thoughts are beginning to take shape in the world, and this is the moment to choose them with care.
+
+This guide explains where 111 comes from, what it is read to mean, how to respond when it appears, and an honest look at why the human mind is so good at catching it. Portal Astra keeps science and symbolism on separate shelves, and angel numbers belong firmly to the reflective side. Treat what follows as a prompt for self-examination rather than a prediction of events.
+
+## What 111 means in numerology
+
+Angel numbers are a branch of numerology, the old practice of attaching meaning to numbers, explained in more depth in our guide Angel Numbers Explained. The single digit one is the number of beginnings, initiative, independence, and the first spark of an idea. It is the starting line of the whole counting system, so it carries the symbolism of anything that is just getting underway.
+
+When a number repeats, numerologists read its core quality as amplified. One on its own is a beginning. Three ones in a row is read as a beginning that is gathering real momentum, a signal that the seeds of thought are close to breaking the surface. That is why 111 is so often linked to the idea that you are standing at the threshold of something new and that your inner world is about to shape your outer circumstances.
+
+## Why 111 is tied to manifestation
+
+The most common reading of 111 is a manifestation message. The idea is simple even if you hold it loosely: what you give sustained attention to tends to grow, because attention quietly steers your choices, your effort, and what you notice as possible. Seeing 111 is taken as a nudge to check what has been occupying your mind. If your thoughts have been hopeful and directed, the number is read as confirmation that you are aimed well. If they have drifted into worry, it is read as a gentle warning to redirect them before that worry hardens into habit.
+
+This is the gateway thinking behind the famous 11:11 wish. People pause at that moment and set an intention because 111 and its longer cousin are associated with alignment, the sense that thought and reality are briefly in step. You do not have to believe a number bends the cosmos to find the practice useful. Naming what you actually want, out loud and in plain language, is a small act of focus, and focus is the part you genuinely control.
+
+## What to do when you see 111
+
+The traditional advice is to treat the moment of noticing as the message, not the digits alone. When 111 appears, pause and ask one honest question: what was I just thinking about? The answer is the real content. A 111 caught while you were daydreaming about a new project reads very differently from one caught mid-spiral over a decision you have been avoiding.
+
+From there the suggested response is small and practical. Write down the thought that was present. Then ask whether it is the direction you actually want to feed. If it is, name one concrete step you can take toward it this week. If it is not, deliberately replace it with a clearer intention. The number becomes a recurring cue to audit your own attention, which is a quietly powerful thing to do on a regular schedule.
+
+## 111 and 1111: is there a difference
+
+People often ask whether 1111 means more than 111. In most popular readings the two share a meaning, with 1111 treated as the same message at higher volume. Both point to beginnings, alignment, and the link between thought and outcome. The extra digit is read as emphasis rather than a separate instruction. If you tend to see 1111 specifically, many practitioners suggest it marks a moment of unusually open potential, a clean page on which to write an intention.
+
+## The honest psychology
+
+Here is the part that does not have to spoil the experience. Two well documented effects explain why 111 feels so striking. The first is the frequency illusion, sometimes called the Baader-Meinhof phenomenon: once a pattern is on your mind, you notice it far more often even though it appears no more frequently than before. The day you learn that 111 is meaningful, you begin catching it everywhere. The second is confirmation bias: you remember the hits and quietly forget the misses, registering the clock at 1:11 while ignoring the hundreds of ordinary times you glanced at it.
+
+None of this makes the practice worthless. Used well, 111 is a prompt, a small repeatable cue to stop and ask what you are focused on and what you want next. The number does not carry the meaning. You do. That is exactly how Portal Astra frames every angel number on its dashboard, clearly labelled as reflection and entertainment rather than fact.
+
+## A simple practice for 111
+
+If 111 keeps finding you, try this for two weeks. Each time you see it, note the time, the place, and the thought you were holding. At the end of the fortnight, read the list back. You will almost certainly learn more about your own preoccupations than about the universe, which is the entire point. Patterns will surface, and those patterns are useful information about where your attention actually goes when you are not watching it.
+
+If you enjoy this kind of daily symbolic check-in, the imagery-based approach in How to Read a Tarot Card for Beginners makes a natural companion, and the sister numbers in Angel Number 222: Finding Balance in Uncertain Times and Angel Number 333: A Signal from Your Guides round out the sequence. You can also calculate the angel number for any given day on the Sky tab of Portal Astra, which uses the same digit-reduction method described in our main numerology guide.
+
+Frequently asked questions:
+
+Q: Is 111 a good sign or a warning?
+A: Most readings treat 111 as encouraging, a sign that beginnings and alignment are near. The one caution attached to it is about attention: because it is linked to thought taking shape, it invites you to check that your focus is where you want it. It is far more often read as a green light than an alarm.
+
+Q: Does the time I see 111 change its meaning?
+A: The digits carry the same core meaning whether you see them on a clock, a receipt, or a sign. What practitioners say matters more is the thought you were holding at the moment of noticing. That context, not the source, is treated as the real message.
+
+Q: Is there scientific proof that 111 predicts anything?
+A: No. There is no evidence that number sequences forecast events. The strong feeling of significance is well explained by the frequency illusion and confirmation bias. That is why Portal Astra presents angel numbers as a tool for reflection and entertainment, never as prediction.`,
+  },
+  {
+    slug: 'angel-number-222-meaning',
+    title: 'Angel Number 222: Finding Balance in Uncertain Times',
+    excerpt:
+      'The number 222 appears when alignment is near. Learn what it means and how to work with its energy.',
+    date: '2026-06-10',
+    category: 'Angel Numbers',
+    tags: ['angel numbers', '222', 'numerology', 'balance'],
+    body: `If 111 is the number of beginnings, 222 is the number of what comes next: the quiet work of balance, patience, and trust while things settle into place. People tend to notice 222 during in-between seasons, when a decision is half made or a situation has not yet resolved. Its traditional message is reassuring. You are closer to alignment than you feel, and the task right now is steadiness rather than force.
+
+This guide covers what 222 means in numerology, why it is linked to balance and relationships, how to work with it in an uncertain stretch, and an honest account of why we notice such numbers at all. As always at Portal Astra, angel numbers sit on the reflective side of the line we draw between science and symbolism. Read this as a prompt to think, not a forecast.
+
+## What 222 means in numerology
+
+The single digit two is the number of balance, partnership, patience, and cooperation. Where one initiates, two relates. It asks you to consider both sides of a situation, to work with others rather than against them, and to wait for the right moment instead of forcing an outcome. The fuller background to this system is laid out in our guide Angel Numbers Explained.
+
+Repeating a digit is read as strengthening its quality, so 222 is balance underlined three times. It is associated with harmony, diplomacy, and the reassurance that a situation in flux is moving toward equilibrium. When it appears, the traditional reading is that you are on the right path even if the destination is not yet visible, and that cooperation and faith will serve you better than impatience.
+
+## Why 222 is linked to balance and relationships
+
+Because two governs partnership, 222 is often read in the context of relationships, whether romantic, family, or working. It is taken as a sign to attend to the give and take in your connections, to listen as much as you speak, and to restore balance anywhere you have been carrying more than your share or less. The number does not name a particular person or outcome. It points at the quality of how you are relating.
+
+It also speaks to inner balance. Seeing 222 in a stressful week is read as a reminder to steady yourself, to bring your energy and your obligations back into proportion, and to stop pouring everything into one corner of your life while another runs dry. The image many practitioners use is a set of scales coming gently level, the moment when two sides find their resting point.
+
+## 222 in daily life
+
+Most people meet 222 as a repeated sighting rather than a calculated number: the clock at 2:22, a receipt, a seat number, a street address. The traditional guidance is to treat the moment of noticing as the message, not the digits alone. When it catches your eye, pause and ask what felt unsettled or out of proportion just then. A 222 seen in the middle of a tense exchange reads differently from one glimpsed on a calm evening, and the context you bring is half of the meaning. It also helps to tell a genuine pattern from coincidence: a single sighting is unremarkable, while noticing 222 again and again during the same unresolved situation is what practitioners mean by an angel number, and it is that repetition, tied to a real question on your mind, that gives the number its weight.
+
+## Working with 222 in uncertain times
+
+The practical value of 222 shows up most when things are unresolved. Uncertainty pushes people toward two unhelpful extremes: forcing a premature decision just to end the discomfort, or freezing entirely. The traditional reading of 222 cuts between them. It counsels patience that is active rather than passive, the kind that keeps preparing and tending while it waits.
+
+When 222 appears, pause and ask where in your life you are out of balance. Then choose one small correction. That might mean having a conversation you have been postponing, setting a boundary, or simply giving a stalled situation a little more time rather than yanking at it. The number is read as permission to trust the process for now, which is often exactly the reassurance an anxious mind needs to stop interfering with something that is quietly working itself out.
+
+## 222 and the master number 22
+
+It is worth knowing that 22 holds special status in numerology as a master number, sometimes called the master builder, associated with turning large visions into concrete reality. While 222 is usually read through the lens of the single digit two, some practitioners hear an echo of that builder energy in it, a suggestion that the balance you are being asked to find is in service of something you are constructing over the longer term. You can read more about master numbers, and calculate the number attached to any date, using the tools described in Angel Numbers Explained and on the Sky tab of Portal Astra.
+
+## The honest psychology
+
+The same two effects that explain every angel number apply here. The frequency illusion means that once 222 is on your radar you will notice it far more often, even though it occurs no more than before. Confirmation bias means you remember the times it appeared during a meaningful moment and forget the times it passed unnoticed. Together they make the number feel pointed and personal.
+
+This does not empty the practice of value. A recurring number you have decided to treat as a cue to check your balance is a genuinely useful habit, regardless of where the cue comes from. The meaning lives in the reflection you bring, not in the digits, which is the honest framing Portal Astra applies to everything on the symbolic side of the site.
+
+## A simple practice for 222
+
+For a fortnight, treat each sighting of 222 as a balance check. Note what felt out of proportion in that moment: too much work and too little rest, too much giving and too little receiving, too much rushing and too little patience. Then make one small adjustment. Over two weeks the exercise tends to reveal a recurring imbalance you had not named, and naming it is most of the work of correcting it.
+
+If the sequence interests you, read it alongside Angel Number 111: The Universe Is Listening, which covers beginnings, and Angel Number 333: A Signal from Your Guides, which covers expression and support. Together the three trace a natural arc from starting something, to balancing it, to growing it.
+
+Frequently asked questions:
+
+Q: Does 222 mean my relationship is meant to be?
+A: Not in any literal or predictive sense. Because two governs partnership, 222 is often read as a prompt to attend to balance and cooperation in your relationships generally. It is best treated as encouragement to relate well, not as confirmation about any one person or outcome.
+
+Q: I keep seeing 222 during a hard decision. What does that suggest?
+A: The traditional reading is patience and trust: that you are closer to resolution than you feel and that forcing the outcome will help less than steadiness will. Used as a prompt, it is an invitation to make one calm, balanced adjustment rather than a dramatic move.
+
+Q: Is 222 scientifically meaningful?
+A: No. There is no evidence that number sequences predict events. The sense of significance is well explained by the frequency illusion and confirmation bias. Portal Astra presents angel numbers as reflection and entertainment, not as fact.`,
+  },
+  {
+    slug: 'angel-number-333-meaning',
+    title: 'Angel Number 333: A Signal from Your Guides',
+    excerpt:
+      '333 is one of the most recognised angel numbers. Here is the full meaning and what action it calls for.',
+    date: '2026-06-10',
+    category: 'Angel Numbers',
+    tags: ['angel numbers', '333', 'numerology', 'spiritual growth'],
+    body: `Among the repeating sequences people notice most, 333 is one of the most recognised. It tends to appear when you are weighing whether to speak up, create something, or step into a fuller version of yourself. Its traditional message is warm and active: you have more support than you realise, and the moment calls for honest self-expression. Where 111 marks a beginning and 222 asks for balance, 333 is about growth and the courage to put your real voice into the world.
+
+This guide explains what 333 means in numerology, why it is associated with support and creativity, what action it is read to call for, and an honest look at the psychology underneath. Portal Astra keeps angel numbers on the reflective side of its work, so take this as a prompt for thought rather than a prediction.
+
+## What 333 means in numerology
+
+The single digit three is creative, expressive, and social. It is the number of communication, optimism, and the encouragement to share your ideas openly rather than keeping them folded away. Our broader guide Angel Numbers Explained sets out how these single-digit meanings are built and where they come from.
+
+When three repeats into 333, that expressive quality is read as amplified and urgent. The number is associated with creativity that wants an outlet, with communication that has been held back, and with growth that is ready to happen if you will let it. Many practitioners describe 333 as a particularly encouraging number, a sense that the conditions are favourable and that your task is to act rather than wait.
+
+## Why 333 is read as a signal of support
+
+The popular phrasing of 333 as a signal from your guides reflects its core theme: you are not doing this alone. Whatever framework you hold, the practical translation is the same and does not require any particular belief. It is a reminder to notice the support that already exists around you, the people, resources, and encouragement you may have been overlooking while focused on the obstacle in front of you.
+
+This is why 333 so often appears to people on the edge of a creative or personal step. It is read as reassurance at exactly the point where doubt usually speaks loudest. The message is that the resources for the next stage of growth are closer to hand than they feel, and that reaching out rather than retreating is the move the number favours.
+
+## The action 333 calls for
+
+Unlike numbers that counsel patience, 333 leans toward expression and movement. Its traditional call to action is to use your voice and your gifts. That might mean starting the creative project you keep describing but never beginning, having the honest conversation you have rehearsed a dozen times, or simply allowing yourself to be seen more fully in your work and relationships.
+
+When 333 appears, pause and ask what you have been holding back. The answer is usually specific: an idea, a feeling, a piece of work, a truth. Then choose one small way to let it out this week. The number is read as an encouragement to stop editing yourself into silence and to trust that expression, even imperfect expression, is how growth actually happens.
+
+## 333 in everyday life
+
+In practice most people meet 333 not as a calculated number but as a repeated sighting: the clock at 3:33, a total that comes to three pounds and thirty-three pence, a third message arriving at the same minute. The traditional advice is to treat the moment of noticing as the real content rather than the digits alone. Pause and ask what you were doing or feeling when the number caught your eye. A 333 spotted while you were talking yourself out of an idea reads very differently from one glimpsed during an ordinary, untroubled afternoon.
+
+It also helps to separate a genuine pattern from simple coincidence. Seeing 333 once is unremarkable. Noticing it repeatedly across several days, especially while you are circling the same creative or personal question, is what practitioners mean by an angel number. Some people keep a brief note on their phone for a week, jotting the time and the thought attached to each sighting; read back later, the list usually says more about what they have been hesitating over than about anything beyond them. Either way the responsible use is the same, as a recurring prompt to express yourself and reflect, never as a substitute for judgement or evidence when a real decision is at stake.
+
+## 333 and the master number 33
+
+In numerology, 33 is a master number, sometimes called the master teacher, associated with compassion, guidance, and service to others. While 333 is most often read through the single digit three, some practitioners hear that teaching quality in it, a suggestion that your self-expression has value beyond yourself and may help or guide others when you share it. You can explore master numbers further in Angel Numbers Explained, and find the number tied to any date on the Sky tab of Portal Astra.
+
+## The honest psychology
+
+As with every angel number, two cognitive effects explain why 333 feels so pointed. The frequency illusion means that once the number matters to you, you notice it far more often without it occurring any more frequently. Confirmation bias means the meaningful sightings stick while the unremarkable ones vanish from memory. The result is a number that feels personally addressed to you.
+
+That explanation does not diminish the practice. A recurring cue you have chosen to read as encouragement to express yourself is a useful, healthy nudge, wherever it comes from. The meaning is supplied by you, not by the digits, which is the framing Portal Astra applies to all of its symbolic content, clearly labelled as reflection rather than fact.
+
+## A simple practice for 333
+
+Try this for two weeks. Each time you see 333, write down one thing you have been holding back and one small way you could express it. At the end of the fortnight, look at how many of those small expressions you actually followed through on. The exercise tends to surface a pattern of self-censorship that, once visible, is much easier to loosen.
+
+Read 333 alongside its neighbours for the full arc: Angel Number 111: The Universe Is Listening for beginnings and Angel Number 222: Finding Balance in Uncertain Times for the patient middle. And if symbolic reflection appeals to you, the imagery practice in How to Read a Tarot Card for Beginners pairs naturally with working a number this way.
+
+Frequently asked questions:
+
+Q: What is the main message of 333?
+A: Growth through self-expression, backed by support you may not have noticed. It is read as encouragement to use your voice and creative gifts and to reach out rather than retreat, on the understanding that you are better resourced than you feel.
+
+Q: Is 333 a warning about anything?
+A: Rarely. It is one of the more uniformly encouraging sequences. The closest it comes to a caution is the suggestion that holding back your expression may be costing you, which is framed as an invitation rather than an alarm.
+
+Q: Does 333 have any scientific basis?
+A: No. No evidence supports the idea that number sequences carry messages or predict events. The compelling feeling of meaning is explained by the frequency illusion and confirmation bias, which is why Portal Astra presents angel numbers as reflection and entertainment only.`,
+  },
+  {
+    slug: 'what-is-a-coronal-mass-ejection',
+    title: 'What Is a Coronal Mass Ejection — And How Does It Affect You?',
+    excerpt:
+      'A coronal mass ejection is one of the most powerful events in our solar system. Here is what it is, what causes it, and why it matters.',
+    date: '2026-06-10',
+    category: 'Space & NASA',
+    tags: ['coronal mass ejection', 'cme', 'space weather', 'solar activity', 'nasa'],
+    body: `Every so often the Sun does something genuinely enormous. It launches a billion tons of magnetised plasma into space at millions of kilometres an hour, a release of energy that dwarfs anything humans have built. This is a coronal mass ejection, or CME, and it is one of the most powerful events in the solar system. When one is aimed at Earth, it can light up the sky with aurora and, in rare strong cases, disturb the technology we depend on. Portal Astra surfaces CME activity on its Solar tab, and this guide explains what a CME actually is, what triggers it, and how it reaches you.
+
+The good news to hold from the start is that Earth is well protected. Our atmosphere and magnetic field shield those of us on the ground, so a CME is far more often a beautiful event than a dangerous one. Understanding it turns a scary-sounding headline into something you can read calmly and even look forward to.
+
+## What a coronal mass ejection actually is
+
+The Sun is not a quiet, steady lamp. It is a churning ball of plasma, which is gas so hot that its atoms have broken into charged particles, and it is threaded through with intense magnetic fields. The corona is the Sun's outer atmosphere, the faint halo visible during a total solar eclipse. A coronal mass ejection is a vast eruption of material from that corona, a cloud of plasma and embedded magnetic field flung outward into space.
+
+The scale is hard to picture. A single CME can carry billions of tons of material and stretch across millions of kilometres. NASA, which studies these events with spacecraft such as the Solar Dynamics Observatory, describes them as among the largest explosions in the solar system. They are distinct from solar flares, although the two often happen together, a difference worth keeping clear.
+
+## What causes a CME
+
+CMEs are driven by the Sun's tangled magnetic field. The Sun does not rotate as a solid body. Its equator spins faster than its poles, which winds and stresses the magnetic field lines over time until they are coiled like an overtwisted spring. Where that tension builds, especially around sunspots, the field can suddenly snap into a new arrangement in a process called magnetic reconnection. That snap releases a colossal burst of energy and hurls a chunk of the corona into space.
+
+This activity rises and falls on an eleven-year solar cycle. Near solar maximum, when sunspots are plentiful, CMEs can happen several times a day. Near solar minimum they are rare. The Sun is a dynamic star, and tracking where it sits in that cycle is part of how forecasters anticipate busy space-weather periods.
+
+## Flares and CMEs: not the same thing
+
+It is easy to confuse the two because they often erupt from the same active region. A solar flare is a sudden flash of radiation, light across many wavelengths, that travels at the speed of light and reaches Earth in about eight minutes. A CME is a physical cloud of matter that travels far slower, taking one to three days to cross the roughly 150 million kilometres to Earth. A flare is the flash; a CME is the cannonball. The Kp Index and Space Weather, Explained covers how both feed into the aurora forecast you can check on Portal Astra.
+
+## How a CME reaches Earth and what it does
+
+When a CME erupts in Earth's direction, it takes a day or two to arrive, which is what gives forecasters a useful lead time. On arrival it slams into Earth's magnetosphere, the protective magnetic bubble around our planet, and if the CME's own magnetic field is oriented the right way it couples strongly with ours and triggers a geomagnetic storm.
+
+That storm is what funnels charged particles down toward the poles, where they collide with oxygen and nitrogen high in the atmosphere and make them glow. The result is the aurora, the northern and southern lights. A strong CME pushes that glowing oval to lower latitudes than usual, which is why a big eruption can bring the aurora to places that rarely see it. The same physics that sounds alarming in a headline is the physics that produces one of the most beautiful sights in nature.
+
+## Should you worry about a CME
+
+For your health and safety on the ground, the honest answer is no. Earth's atmosphere and magnetic field absorb the impact, and there is no direct danger to people at the surface, even during a strong storm. The risks from the most severe CMEs are to technology, not bodies. Powerful geomagnetic storms can induce unwanted currents in long power lines, degrade GPS accuracy, disturb radio communication, and stress satellites. The well-known 1989 storm caused a hours-long blackout across Quebec, which is why grid operators and agencies like NASA and NOAA monitor the Sun continuously.
+
+These severe events are rare, and the systems that matter are increasingly designed with space weather in mind. For most people, the practical effect of a CME is simply a better chance of seeing aurora and a reason to glance up. The serious infrastructure side is real but handled by professionals watching the same data.
+
+## Watching CMEs yourself
+
+You do not need a telescope to follow this. Portal Astra's Solar tab shows recent flare, CME, and geomagnetic activity drawn directly from NASA, so you can see when an eruption has occurred and whether a storm may follow. Pair it with the live short-term forecasts from NOAA's Space Weather Prediction Center if you want to chase aurora, and remember that clear, dark skies and a view toward the pole matter as much as the size of the storm itself. All space weather data on Portal Astra comes from NASA; you can read about the sources on our <a href='/nasa-data'>data sources page</a>.
+
+There is something genuinely moving about the chain of cause and effect here. A magnetic knot unravels on the surface of a star, a cloud of plasma crosses the inner solar system for two days, and the result is a curtain of green light over your own head. Few things connect you so directly to the workings of the cosmos.
+
+Frequently asked questions:
+
+Q: Can a coronal mass ejection hurt me?
+A: Not on the ground. Earth's atmosphere and magnetic field protect people at the surface even during strong storms. The risks from severe CMEs are to technology such as power grids, satellites, and GPS, and to a lesser extent to astronauts and passengers on high-altitude polar flights.
+
+Q: How much warning do we get before a CME arrives?
+A: Usually one to three days. Because a CME is a physical cloud of plasma rather than light, it takes that long to travel from the Sun to Earth, so once one is observed leaving the Sun, forecasters can issue a storm watch with roughly a day or two of lead time.
+
+Q: What is the difference between a solar flare and a CME?
+A: A solar flare is a burst of radiation that reaches Earth at the speed of light in about eight minutes. A coronal mass ejection is a slower-moving cloud of plasma and magnetic field that takes days to arrive. They often erupt together but are separate events with different effects.`,
+  },
+  {
+    slug: 'moon-sign-vs-sun-sign',
+    title: 'Moon Sign vs Sun Sign: What Is the Difference?',
+    excerpt:
+      'Most people know their sun sign. But your moon sign may reveal far more about who you really are.',
+    date: '2026-06-10',
+    category: 'Astrology',
+    tags: ['moon sign', 'sun sign', 'astrology', 'birth chart', 'zodiac'],
+    body: `Almost everyone can name their star sign. Far fewer can name their moon sign, and that gap is the single biggest reason people read a horoscope and think that is not me at all. Your sun sign is only one piece of your birth chart. Your moon sign is another, and in many ways it describes the more private, emotional you that the sun sign never quite captures. This guide explains the difference, where each one comes from, and why knowing both gives a far richer picture than either alone.
+
+As always at Portal Astra, the line between science and symbolism stays clearly drawn. The astronomy of the Sun and Moon is settled fact; astrology is a symbolic tradition built on top of it. Knowing which is which lets you enjoy the symbolism without confusing it with observation.
+
+## What your sun sign is
+
+Your sun sign is the zodiac constellation the Sun appeared to occupy, from Earth's point of view, on the day you were born. Because Earth takes a year to orbit the Sun, the Sun spends about a month in each of the twelve signs, which is why the dates are fixed and why you can know your sun sign from your birthday alone. This is the sign meant by what is your sign, and the one almost every horoscope column uses. Our guide Your Zodiac Sign: What It Really Means covers the twelve signs, their elements, and their dates in full.
+
+In astrological terms the sun sign is read as your core identity, your essential character, ego, and the direction your life energy points. It is the headline of your chart, the part of you that is most consistent and most visible over the long run. It is real and useful, but it is one instrument in a larger arrangement.
+
+## What your moon sign is
+
+Your moon sign is the zodiac sign the Moon was passing through at the moment you were born. The Moon moves far faster across the sky than the Sun, changing signs roughly every two and a half days as it completes its monthly circuit of the zodiac. That speed is why the moon sign needs more than your birth date to pin down, and why two people born on the same day can have different moon signs.
+
+Astrologers read the moon sign as your inner emotional life: your instincts, your private feelings, your needs, and the way you process and respond to the world when no one is watching. If the sun sign is who you are becoming, the moon sign is described as who you are underneath, the emotional weather behind the public face. This is why so many people find their moon sign more recognisable than their sun sign once they learn it. The Moon's monthly journey through the signs, which connects to the lunar cycle we explain in Moon Phases Explained, is the same motion astrologers track when they speak of the moon being in a particular sign on a given day.
+
+## Why the two can feel so different
+
+Imagine someone with a fiery, outgoing sun sign and a sensitive, private moon sign. In public they may read as confident and driven, the sun sign on display. In private they may be far more tender and inward than anyone expects, the moon sign coming through. Neither is a mask. They are two genuine layers of the same person, one outward and one inward.
+
+This is exactly why a sun-sign horoscope sometimes lands and sometimes misses completely. When it describes your outward direction it may fit well; when it tries to speak to your emotional life it may miss, because that territory belongs to the Moon. Learning your moon sign often resolves that sense of partial recognition. It fills in the half of the portrait the sun sign leaves blank.
+
+## The third piece: your rising sign
+
+For completeness it helps to know there is a third major marker, the rising sign or ascendant, which is the sign that was climbing over the eastern horizon at the exact minute and place of your birth. It is read as the first impression you give, the style in which you meet the world. Sun, Moon, and rising are often called the big three of a birth chart, and together they give a far fuller account than any one alone. The rising sign, like the moon sign, depends on your precise birth time and location.
+
+## How to find your moon sign
+
+Because the Moon changes signs every couple of days, you cannot work out your moon sign from your birthday alone. You need your date of birth plus, ideally, your time and place of birth, because on the day you were born the Moon may have changed signs partway through. With those details, any birth-chart calculator will return your moon sign along with your sun and rising signs. If you do not know your exact birth time, you can often still narrow the moon sign down, since it only changes once every two and a half days.
+
+Once you have all three, read them as a set. Take your sun sign as your core direction, your moon sign as your emotional nature, and your rising sign as your outward style. The interplay between them is where astrology becomes genuinely interesting, and where the flat caricature of sun-sign columns gives way to something that feels more personal.
+
+## Using this well
+
+Treat your moon sign the way Portal Astra suggests treating all astrology: as a mirror for reflection rather than a verdict. Read its description and ask honestly which parts fit your inner life and which do not, paying as much attention to the misses as the hits. The value is not in being told who you are but in being prompted to look. Paired with a symbolic practice like the one in How to Read a Tarot Card for Beginners, knowing your moon sign can deepen a gentle daily habit of self-reflection that asks nothing of you but honesty. Knowing your moon sign will not tell you your future, but it can point at something more immediately useful than any forecast: the emotional pattern you tend to fall back on when life gets difficult, and the kind of comfort that genuinely settles you.
+
+Frequently asked questions:
+
+Q: Which is more important, my sun sign or my moon sign?
+A: Neither outranks the other; they describe different things. The sun sign reflects your core identity and outward direction, while the moon sign reflects your inner emotional life. Most people find reading them together far more revealing than choosing one, and astrologers add the rising sign for a fuller picture still.
+
+Q: Why do I need my birth time to find my moon sign?
+A: Because the Moon changes signs roughly every two and a half days, on your birth date it may have shifted partway through the day. Your birth time, and ideally your birthplace, let a calculator determine which sign the Moon was actually in at the moment you were born.
+
+Q: Is any of this scientifically proven?
+A: No. Controlled studies have not found that sun or moon signs predict personality or events, and the constellations no longer align with the traditional dates due to precession. Astrology is best understood as a symbolic tradition for self-reflection, which is how Portal Astra presents it.`,
+  },
+  {
+    slug: 'how-to-manifest-with-moon-phases',
+    title: 'How to Manifest with Moon Phases',
+    excerpt:
+      'The lunar cycle is one of the most powerful natural rhythms for setting intentions and releasing what no longer serves you.',
+    date: '2026-06-10',
+    category: 'Moon',
+    tags: ['manifestation', 'moon phases', 'new moon', 'full moon', 'rituals'],
+    body: `Long before calendars and planners, the Moon gave people a built-in monthly rhythm: a reliable cycle of growing and shrinking light that marked time and structured reflection. Manifestation with moon phases simply borrows that rhythm. It aligns the act of setting intentions, building toward them, and releasing what holds you back with the natural stages of the lunar cycle. You do not need to believe the Moon exerts any mystical pull to find this genuinely useful, because the real power is in having a regular, sky-given schedule for focusing on what you actually want.
+
+Let us be clear at the outset, in the spirit Portal Astra keeps throughout. As NASA explains, the Moon's gravity moves the oceans, but there is no scientific evidence that it influences human mood, luck, or outcomes. What follows is a structure for intention and reflection, valuable as a recurring prompt rather than as cause and effect. The astronomy behind the cycle, if you want the mechanics first, is laid out in Moon Phases Explained.
+
+## What manifestation actually means here
+
+Manifestation, stripped of hype, is the practice of getting clear about what you want and then aligning your attention and actions toward it. The honest version does not claim that wishing changes reality directly. It works because naming a goal sharpens focus, and focus quietly steers the hundreds of small choices that do shape outcomes. The lunar cycle is useful because it breaks that work into stages and gives each one a natural moment, so intention does not stay a vague wish but moves through setting, building, peaking, and releasing.
+
+## New Moon: plant the intention
+
+The new moon is the dark reset of the cycle, when the Moon sits between Earth and Sun and is effectively invisible. A fresh lunar month begins here, which makes it the traditional time to set intentions. Symbolically it is a blank page.
+
+The practice is simple. Find a quiet few minutes, reflect on what you genuinely want to grow over the coming month, and write it down. Phrase each intention in the present and the positive, describing what you are moving toward rather than what you are escaping. Keep the list short and specific enough to act on. This is the seed-planting stage, and the clarity you create here is what the rest of the cycle builds on.
+
+## Waxing Moon: take action and build
+
+As the first sliver of light appears and grows over the following two weeks, the symbolism shifts from intention to action. The waxing crescent is for first small moves, the moments when you take the earliest concrete step toward what you named. The first quarter, about a week in, is traditionally a point of decision and commitment, the stage where obstacles surface and you choose to push through them rather than abandon the goal.
+
+The practical ritual is to revisit your new-moon intentions and attach one specific action to each. Momentum matters more than perfection here. As the waxing gibbous fills out in the days before the full moon, the theme becomes refinement and persistence: review what you have started, adjust what is not working, and resist the urge to give up just before something ripens. The growing Moon overhead is a nightly, visible reminder that this is the season for adding and doing.
+
+## Full Moon: celebrate and amplify
+
+The full moon is the peak of the cycle, the brightest night, when the Moon rises at sunset and owns the sky until dawn. Symbolically it is culmination, gratitude, and heightened awareness, which makes it a powerful moment for manifestation work.
+
+Step outside and actually look at the Moon. Acknowledge what has come to fruition since the new moon, however small, and give it genuine recognition. The full moon is also read as a time of clarity, when the bright light surfaces whatever has been hidden, including the obstacles standing between you and your intention. Many people use this night to express gratitude for progress and to name plainly what they still want, treating the peak of light as a moment to charge an intention with attention before the cycle turns. This is the same moon astrologers watch most closely as it moves through the signs, a thread picked up in Your Zodiac Sign: What It Really Means.
+
+## Waning Moon: release what no longer serves you
+
+After the full moon the light recedes over two weeks, and the symbolism turns toward release. The waning gibbous is associated with gratitude in action and generosity, giving back and sharing what you have. The last quarter, halfway down, is a time of forgiveness and letting go, of clearing away grudges, habits, or commitments that block what you are trying to grow. The final waning crescent is the cycle's exhale, a few days of rest and restoration before the next new moon.
+
+The practice across this stretch is subtraction rather than addition. Where the waxing moon asked what you could build, the waning moon asks what you can release to make room. A common ritual is to write down one thing you are ready to let go of, something that stands between you and your intention, and as the Moon shrinks, deliberately loosen your grip on it. Releasing is as much a part of manifestation as setting, because intentions rarely take root in a crowded, cluttered life.
+
+## Building your own lunar manifestation practice
+
+You do not need special tools or any particular belief to follow this rhythm. A notebook and a willingness to check in four times a month is enough. Many people mark just four moments: intentions at the new moon, action at the first quarter, gratitude and amplification at the full moon, and release at the last quarter. Ten minutes of honest journalling at each is plenty.
+
+Portal Astra shows the current phase and approximate illumination on its main dashboard and in detail on the <a href='/moon'>Moon Phase Calendar</a>, so you always know where you are in the cycle. If you want a fuller set of reflective practices mapped to each stage, our companion guide Moon Phase Rituals for Each Lunar Stage goes deeper, and the imagery-based approach in How to Read a Tarot Card for Beginners makes a natural partner practice. The real value, as with any of this, is consistency: a recurring, dependable schedule for asking what you want and what you are willing to release to get it.
+
+Frequently asked questions:
+
+Q: Do I have to believe in astrology for moon manifestation to work?
+A: No. The practice works as structure and reflection, not as supernatural cause and effect. The Moon simply provides a reliable monthly schedule for setting intentions, taking action, and releasing what holds you back. The benefit comes from the focus and the habit, which is why Portal Astra presents it as personal practice and entertainment rather than fact.
+
+Q: What if I miss the exact new moon or full moon?
+A: It does not matter. The cycle returns every 29.5 days, and the phases are approximate prompts rather than deadlines. If you miss the precise new moon, set your intentions the next evening. The value is in the recurring habit, not in perfect timing.
+
+Q: How do I know which phase the Moon is in right now?
+A: You can tell roughly by eye, since a growing crescent in the evening is waxing and a shrinking one before dawn is waning. For an exact reading, Portal Astra displays the current phase and approximate illumination on its main dashboard and Moon Phase Calendar every day.`,
   },
 ]
 
