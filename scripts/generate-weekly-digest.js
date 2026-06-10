@@ -71,14 +71,20 @@ async function fetchAPOD() {
       const r = await fetch(url)
       if (r.status >= 500) throw new Error(`APOD responded ${r.status}`)
       const d = await r.json() // throws if the body isn't valid JSON
-      return { title: d.title || 'Unknown', explanation: d.explanation || '', date: d.date || '' }
+      return {
+        title:       d.title || 'Unknown',
+        explanation: d.explanation || '',
+        date:        d.date || '',
+        url:         d.url || '',
+        hdurl:       d.hdurl || '',
+      }
     } catch (e) {
       console.error(`APOD fetch attempt ${attempt + 1} failed:`, e.message)
       if (attempt < 2) await sleep(500)
     }
   }
   console.error('APOD fetch failed after 3 attempts')
-  return { title: 'Unavailable', explanation: '', date: '' }
+  return { title: 'Unavailable', explanation: '', date: '', url: '', hdurl: '' }
 }
 
 async function fetchDONKI() {
@@ -152,7 +158,15 @@ RITUAL: [one practical moon ritual tip suited to this phase — concrete and doa
 
 SIGN_OFF: [one closing sentence — warm, cosmic, encouraging]
 
-Format exactly as shown. Each section on its own line starting with the label in caps followed by a colon.`
+Format exactly as shown. Each section on its own line starting with the label in caps followed by a colon.
+
+WRITING RULES — follow strictly:
+- No em dashes or en dashes. Use a full stop or restructure the sentence instead.
+- No paradox framing ("X and Y are not opposites but...")
+- Never use "eternal", "forever", "infinite", "tapestry", "dance" as metaphors
+- Sentences under 25 words where possible
+- The CTA button text must be specific to this week — use the NASA image title or moon phase name, not "Open Portal Astra"
+- End the SIGN_OFF with something quotable and specific to this week's moon phase, not a generic blessing`
 
   try {
     const r = await fetch('https://api.anthropic.com/v1/messages', {
@@ -249,6 +263,7 @@ function buildEmailHTML(p, moon, apod) {
           <p style="margin:0 0 8px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#9b8aff;">
             🌌 NASA · ${apod.title}
           </p>
+          <img src="${apod.hdurl || apod.url}" alt="${apod.title}" style="width:100%;max-height:400px;object-fit:cover;border-radius:8px;margin-bottom:16px;display:block;" />
           <p style="margin:0;font-size:14px;line-height:1.75;color:rgba(232,224,255,0.8);">${p.space}</p>
         </div>
       </td></tr>
@@ -309,7 +324,7 @@ function buildEmailHTML(p, moon, apod) {
 // ─── MailerLite ──────────────────────────────────────────────────────────────
 
 async function createAndScheduleCampaign(subject, htmlContent, scheduledAt) {
-  // Step 1 — Create campaign
+  // Step 1 — Create campaign (draft)
   const createRes = await fetch('https://connect.mailerlite.com/api/campaigns', {
     method: 'POST',
     headers: {
@@ -338,7 +353,21 @@ async function createAndScheduleCampaign(subject, htmlContent, scheduledAt) {
   const campaignId = campaign.data.id
   console.log(`Campaign created: ${campaignId}`)
 
-  // Step 2 — Schedule campaign
+  // Step 2 — Mark campaign as ready before scheduling
+  const readyRes = await fetch(`https://connect.mailerlite.com/api/campaigns/${campaignId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type':  'application/json',
+      'Authorization': `Bearer ${MAILERLITE_KEY}`,
+    },
+    body: JSON.stringify({ status: 'ready' }),
+  })
+  if (!readyRes.ok) {
+    console.warn('Status-ready PATCH returned', readyRes.status, await readyRes.text())
+  }
+  await sleep(1000)
+
+  // Step 3 — Schedule campaign
   const scheduleRes = await fetch(`https://connect.mailerlite.com/api/campaigns/${campaignId}/schedule`, {
     method: 'POST',
     headers: {
