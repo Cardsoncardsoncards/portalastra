@@ -27,15 +27,14 @@ const FREE_FEATURES = [
   'Share your cosmic readings',
 ]
 
-const PREMIUM_FEATURES = [
-  'Everything in Free',
-  'Daily ritual prompts and journal questions per phase',
-  'Lunar planting calendar (best days to sow, prune, harvest)',
-  'Full moon and new moon intention-setting guides',
-  'Eclipse and supermoon email alerts 7 days prior',
-  'Monthly cosmic forecast email',
-  'Ad-free experience',
-  'Early access to new features',
+const PREMIUM_FEATURES: { label: string; comingSoon?: boolean }[] = [
+  { label: 'Everything in Free' },
+  { label: 'Daily ritual prompts and journal questions per phase', comingSoon: true },
+  { label: 'Lunar planting calendar (best days to sow, prune, harvest)' },
+  { label: 'Full moon and new moon intention-setting guides', comingSoon: true },
+  { label: 'Eclipse and supermoon email alerts 7 days prior', comingSoon: true },
+  { label: 'Monthly cosmic forecast email', comingSoon: true },
+  { label: 'Early access to new features' },
 ]
 
 export default function PricingPage() {
@@ -74,7 +73,12 @@ export default function PricingPage() {
             <p className={styles.tierStandard}>Usually AUD $9.95/month or $79/year</p>
             <ul className={styles.featureList}>
               {PREMIUM_FEATURES.map((f) => (
-                <li key={f} className={styles.feature}><span className={styles.checkGold}>✦</span> {f}</li>
+                <li key={f.label} className={styles.feature}>
+                  <span className={styles.checkGold}>✦</span> {f.label}
+                  {f.comingSoon && (
+                    <span style={{ color: 'rgba(232, 224, 255, 0.4)', fontSize: '0.8em', marginLeft: '4px' }}>(coming soon)</span>
+                  )}
+                </li>
               ))}
             </ul>
             <CheckoutButton />
