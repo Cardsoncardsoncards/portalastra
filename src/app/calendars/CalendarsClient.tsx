@@ -118,6 +118,11 @@ export default function CalendarsClient() {
   const [pBusy, setPBusy] = useState(false)
   const [pNote, setPNote] = useState<{ ok: boolean; msg: string } | null>(null)
 
+  // Premium unlock
+  const [premiumEmail, setPremiumEmail] = useState('')
+  const [premiumLoading, setPremiumLoading] = useState(false)
+  const [premiumError, setPremiumError] = useState('')
+
   useEffect(() => {
     setMoonInfo(getMoonPhase(new Date()))
     const cy = new Date().getFullYear()
@@ -170,6 +175,34 @@ export default function CalendarsClient() {
       else setPNote({ ok: false, msg: dd.error || 'Something went wrong.' })
     } catch { setPNote({ ok: false, msg: 'Network error — try again.' }) }
     setPBusy(false)
+  }
+
+  const handleVerifyPremium = async () => {
+    if (!premiumEmail.includes('@')) {
+      setPremiumError('Please enter a valid email.')
+      return
+    }
+    setPremiumLoading(true)
+    setPremiumError('')
+    try {
+      const res = await fetch('/api/verify-premium', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: premiumEmail }),
+      })
+      const data = await res.json()
+      if (data.isPaid) {
+        const expires = Date.now() + 30 * 24 * 60 * 60 * 1000
+        localStorage.setItem('pa_premium_verified', JSON.stringify({ verified: true, expires }))
+        setIsPremium(true)
+        setPremiumEmail('')
+      } else {
+        setPremiumError('This email is not linked to an active Astra Premium subscription.')
+      }
+    } catch {
+      setPremiumError('Something went wrong. Please try again.')
+    }
+    setPremiumLoading(false)
   }
 
   const TABS: { id: TabId; label: string }[] = [
@@ -247,29 +280,92 @@ export default function CalendarsClient() {
               </div>
             </div>
           ) : (
-            <div className={`${styles.card} ${styles.lockedCard}`}>
-              <span className={styles.lockIcon}>🔒</span>
-              <p className={styles.comingSoon}>Coming Soon — Astra Premium</p>
-              <p className={styles.cardText}>
-                The best days to sow, prune, and harvest based on lunar cycles. Trusted by gardeners and
-                farmers for centuries.
-              </p>
-              <form className={styles.waitForm} onSubmit={joinPlanting}>
-                <input
-                  type="email"
-                  className={styles.waitInput}
-                  placeholder="you@example.com"
-                  aria-label="Email address"
-                  value={pEmail}
-                  onChange={(e) => setPEmail(e.target.value)}
-                  required
-                />
-                <button type="submit" className={styles.primaryBtn} disabled={pBusy}>
-                  {pBusy ? 'Joining...' : 'Join waitlist'}
-                </button>
-              </form>
-              {pNote && <p className={pNote.ok ? styles.noteOk : styles.noteErr}>{pNote.msg}</p>}
-            </div>
+            <>
+              <div className={`${styles.card} ${styles.lockedCard}`}>
+                <span className={styles.lockIcon}>🔒</span>
+                <p className={styles.comingSoon}>Coming Soon — Astra Premium</p>
+                <p className={styles.cardText}>
+                  The best days to sow, prune, and harvest based on lunar cycles. Trusted by gardeners and
+                  farmers for centuries.
+                </p>
+                <form className={styles.waitForm} onSubmit={joinPlanting}>
+                  <input
+                    type="email"
+                    className={styles.waitInput}
+                    placeholder="you@example.com"
+                    aria-label="Email address"
+                    value={pEmail}
+                    onChange={(e) => setPEmail(e.target.value)}
+                    required
+                  />
+                  <button type="submit" className={styles.primaryBtn} disabled={pBusy}>
+                    {pBusy ? 'Joining...' : 'Join waitlist'}
+                  </button>
+                </form>
+                {pNote && <p className={pNote.ok ? styles.noteOk : styles.noteErr}>{pNote.msg}</p>}
+              </div>
+
+              <div style={{
+                marginTop: '12px',
+                background: 'rgba(155,138,255,0.06)',
+                border: '1px solid rgba(155,138,255,0.2)',
+                borderRadius: '12px',
+                padding: '20px',
+              }}>
+                <p style={{ fontSize: '11px', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#9b8aff', marginBottom: '8px' }}>
+                  Already a member?
+                </p>
+                <p style={{ fontSize: '13px', color: 'rgba(232,224,255,0.6)', marginBottom: '14px', lineHeight: '1.6' }}>
+                  Enter your email to unlock the planting calendar now.
+                </p>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  <input
+                    type="email"
+                    placeholder="your@email.com"
+                    value={premiumEmail}
+                    onChange={e => setPremiumEmail(e.target.value)}
+                    onKeyDown={e => e.key === 'Enter' && handleVerifyPremium()}
+                    style={{
+                      flex: 1,
+                      minWidth: '200px',
+                      background: 'rgba(255,255,255,0.05)',
+                      border: '1px solid rgba(155,138,255,0.25)',
+                      borderRadius: '8px',
+                      padding: '10px 14px',
+                      color: '#e8e0ff',
+                      fontSize: '13px',
+                      fontFamily: 'inherit',
+                      outline: 'none',
+                    }}
+                  />
+                  <button
+                    onClick={handleVerifyPremium}
+                    disabled={premiumLoading}
+                    style={{
+                      background: 'linear-gradient(135deg, #7B5EA7, #C9A84C)',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '8px',
+                      padding: '10px 20px',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      cursor: premiumLoading ? 'not-allowed' : 'pointer',
+                      fontFamily: 'inherit',
+                      letterSpacing: '0.04em',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {premiumLoading ? 'Checking...' : 'Unlock'}
+                  </button>
+                </div>
+                {premiumError && (
+                  <p style={{ color: '#ff8080', fontSize: '12px', marginTop: '8px' }}>{premiumError}</p>
+                )}
+                <p style={{ fontSize: '11px', color: 'rgba(232,224,255,0.25)', marginTop: '10px' }}>
+                  Not a member yet? <a href="/pricing" style={{ color: '#9b8aff' }}>View Astra Premium</a>
+                </p>
+              </div>
+            </>
           )
         )}
 

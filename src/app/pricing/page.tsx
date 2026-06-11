@@ -85,6 +85,21 @@ export default function PricingPage() {
             <p className={styles.finePrint}>Secure checkout via Stripe. Cancel anytime.</p>
           </div>
         </div>
+
+        <div style={{
+          marginTop: '32px',
+          padding: '20px',
+          background: 'rgba(155,138,255,0.04)',
+          border: '1px solid rgba(155,138,255,0.12)',
+          borderRadius: '12px',
+          textAlign: 'center',
+        }}>
+          <p style={{ fontSize: '12px', color: 'rgba(232,224,255,0.5)', lineHeight: '1.7' }}>
+            No password needed. After subscribing, visit the Sky tab or Calendars page
+            and enter your email to unlock premium features instantly.
+            Access is remembered for 30 days per browser.
+          </p>
+        </div>
       </div>
 
       <Footer title="Portal Astra Pricing" shareText="Start free, upgrade when you're ready — Portal Astra" />
