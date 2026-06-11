@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import IntentionGuides from '@/components/IntentionGuides'
 import styles from './page.module.css'
 
 const CYCLE = 29.53059
@@ -106,6 +107,7 @@ export default function MoonClient() {
   const [eventsPaused, setEventsPaused] = useState(false)
   const [guidePaused, setGuidePaused] = useState(false)
   const [pageUrl, setPageUrl] = useState('')
+  const [isPremium, setIsPremium] = useState(false)
 
   // Subscribe form
   const [email, setEmail] = useState('')
@@ -117,6 +119,17 @@ export default function MoonClient() {
     setNow(d)
     setViewDate(new Date(d.getFullYear(), d.getMonth(), 1))
     setPageUrl(window.location.href)
+  }, [])
+
+  // Restore a previously verified premium session (same pattern as Sky tab and Calendars).
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('pa_premium_verified')
+      if (stored) {
+        const { verified, expires } = JSON.parse(stored)
+        if (verified && Date.now() < expires) setIsPremium(true)
+      }
+    } catch {}
   }, [])
 
   const todayPhase = now ? getMoonPhase(now) : null
@@ -309,6 +322,14 @@ export default function MoonClient() {
             </div>
           </div>
         </section>
+
+        {/* Premium — full moon and new moon intention-setting guides */}
+        {isPremium && (
+          <section className={styles.section}>
+            <h2 className={styles.sectionHeading}>Intention Guides</h2>
+            <IntentionGuides />
+          </section>
+        )}
 
         {/* Subscribe CTA */}
         <section className={styles.section}>

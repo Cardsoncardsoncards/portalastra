@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import PlantingCalendar from '@/components/PlantingCalendar'
 import styles from './page.module.css'
 
 // --- moon phase (same calculation as the Moon page) -------------------------
@@ -254,30 +255,7 @@ export default function CalendarsClient() {
         {tab === 'planting' && (
           isPremium ? (
             <div className={styles.card}>
-              <div style={{ padding: '8px 0' }}>
-                <p style={{ fontSize: '11px', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#9b8aff', marginBottom: '12px' }}>Lunar Planting Calendar</p>
-                <p style={{ fontSize: '13px', color: 'rgba(232,224,255,0.6)', lineHeight: '1.7', marginBottom: '16px' }}>
-                  Plant root vegetables during the Waning Crescent and New Moon phases when energy moves downward. Sow leafy greens and herbs during the Waxing Crescent and First Quarter. Harvest during the Full Moon for maximum vitality.
-                </p>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '10px' }}>
-                  {[
-                    { phase: 'New Moon', emoji: '🌑', action: 'Rest the soil. Plant nothing.' },
-                    { phase: 'Waxing Crescent', emoji: '🌒', action: 'Sow leafy greens, herbs, flowers.' },
-                    { phase: 'First Quarter', emoji: '🌓', action: 'Plant fruiting crops and grains.' },
-                    { phase: 'Waxing Gibbous', emoji: '🌔', action: 'Tend, fertilise, and water.' },
-                    { phase: 'Full Moon', emoji: '🌕', action: 'Harvest. Plant nothing new.' },
-                    { phase: 'Waning Gibbous', emoji: '🌖', action: 'Plant root vegetables.' },
-                    { phase: 'Last Quarter', emoji: '🌗', action: 'Prune, weed, and compost.' },
-                    { phase: 'Waning Crescent', emoji: '🌘', action: 'Rest the soil. Prepare beds.' },
-                  ].map(({ phase, emoji, action }) => (
-                    <div key={phase} style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '10px', padding: '14px' }}>
-                      <div style={{ fontSize: '24px', marginBottom: '6px' }}>{emoji}</div>
-                      <div style={{ fontSize: '11px', fontWeight: 600, color: '#c4b8ff', marginBottom: '4px' }}>{phase}</div>
-                      <div style={{ fontSize: '12px', color: 'rgba(232,224,255,0.5)', lineHeight: '1.5' }}>{action}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <PlantingCalendar />
             </div>
           ) : (
             <>

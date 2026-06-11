@@ -83,6 +83,9 @@ export default function PricingPage() {
             </ul>
             <CheckoutButton />
             <p className={styles.finePrint}>Secure checkout via Stripe. Cancel anytime.</p>
+            <p style={{ fontSize: '12px', color: 'rgba(201,168,76,0.7)', lineHeight: 1.6, marginTop: '6px', textAlign: 'center' }}>
+              Not happy in your first 30 days? Email us and we will refund you in full. No questions asked.
+            </p>
           </div>
         </div>
 
@@ -98,6 +101,23 @@ export default function PricingPage() {
             No password needed. After subscribing, visit the Sky tab or Calendars page
             and enter your email to unlock premium features instantly.
             Access is remembered for 30 days per browser.
+          </p>
+        </div>
+
+        <div style={{
+          textAlign: 'center',
+          padding: '24px 0',
+          borderTop: '1px solid rgba(255,255,255,0.07)',
+          marginTop: '40px',
+        }}>
+          <p style={{ fontSize: '12px', color: 'rgba(232,224,255,0.4)', margin: 0, lineHeight: 1.6 }}>
+            Questions about your subscription?{' '}
+            <a
+              href="mailto:theportalastra@gmail.com"
+              style={{ color: '#9b8aff', textDecoration: 'none' }}
+            >
+              theportalastra@gmail.com
+            </a>
           </p>
         </div>
       </div>

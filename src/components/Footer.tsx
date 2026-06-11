@@ -100,6 +100,8 @@ export default function Footer({ title = 'Portal Astra', shareText }: { title?: 
         <Link href="/about" className={styles.link}>About</Link>
         <span className={styles.sep}>·</span>
         <Link href="/privacy" className={styles.link}>Privacy</Link>
+        <span className={styles.sep}>·</span>
+        <a href="mailto:theportalastra@gmail.com" className={styles.link}>theportalastra@gmail.com</a>
       </nav>
 
       <p className={styles.attribution}>Astronomy data: NASA Open APIs (APOD, NeoWs, DONKI, EPIC) · Horoscope: third-party astrology feed</p>
