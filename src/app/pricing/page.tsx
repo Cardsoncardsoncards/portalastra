@@ -29,11 +29,11 @@ const FREE_FEATURES = [
 
 const PREMIUM_FEATURES: { label: string; comingSoon?: boolean }[] = [
   { label: 'Everything in Free' },
-  { label: 'Daily ritual prompts and journal questions per phase', comingSoon: true },
+  { label: 'Daily ritual prompts and journal questions per phase' },
   { label: 'Lunar planting calendar (best days to sow, prune, harvest)' },
-  { label: 'Full moon and new moon intention-setting guides', comingSoon: true },
+  { label: 'Full moon and new moon intention-setting guides' },
   { label: 'Eclipse and supermoon email alerts 7 days prior', comingSoon: true },
-  { label: 'Monthly cosmic forecast email', comingSoon: true },
+  { label: 'Monthly cosmic forecast email' },
   { label: 'Early access to new features' },
 ]
 

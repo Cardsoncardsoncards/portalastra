@@ -1,0 +1,24 @@
+name: Eclipse and Supermoon Alerts
+
+on:
+  schedule:
+    # Daily at 9:00am UTC
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  check-eclipse-alerts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run eclipse alert check
+        env:
+          NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
+          MAILERLITE_API_KEY: ${{ secrets.MAILERLITE_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/check-eclipse-alerts.js
