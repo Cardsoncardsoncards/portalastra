@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       customer_email: email || undefined,
       line_items: [
         {
-          price: 'price_1TgjpVCGAEQ2PKENTmPwMFKf',
+          price: 'price_1Th5W3EzKt7FGdkFCQDVz6BM',
           quantity: 1,
         },
       ],
