@@ -372,7 +372,7 @@ export default function MoonClient() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            📌 Pin this on Pinterest
+            Pin this on Pinterest
           </a>
         </section>
       </div>

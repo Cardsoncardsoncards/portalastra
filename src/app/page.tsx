@@ -119,7 +119,7 @@ function ShareButtons({ text, url }: { text: string; url: string }) {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <span className={styles.shareIcon}>f</span> Facebook
+        Facebook
       </a>
       <a
         className={styles.shareBtn}
@@ -129,7 +129,7 @@ function ShareButtons({ text, url }: { text: string; url: string }) {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <span className={styles.shareIcon}>𝕏</span> Post
+        Post
       </a>
       <a
         className={styles.shareBtn}
@@ -138,7 +138,7 @@ function ShareButtons({ text, url }: { text: string; url: string }) {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <span className={styles.shareIcon}>💬</span> WhatsApp
+        WhatsApp
       </a>
       <a
         className={styles.shareBtn}
@@ -147,7 +147,7 @@ function ShareButtons({ text, url }: { text: string; url: string }) {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <span className={styles.shareIcon}>r</span> Reddit
+        Reddit
       </a>
       <a
         className={styles.shareBtn}
@@ -156,7 +156,7 @@ function ShareButtons({ text, url }: { text: string; url: string }) {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <span className={styles.shareIcon}>P</span> Pinterest
+        Pinterest
       </a>
       <a
         className={styles.shareBtn}
@@ -165,14 +165,14 @@ function ShareButtons({ text, url }: { text: string; url: string }) {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <span className={styles.shareIcon}>📷</span> Instagram
+        Instagram
       </a>
       <button
         className={styles.shareBtn}
         style={{ background: '#b8a4ff', borderColor: '#b8a4ff', color: '#07070d' }}
         onClick={copy}
       >
-        <span className={styles.shareIcon}>{copied ? '✓' : '🔗'}</span> {copied ? 'Copied!' : 'Copy Link'}
+        {copied ? 'Copied!' : 'Copy Link'}
       </button>
     </div>
   )
@@ -268,6 +268,16 @@ export default function Home() {
   // Parallax star background
   const starsRef = useRef<HTMLDivElement>(null)
 
+  // Premium access
+  const [isPremium, setIsPremium] = useState(false)
+  const [premiumEmail, setPremiumEmail] = useState('')
+  const [showPremiumPrompt, setShowPremiumPrompt] = useState(false)
+  const [premiumLoading, setPremiumLoading] = useState(false)
+  const [premiumError, setPremiumError] = useState('')
+
+  // Daily ritual prompt (premium)
+  const [ritualPrompt, setRitualPrompt] = useState<string>('')
+
   const moon = getMoonPhase()
   const angelNum = getAngelNumber()
   const angelMeaning = ANGEL_NUMBER_MEANINGS[angelNum]
@@ -318,6 +328,32 @@ export default function Home() {
     fetch('/api/donki').then(r => r.json()).then(d => setEvents(d.events || [])).catch(() => {}).finally(() => setDonkiLoading(false))
     fetch('/api/asteroids').then(r => r.json()).then(d => setAsteroids(d.asteroids || [])).catch(() => {}).finally(() => setAstLoading(false))
   }, [])
+
+  // Restore a previously verified premium session from localStorage (client only).
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('pa_premium_verified')
+      if (stored) {
+        const { verified, expires } = JSON.parse(stored)
+        if (verified && Date.now() < expires) {
+          setIsPremium(true)
+        } else {
+          localStorage.removeItem('pa_premium_verified')
+        }
+      }
+    } catch {}
+  }, [])
+
+  // Fetch the daily ritual prompt once premium is confirmed. moon.name is stable
+  // within a session, so isPremium is the only dependency.
+  useEffect(() => {
+    if (isPremium && moon?.name) {
+      fetch(`/api/ritual-prompt?phase=${encodeURIComponent(moon.name)}`)
+        .then(r => r.json())
+        .then(d => { if (d.prompt) setRitualPrompt(d.prompt) })
+        .catch(() => {})
+    }
+  }, [isPremium])
 
   // Parallax: drift the fixed star layer at 0.3x scroll speed
   useEffect(() => {
@@ -383,6 +419,34 @@ export default function Home() {
   const dismissTarotNotice = () => {
     sessionStorage.setItem('pa_tarot_notice', '1')
     setTarotNoticeDismissed(true)
+  }
+
+  const handleVerifyPremium = async () => {
+    if (!premiumEmail.includes('@')) {
+      setPremiumError('Please enter a valid email.')
+      return
+    }
+    setPremiumLoading(true)
+    setPremiumError('')
+    try {
+      const res = await fetch('/api/verify-premium', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: premiumEmail }),
+      })
+      const data = await res.json()
+      if (data.isPaid) {
+        const expires = Date.now() + 30 * 24 * 60 * 60 * 1000
+        localStorage.setItem('pa_premium_verified', JSON.stringify({ verified: true, expires }))
+        setIsPremium(true)
+        setShowPremiumPrompt(false)
+      } else {
+        setPremiumError('This email is not linked to an active Astra Premium subscription.')
+      }
+    } catch {
+      setPremiumError('Something went wrong. Please try again.')
+    }
+    setPremiumLoading(false)
   }
 
   const TABS: { id: Tab; label: string }[] = [
@@ -707,6 +771,115 @@ export default function Home() {
                     {apod && apod.title ? <>Today NASA shows us <em>&quot;{apod.title}&quot;</em>. </> : null}
                     {angelMeaning.message} {events.length > 0 ? humaniseSolarEvent(events[0]) : 'The sun is calm, grounding energy is available.'}
                   </p>
+                </div>
+              )}
+
+              {/* Premium unlock entry point */}
+              {!isPremium && (
+                <div style={{ marginTop: '16px' }}>
+                  {showPremiumPrompt ? (
+                    <div style={{
+                      background: 'rgba(155,138,255,0.06)',
+                      border: '1px solid rgba(155,138,255,0.2)',
+                      borderRadius: '12px',
+                      padding: '20px',
+                      marginTop: '16px',
+                    }}>
+                      <p style={{ fontSize: '11px', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#9b8aff', marginBottom: '8px' }}>
+                        Astra Premium
+                      </p>
+                      <p style={{ fontSize: '13px', color: 'rgba(232,224,255,0.6)', marginBottom: '14px', lineHeight: '1.6' }}>
+                        Enter your email to unlock premium features for this browser.
+                      </p>
+                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                        <input
+                          type="email"
+                          placeholder="your@email.com"
+                          value={premiumEmail}
+                          onChange={e => setPremiumEmail(e.target.value)}
+                          onKeyDown={e => e.key === 'Enter' && handleVerifyPremium()}
+                          style={{
+                            flex: 1,
+                            minWidth: '200px',
+                            background: 'rgba(255,255,255,0.05)',
+                            border: '1px solid rgba(155,138,255,0.25)',
+                            borderRadius: '8px',
+                            padding: '10px 14px',
+                            color: '#e8e0ff',
+                            fontSize: '13px',
+                            fontFamily: 'inherit',
+                            outline: 'none',
+                          }}
+                        />
+                        <button
+                          onClick={handleVerifyPremium}
+                          disabled={premiumLoading}
+                          style={{
+                            background: 'linear-gradient(135deg, #7B5EA7, #C9A84C)',
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: '8px',
+                            padding: '10px 20px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            cursor: premiumLoading ? 'not-allowed' : 'pointer',
+                            fontFamily: 'inherit',
+                            letterSpacing: '0.04em',
+                            whiteSpace: 'nowrap',
+                          }}
+                        >
+                          {premiumLoading ? 'Checking...' : 'Unlock'}
+                        </button>
+                      </div>
+                      {premiumError && (
+                        <p style={{ color: '#ff8080', fontSize: '12px', marginTop: '8px' }}>{premiumError}</p>
+                      )}
+                      <p style={{ fontSize: '11px', color: 'rgba(232,224,255,0.25)', marginTop: '10px' }}>
+                        Not a member? <a href="/pricing" style={{ color: '#9b8aff' }}>View Astra Premium</a>
+                      </p>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setShowPremiumPrompt(true)}
+                      style={{
+                        width: '100%',
+                        background: 'rgba(201,168,76,0.06)',
+                        border: '1px solid rgba(201,168,76,0.15)',
+                        borderRadius: '10px',
+                        padding: '12px',
+                        color: 'rgba(201,168,76,0.7)',
+                        fontSize: '11px',
+                        letterSpacing: '0.08em',
+                        cursor: 'pointer',
+                        fontFamily: 'inherit',
+                        textTransform: 'uppercase' as const,
+                      }}
+                    >
+                      Unlock daily ritual prompts — Astra Premium
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {/* Premium: today's ritual prompt */}
+              {isPremium && (
+                <div style={{
+                  marginTop: '16px',
+                  padding: '16px',
+                  background: 'rgba(201,168,76,0.06)',
+                  border: '1px solid rgba(201,168,76,0.2)',
+                  borderRadius: '12px',
+                }}>
+                  <p style={{ fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: '#C9A84C', marginBottom: '8px' }}>
+                    Today&apos;s Ritual Prompt
+                  </p>
+                  {ritualPrompt ? (
+                    <p style={{ fontSize: '14px', lineHeight: '1.75', color: 'rgba(232,224,255,0.75)', fontFamily: 'Cormorant Garamond, serif', fontStyle: 'italic' }}>
+                      {ritualPrompt}
+                    </p>
+                  ) : (
+                    <div className={styles.skeleton} style={{ height: '48px' }} />
+                  )}
                 </div>
               )}
 
