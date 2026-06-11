@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { nasaFetch } from '@/lib/nasa'
 
+export const dynamic = 'force-dynamic'
+
 interface EpicImage {
   identifier: string
   caption: string

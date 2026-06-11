@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { nasaFetch, todayISO } from '@/lib/nasa'
 
+export const dynamic = 'force-dynamic'
+
 interface FlrEntry {
   flrID: string
   beginTime: string

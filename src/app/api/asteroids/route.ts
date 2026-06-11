@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { nasaFetch, todayISO } from '@/lib/nasa'
 
+export const dynamic = 'force-dynamic'
+
 interface NeoFeedResponse {
   element_count: number
   near_earth_objects: Record<
