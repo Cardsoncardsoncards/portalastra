@@ -1079,11 +1079,11 @@ It is the same effect you see when you pass a slower car on the motorway: for a 
 
 Mercury turns retrograde three times in 2026. The widely published date ranges are:
 
-First retrograde: late February into March 2026, roughly the 26th of February to the 20th of March, falling in the watery, dreamy signs around Pisces.
+First retrograde: March 15 to April 7, falling in fiery, impulsive Aries, which colours the period with bold communication and quick decisions.
 
-Second retrograde: late June into July 2026, roughly the 29th of June to the 23rd of July, around the signs of Cancer and Leo.
+Second retrograde: July 18 to August 11, settling in dramatic, expressive Leo, which colours the season with attention to creativity, identity, and self-expression.
 
-Third retrograde: late October into November 2026, roughly the 24th of October to the 13th of November, around Scorpio and Sagittarius.
+Third retrograde: November 9 to November 29, falling in adventurous, philosophical Sagittarius, which colours the weeks with questions about meaning, belief, and the bigger picture.
 
 A note on precision: the exact day a retrograde begins or ends can shift by a day depending on your time zone, since the turning points are calculated in universal time. Astrologers also talk about the shadow periods, the couple of weeks before and after each retrograde when Mercury crosses the same stretch of sky, which is why effects are often described as ramping up and fading out rather than switching on and off.
 
@@ -1114,7 +1114,7 @@ The myth worth dropping entirely is the idea that the planet physically causes p
 Frequently asked questions:
 
 Q: What are the Mercury retrograde dates for 2026?
-A: There are three, falling roughly late February to mid-March, late June to late July, and late October to mid-November. The exact start and end days can shift by about a day depending on time zone, and astrologers count the shadow weeks on either side as part of the period.
+A: There are three, falling 15 March to 7 April in Aries, 18 July to 11 August in Leo, and 9 November to 29 November in Sagittarius. The exact start and end days can shift by about a day depending on time zone, and astrologers count the shadow weeks on either side as part of the period.
 
 Q: Does Mercury retrograde actually affect technology and travel?
 A: There is no scientific evidence that it does. Mercury only appears to move backwards, an optical illusion of orbital motion, and exerts no measurable force on Earth. The sense that things go wrong is well explained by confirmation bias, where we notice the glitches that fit the story and forget the smooth days.
@@ -1252,7 +1252,9 @@ The cycle that drives this is roughly four hundred and eleven days, so the close
 
 ## Upcoming supermoon dates
 
-The supermoon calendar drifts year to year. Portal Astra tracks the active lunar cycle on its main dashboard, with eclipse and major event alerts available to premium members. The simplest way to check the next one without doing the maths yourself is to open the dashboard.
+The confirmed supermoon dates for 2026 are January 3, November 24, and December 24. The first is the Wolf Moon Supermoon, which coincides with Earth's closest approach to the Sun, an alignment not seen since 1912. November 24 brings the Beaver Moon Supermoon. December 24 closes the year with the Cold Moon Supermoon, the closest and brightest of all three at roughly 221,667 miles from Earth. 2026 is also notable for having 13 full moons in total, including a Blue Moon on May 31.
+
+Beyond 2026 the supermoon calendar drifts year to year. Portal Astra tracks the active lunar cycle on its main dashboard, with eclipse and major event alerts available to premium members. The simplest way to check the next one without doing the maths yourself is to open the dashboard.
 
 The general rule of thumb: late summer and autumn in the Northern Hemisphere tend to host the showiest supermoons, because the geometry of Earth around the Sun puts the Moon high in the sky on long winter nights. A late October or November supermoon often gives the most striking visual.
 
@@ -2202,6 +2204,8 @@ Rest practices help. Capricorn is the sign most likely to push past sustainable 
 
 The other practice is celebrating wins. Capricorns often hit a goal and immediately set the next one without pausing. Building rituals to actually acknowledge accomplishment, with friends and family, helps the climb feel less lonely.
 
+Portal Astra generates a fresh daily horoscope for Capricorn each morning, drawing on real-time planetary positions. It tracks Saturn's transits and the slower influences that matter most when you are playing the long game.
+
 ## Quick reference
 
 Dates: 22 December to 19 January.
@@ -2294,6 +2298,8 @@ Community involvement helps. Aquarius is genuinely energised by being part of gr
 
 The other practice is emotional presence. Aquarius lives in ideas, and ideas can be a way of avoiding feelings. Pausing to ask what you actually feel, not what you think about what you feel, is a radical Aquarius practice and pays off in deeper relationships.
 
+Portal Astra generates a fresh daily horoscope for Aquarius each morning, drawing on real-time planetary positions. It surfaces Uranus transits and the unexpected shifts that often matter most to a sign built for the unconventional.
+
 ## Quick reference
 
 Dates: 20 January to 18 February.
@@ -2385,6 +2391,8 @@ The healthier expression of Pisces energy is grounded creativity. The Pisces who
 Creative practice helps. Pisces needs an outlet for the rich inner world they carry. Without one, the energy turns inward and becomes restless or self destructive. Music, art, writing, movement practice, anything that gives the imagination a body.
 
 The other practice is healthy boundary setting. Pisces benefits enormously from learning to say no, to limit time with draining people, and to protect their own energy. The fish who can swim home as well as out to sea becomes the most powerful expression of the sign.
+
+Portal Astra generates a fresh daily horoscope for Pisces each morning, drawing on real-time planetary positions. It pays close attention to Neptune transits and the dream-like cycles that resonate most with this watery, intuitive sign.
 
 ## Quick reference
 
