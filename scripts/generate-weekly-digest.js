@@ -9,6 +9,72 @@ const MAILERLITE_KEY = process.env.MAILERLITE_API_KEY
 const ANTHROPIC_KEY  = process.env.ANTHROPIC_API_KEY
 const GROUP_ID       = '189583616610666425'  // Portal Astra - Free
 
+// ─── Tarot deck (self-contained copy of src/lib/tarot.ts TAROT_DECK) ────────
+// No imports — replicates the same 22 majors + 56 minors (78 total).
+const TAROT_CARDS = (() => {
+  const MAJORS = [
+    { name: 'The Fool',           emoji: '🃏', arcana: 'Major', theme: 'New beginnings',  upright: 'A leap of faith, fresh starts, and innocent trust in the road ahead.', reversed: 'Recklessness, hesitation, or fear of stepping into the unknown.' },
+    { name: 'The Magician',       emoji: '🪄', arcana: 'Major', theme: 'Manifestation',   upright: 'You hold every tool you need — focus your will and create.',           reversed: 'Scattered energy, untapped talent, or manipulation at play.' },
+    { name: 'The High Priestess', emoji: '🌙', arcana: 'Major', theme: 'Intuition',       upright: 'Inner knowing speaks softly; trust the mystery you already sense.',     reversed: 'Secrets withheld, silenced intuition, surface over depth.' },
+    { name: 'The Empress',        emoji: '👑', arcana: 'Major', theme: 'Abundance',       upright: 'Nurturing, fertility, and creative abundance flow toward you.',         reversed: 'Creative block, neglect, or smothering of what you tend.' },
+    { name: 'The Emperor',        emoji: '🏛️', arcana: 'Major', theme: 'Structure',       upright: 'Authority, stability, and the discipline to build something lasting.',  reversed: 'Rigidity, control, or a structure that no longer serves.' },
+    { name: 'The Hierophant',     emoji: '📜', arcana: 'Major', theme: 'Tradition',       upright: 'Guidance, shared belief, and wisdom passed down through ritual.',       reversed: 'Rebellion against dogma, or freedom from inherited rules.' },
+    { name: 'The Lovers',         emoji: '💞', arcana: 'Major', theme: 'Union',           upright: 'Connection, alignment of values, and a meaningful choice of the heart.',reversed: 'Discord, misalignment, or a difficult choice avoided.' },
+    { name: 'The Chariot',        emoji: '🛞', arcana: 'Major', theme: 'Willpower',       upright: 'Drive and determination carry you to victory — steer with focus.',     reversed: 'Loss of direction, opposing forces, or stalled momentum.' },
+    { name: 'Strength',           emoji: '🦁', arcana: 'Major', theme: 'Courage',         upright: 'Gentle power, patience, and courage that tames the wildest fear.',      reversed: 'Self-doubt, raw emotion, or strength turned to force.' },
+    { name: 'The Hermit',         emoji: '🕯️', arcana: 'Major', theme: 'Reflection',      upright: 'Solitude lights the way; seek the answer that lives within.',           reversed: 'Isolation, withdrawal, or refusing the wisdom of stillness.' },
+    { name: 'Wheel of Fortune',   emoji: '🎡', arcana: 'Major', theme: 'Cycles',          upright: 'Fate turns in your favour — change, luck, and a new chapter open.',     reversed: 'Resistance to change, bad timing, or cycles repeating.' },
+    { name: 'Justice',            emoji: '⚖️', arcana: 'Major', theme: 'Truth',           upright: 'Fairness, accountability, and cause meeting its honest effect.',        reversed: 'Imbalance, dishonesty, or consequences avoided.' },
+    { name: 'The Hanged Man',     emoji: '🙃', arcana: 'Major', theme: 'Surrender',       upright: 'A pause and a new perspective; release the need to control.',           reversed: 'Stalling, martyrdom, or clinging when it is time to let go.' },
+    { name: 'Death',              emoji: '💀', arcana: 'Major', theme: 'Transformation',  upright: 'An ending clears the ground for profound renewal.',                    reversed: 'Resistance to an ending, or change held at bay.' },
+    { name: 'Temperance',         emoji: '🍷', arcana: 'Major', theme: 'Balance',         upright: 'Patience and moderation blend opposites into harmony.',                reversed: 'Excess, impatience, or elements out of proportion.' },
+    { name: 'The Devil',          emoji: '😈', arcana: 'Major', theme: 'Attachment',      upright: 'Face what binds you — desire, habit, or fear holding you in place.',    reversed: 'Release from chains, reclaiming your own power.' },
+    { name: 'The Tower',          emoji: '🗼', arcana: 'Major', theme: 'Upheaval',        upright: 'Sudden change shakes a false foundation so truth can stand.',           reversed: 'Averted disaster, or clinging to a crumbling structure.' },
+    { name: 'The Star',           emoji: '⭐', arcana: 'Major', theme: 'Hope',            upright: 'Healing, renewal, and quiet faith after the storm.',                   reversed: 'Doubt, dimmed hope, or disconnection from your light.' },
+    { name: 'The Moon',           emoji: '🌕', arcana: 'Major', theme: 'Mystery',         upright: 'Dreams, illusion, and intuition guiding you through the unknown.',      reversed: 'Confusion lifting, or fears finally brought to light.' },
+    { name: 'The Sun',            emoji: '☀️', arcana: 'Major', theme: 'Joy',             upright: 'Warmth, success, and radiant clarity — a wholehearted yes.',           reversed: 'Temporary clouds, dimmed optimism, or delayed joy.' },
+    { name: 'Judgement',          emoji: '🎺', arcana: 'Major', theme: 'Awakening',       upright: 'A calling, reckoning, and rebirth into a truer self.',                 reversed: 'Self-doubt, avoidance, or a call left unanswered.' },
+    { name: 'The World',          emoji: '🌍', arcana: 'Major', theme: 'Completion',      upright: 'Fulfilment, wholeness, and the joyful close of a great cycle.',        reversed: 'Loose ends, a goal nearly reached, or closure delayed.' },
+  ]
+  const SUITS = [
+    { suit: 'Wands',     emoji: '🔥', theme: 'energy, passion and ambition' },
+    { suit: 'Cups',      emoji: '💧', theme: 'emotion, intuition and relationships' },
+    { suit: 'Swords',    emoji: '⚔️', theme: 'intellect, truth and conflict' },
+    { suit: 'Pentacles', emoji: '🪙', theme: 'work, money and the material world' },
+  ]
+  const RANKS = [
+    { name: 'Ace',    theme: 'New spark',    up: 'a pure new spark of',                 rev: 'a blocked or delayed beginning in' },
+    { name: 'Two',    theme: 'Choice',       up: 'balance and a meaningful choice in',  rev: 'indecision and imbalance in' },
+    { name: 'Three',  theme: 'Growth',       up: 'early growth and collaboration in',   rev: 'stalled progress or misalignment in' },
+    { name: 'Four',   theme: 'Stability',    up: 'rest, structure and stability in',    rev: 'stagnation or clinging within' },
+    { name: 'Five',   theme: 'Challenge',    up: 'conflict, loss or challenge in',      rev: 'recovery and release from struggle in' },
+    { name: 'Six',    theme: 'Harmony',      up: 'harmony, generosity and progress in', rev: 'imbalance or stalled momentum in' },
+    { name: 'Seven',  theme: 'Perseverance', up: 'perseverance and assessment in',      rev: 'doubt or giving up too soon in' },
+    { name: 'Eight',  theme: 'Movement',     up: 'swift movement and mastery in',       rev: 'delay, scattered focus or haste in' },
+    { name: 'Nine',   theme: 'Resilience',   up: 'resilience and near-fulfilment in',   rev: 'anxiety or guardedness around' },
+    { name: 'Ten',    theme: 'Completion',   up: 'completion and lasting legacy in',    rev: 'burden or an overdue ending in' },
+    { name: 'Page',   theme: 'Curiosity',    up: 'curiosity and a fresh message about', rev: 'immaturity or blocked news about' },
+    { name: 'Knight', theme: 'Action',       up: 'bold action and pursuit of',          rev: 'recklessness or stalled drive in' },
+    { name: 'Queen',  theme: 'Mastery',      up: 'nurturing mastery and depth in',      rev: 'insecurity or imbalance in' },
+    { name: 'King',   theme: 'Command',      up: 'authority and confident command of',  rev: 'control, coldness or misuse of' },
+  ]
+  const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1)
+  const minors = []
+  for (const s of SUITS) {
+    for (const r of RANKS) {
+      minors.push({
+        name: `${r.name} of ${s.suit}`,
+        emoji: s.emoji,
+        arcana: s.suit,
+        theme: r.theme,
+        upright: `${cap(r.up)} ${s.theme}.`,
+        reversed: `${cap(r.rev)} ${s.theme}.`,
+      })
+    }
+  }
+  return [...MAJORS, ...minors]
+})()
+
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 function getMoonPhase() {
@@ -131,7 +197,8 @@ async function fetchDONKI() {
 
 // ─── Claude generation ───────────────────────────────────────────────────────
 
-async function generateEmail({ moon, apod, solar, dateStr }) {
+async function generateEmail({ moon, apod, solar, dateStr, weeklyCard, angelNumber }) {
+  const tarotKeywords = `${weeklyCard.theme} — ${weeklyCard.upright}`
   const prompt = `You are writing the weekly cosmic digest email for Portal Astra (portalastra.com).
 
 Brand tone: mystical but grounded, scientific but accessible. Warm, poetic, never cheesy.
@@ -169,7 +236,27 @@ WRITING RULES — follow strictly:
 - Never use "eternal", "forever", "infinite", "tapestry", "dance" as metaphors
 - Sentences under 25 words where possible
 - The CTA button text must be specific to this week — use the NASA image title or moon phase name, not "Open Portal Astra"
-- End the SIGN_OFF with something quotable and specific to this week's moon phase, not a generic blessing`
+- End the SIGN_OFF with something quotable and specific to this week's moon phase, not a generic blessing
+
+ADDITIONAL INSTRUCTIONS (override earlier guidance where they conflict):
+
+SUBJECT LINE: Reference the current moon phase and one specific content hook. Format: '[Moon phase]: [hook]'. Example: 'Waning Crescent: release what no longer fits'. Under 50 characters. No generic phrases.
+
+PREHEADER: 60-80 character inbox preview teaser. Specific to this week. Return as field "preheader" on its own line: PREHEADER: [text]
+
+TAROT: Card this week: ${weeklyCard.name}, keywords: ${tarotKeywords}. Write one sentence on this card's energy for the week (under 20 words) and one sentence on the action it calls for (under 20 words). No em dashes. Return as field "tarot" with subfields cardName, keywords, reading — the cardName and keywords are already known, so only return the reading on its own line: TAROT_READING: [two sentences]
+
+ANGEL NUMBER: This week is ${angelNumber}. One-line meaning tied to the week, 10 words. Return as field "angelNumber" with subfields number, meaning — the number is already known, so only return the meaning on its own line: ANGEL_NUMBER_MEANING: [one line]
+
+SOLAR: End the SOLAR section with one sentence starting 'This week:' tying space weather to a human grounding tip. Under 20 words.
+
+CTA: Write a 4-6 word CTA referencing the moon phase. Example: 'Explore the Waning Crescent'. Return as field "ctaText" on its own line: CTA_TEXT: [4-6 words]
+
+ADDITIONAL FIELDS — include these labeled lines in your response in addition to the original sections:
+PREHEADER: ...
+TAROT_READING: ...
+ANGEL_NUMBER_MEANING: ...
+CTA_TEXT: ...`
 
   try {
     const r = await fetch('https://api.anthropic.com/v1/messages', {
@@ -210,20 +297,24 @@ function parseEmail(raw) {
     return match ? match[1].trim() : ''
   }
   return {
-    subject:  get('SUBJECT'),
-    preview:  get('PREVIEW'),
-    greeting: get('GREETING'),
-    moon:     get('MOON'),
-    space:    get('SPACE'),
-    solar:    get('SOLAR'),
-    ritual:   get('RITUAL'),
-    signOff:  get('SIGN_OFF'),
+    subject:       get('SUBJECT'),
+    preview:       get('PREVIEW'),
+    greeting:      get('GREETING'),
+    moon:          get('MOON'),
+    space:         get('SPACE'),
+    solar:         get('SOLAR'),
+    ritual:        get('RITUAL'),
+    signOff:       get('SIGN_OFF'),
+    preheader:     get('PREHEADER'),
+    tarotReading:  get('TAROT_READING'),
+    angelMeaning:  get('ANGEL_NUMBER_MEANING'),
+    ctaText:       get('CTA_TEXT'),
   }
 }
 
 // ─── Build HTML email ────────────────────────────────────────────────────────
 
-function buildEmailHTML(p, moon, apod) {
+function buildEmailHTML(p, moon, apod, tarot, angel) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -232,6 +323,7 @@ function buildEmailHTML(p, moon, apod) {
 <title>${p.subject}</title>
 </head>
 <body style="margin:0;padding:0;background:#0a0a0f;font-family:'DM Mono',monospace,sans-serif;color:#e8e0ff;">
+<span style="display:none;max-height:0;overflow:hidden;mso-hide:all;">${p.preheader}</span>
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0f;padding:40px 20px;">
   <tr><td align="center">
     <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
@@ -259,6 +351,12 @@ function buildEmailHTML(p, moon, apod) {
           <p style="margin:0;font-size:14px;line-height:1.75;color:rgba(232,224,255,0.8);">${p.moon}</p>
         </div>
       </td></tr>
+
+      <!-- Tarot -->
+      <tr><td style="padding:0 0 24px 0;"><a href="https://portalastra.com/?tab=tarot" style="text-decoration:none;display:block;"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding:16px 20px;background:rgba(8,10,30,0.75);border:1px solid rgba(155,138,255,0.2);border-radius:10px;"><p style="margin:0 0 4px 0;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C9A84C;">This week's tarot</p><p style="margin:0 0 4px 0;font-size:16px;font-weight:600;color:#e8e0ff;">${tarot.cardName}</p><p style="margin:0 0 10px 0;font-size:12px;color:rgba(232,224,255,0.55);">${tarot.keywords}</p><p style="margin:0 0 10px 0;font-size:14px;color:rgba(232,224,255,0.85);line-height:1.7;">${tarot.reading}</p><p style="margin:0;font-size:12px;color:#9b8aff;">Draw your full reading →</p></td></tr></table></a></td></tr>
+
+      <!-- Angel number -->
+      <tr><td style="padding:0 0 24px 0;"><a href="https://portalastra.com/?tab=sky" style="text-decoration:none;display:block;"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding:12px 16px;background:rgba(8,10,30,0.75);border:1px solid rgba(201,168,76,0.2);border-radius:10px;"><p style="margin:0 0 4px 0;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C9A84C;">This week's angel number</p><p style="margin:0;font-size:14px;color:rgba(232,224,255,0.85);">${angel.number} — ${angel.meaning}</p></td></tr></table></a></td></tr>
 
       <!-- Space -->
       <tr><td style="padding:0 0 24px;">
@@ -297,7 +395,7 @@ function buildEmailHTML(p, moon, apod) {
           style="display:inline-block;background:rgba(155,138,255,0.2);border:1px solid rgba(155,138,255,0.35);
           border-radius:10px;padding:14px 32px;color:#c4b8ff;font-size:12px;letter-spacing:0.1em;
           text-decoration:none;text-transform:uppercase;">
-          Open Portal Astra →
+          ${p.ctaText} →
         </a>
       </td></tr>
 
@@ -312,6 +410,7 @@ function buildEmailHTML(p, moon, apod) {
         <p style="margin:0 0 4px;font-size:10px;color:rgba(232,224,255,0.2);letter-spacing:0.06em;">
           You're receiving this because you subscribed at portalastra.com
         </p>
+        <p style="font-size:11px;color:rgba(232,224,255,0.3);margin:0 0 6px 0;text-align:center;">You are receiving this as a Portal Astra subscriber at {$email}.</p>
         <p style="margin:0;font-size:10px;color:rgba(232,224,255,0.2);letter-spacing:0.06em;">
           <a href="{$unsubscribe}" style="color:rgba(155,138,255,0.4);">Unsubscribe</a>
         </p>
@@ -400,7 +499,16 @@ async function main() {
   const [apod, solar] = await Promise.all([fetchAPOD(), fetchDONKI()])
   console.log(`APOD: ${apod.title} | Solar events: ${solar.count}`)
 
-  const rawEmail = await generateEmail({ moon, apod, solar, dateStr })
+  const startOfYear = new Date(new Date().getFullYear(), 0, 0)
+  const weekNumber = Math.floor((Date.now() - startOfYear.getTime()) / (7 * 24 * 60 * 60 * 1000))
+  const weeklyCard = TAROT_CARDS[weekNumber % TAROT_CARDS.length]
+  const _an = new Date()
+  const _digits = [_an.getDate(), _an.getMonth() + 1, ..._an.getFullYear().toString().split('').map(Number)]
+  let angelNumber = _digits.reduce((a, b) => a + b, 0)
+  while (angelNumber > 9) { angelNumber = angelNumber.toString().split('').map(Number).reduce((a,b)=>a+b,0) }
+  console.log(`Week #${weekNumber} | Tarot: ${weeklyCard.name} | Angel: ${angelNumber}`)
+
+  const rawEmail = await generateEmail({ moon, apod, solar, dateStr, weeklyCard, angelNumber })
   if (!rawEmail) throw new Error('Claude generation returned nothing')
 
   const parsed = parseEmail(rawEmail)
@@ -408,7 +516,14 @@ async function main() {
 
   console.log(`Subject: ${parsed.subject}`)
 
-  const html        = buildEmailHTML(parsed, moon, apod)
+  const tarot = {
+    cardName: weeklyCard.name,
+    keywords: `${weeklyCard.theme} — ${weeklyCard.upright}`,
+    reading:  parsed.tarotReading,
+  }
+  const angel = { number: angelNumber, meaning: parsed.angelMeaning }
+
+  const html        = buildEmailHTML(parsed, moon, apod, tarot, angel)
   const scheduleAt  = getScheduleTime()
   const campaignId  = await createAndScheduleCampaign(parsed.subject, html, scheduleAt)
 
