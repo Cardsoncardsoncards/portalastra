@@ -1122,6 +1122,1408 @@ A: There is no scientific evidence that it does. Mercury only appears to move ba
 Q: How should I handle Mercury retrograde?
 A: Treat the traditional advice as sensible life admin: double-check communication, back up your files, allow extra travel time, and favour reviewing and finishing over launching something new. It works as a helpful prompt to slow down, whether or not you take the astrology literally.`,
   },
+  {
+    slug: 'what-is-my-life-path-number',
+    title: 'What Is My Life Path Number? How to Calculate Yours and What It Means',
+    excerpt:
+      'Your life path number is the single most personal piece of numerology, calculated from your birth date. Here is exactly how to find yours and what each number means.',
+    date: '2026-06-17',
+    category: 'Angel Numbers',
+    tags: ['life path number', 'numerology', 'angel numbers', 'birth date'],
+    body: `Your birth date carries one number that numerology treats as a kind of personal compass. It is called the life path number. Unlike the angel numbers you might glimpse on a clock or a receipt, it does not change. Calculate it once and it stays with you, pointing at the broad themes you tend to circle back to in work, in love, and in the way you make decisions.
+
+This guide will walk you through the exact calculation. It explains what each result means, and clears up the two questions that trip people up most: when to reduce a number and when not to, and how the life path differs from the angel numbers Portal Astra surfaces on its sky dashboard.
+
+## What a life path number actually is
+
+The life path is a single digit between one and nine, derived from the full date of your birth. In numerology it is read as the underlying current of your life. It is the shape that recurring lessons tend to take. Where your angel number for today is a passing prompt, your life path is closer to a fixed star.
+
+You can lean toward it or push against it, but it stays where it is. There are two important exceptions, called master numbers. We will get to those in a moment.
+
+The maths is borrowed from older traditions of digit reduction. The Pythagoreans of ancient Greece used the same approach to assign meaning to numbers more than two thousand years ago. Numerology pulled this technique forward into the modern era. Writers in the early twentieth century formalised the life path as one of the core calculations in a personal numerology profile.
+
+## How to calculate yours, step by step
+
+Take your full birth date in the format day, month, year. Write out every digit. Add them all together. If the sum has more than one digit, add those digits together too. Keep going until you reach a single digit.
+
+A worked example. Say you were born on 14 March 1990. Write out all the digits: 1, 4, 0, 3, 1, 9, 9, 0. The sum is 27. Two plus seven is nine. Your life path number is nine.
+
+Another. Born on 2 August 2001. Digits: 2, 0, 8, 2, 0, 0, 1. Sum is 13. One plus three is four. Life path four.
+
+A third. Born on 29 November 1985. Digits: 2, 9, 1, 1, 1, 9, 8, 5. Sum is 36. Three plus six is nine. Life path nine.
+
+This is the same method Portal Astra uses to surface a daily angel number on its dashboard, just with a different input. There the input is today's date; here it is yours. You can read more about that in Angel Numbers Explained.
+
+## Master numbers and when not to reduce
+
+If at any point in the reduction the sum lands on 11, 22, or 33, numerology says you stop there. These are master numbers, considered especially potent. You read an 11 as 11, not as 2. A 22 stays as 22, not 4. A 33 stays as 33, not 6.
+
+Example: born on 11 February 1987. Digits: 1, 1, 0, 2, 1, 9, 8, 7. Sum is 29. Two plus nine is 11. Stop. Master number 11.
+
+Example: born on 25 May 1993. Digits: 2, 5, 0, 5, 1, 9, 9, 3. Sum is 34. Three plus four is seven. Regular life path seven, no master number involved.
+
+Many practitioners also check the intermediate sum. If your first sum is exactly 11, 22, or 33 before you reduce, that is also read as a master number. Other schools insist only the final reduction matters. Both approaches are common. Pick one and stay consistent, and remember that none of this is settled science. It is an interpretive tradition.
+
+## The nine life paths, one by one
+
+One is the initiator. Independent, driven, and quick to start things. The path of one is learning to lead without isolating yourself, and to finish what you begin.
+
+Two is the diplomat. Cooperative, sensitive, and attuned to balance. The path of two is learning to value your own voice as much as you value harmony with others.
+
+Three is the communicator. Expressive, social, and creatively restless. The path of three is choosing depth over scatter, and finishing one expressive project before chasing the next.
+
+Four is the builder. Practical, disciplined, and steady. The path of four is creating real structure without becoming rigid, and resting before you collapse.
+
+Five is the changemaker. Adventurous, curious, and allergic to routine. The path of five is learning that freedom requires some commitments, and that sustained focus is its own kind of liberation.
+
+Six is the carer. Nurturing, responsible, and family-oriented. The path of six is giving generously without giving yourself away, and learning the word no.
+
+Seven is the seeker. Analytical, introspective, and drawn to the unseen. The path of seven is balancing the inner life with real connection, and trusting that not everything has to be solved.
+
+Eight is the achiever. Ambitious, organised, and comfortable with power. The path of eight is learning that money and status are tools, not the destination, and that integrity is the multiplier.
+
+Nine is the humanitarian. Compassionate, idealistic, and wise. The path of nine is learning to serve without martyrdom, and to let endings happen.
+
+Master 11 is intuition turned up. It carries strong sensitivity and a tendency toward vision. The path is learning to ground that insight in everyday life.
+
+Master 22 is sometimes called the master builder. It pairs vision with capacity to execute. The path is learning to scale your ambition without burning out.
+
+Master 33 is the master teacher. It carries deep compassion and presence. The path is offering wisdom without losing yourself in service.
+
+## Life path versus angel number
+
+This is where most people get confused. A life path number is calculated once, from your birth date, and stays with you. An angel number is a sequence you notice repeatedly, or a number derived from a passing date such as today. Same maths in some cases, different input, very different role.
+
+Your life path is a long arc. It points at the kind of work that suits you and the lessons you tend to return to. An angel number is a moment. It is a prompt to pause and ask what you are focused on right now. Treat the first as a profile and the second as a daily nudge.
+
+Portal Astra makes this distinction visible. The Sky tab surfaces a daily angel number, and the birth calculator lets you compute your life path from your date of birth and read the meaning alongside your sun and moon signs.
+
+## How to actually use your life path
+
+The honest framing for any numerology insight is that it is a mirror, not a forecast. Your life path number cannot tell you what will happen. It can only suggest themes worth paying attention to.
+
+Use yours like a writing prompt. Read the meaning of your number and ask where you see those themes in your life. A life path four might notice they crave structure but resist it. A life path five might notice they keep saying yes to change without finishing what they started. Those are useful observations regardless of whether you believe the number caused them.
+
+The other healthy practice is to read across more than one system. Your life path is one lens. Your sun sign, moon sign, and rising sign are three more. Each tells a slightly different story, and looking at them together is more revealing than relying on one in isolation. The Sky tab on Portal Astra layers them so you can compare.
+
+## Common questions
+
+Two questions come up almost every time. The first is whether you should reduce a master number to its single digit anyway. The traditional answer is no, but some people find the master number meanings too heavy and prefer the simpler reading. There is no rule. Use whichever feels useful, as long as you are consistent.
+
+The second is whether the life path can change. The number itself does not change. Your birth date is fixed. What can shift is how strongly you express it, or how aware you are of it. A life path nine in their twenties might be all idealism and burnout. The same person at forty might have learned to serve with limits. The number is the same; the relationship to it matures.
+
+## Quick reference
+
+Life path number: a single digit between 1 and 9, or master numbers 11, 22, 33. Calculated by summing every digit of your birth date and reducing.
+
+Quick meanings: 1 initiator. 2 diplomat. 3 communicator. 4 builder. 5 changemaker. 6 carer. 7 seeker. 8 achiever. 9 humanitarian. 11 visionary. 22 master builder. 33 master teacher.
+
+When not to reduce: stop at 11, 22, or 33.
+
+Where to find yours: the birth calculator on the Sky tab of Portal Astra, or use the method above with your full birth date.
+
+How to use it: as a reflective prompt about recurring themes, not as a forecast. Pair it with your sun sign, moon sign, and any angel numbers you notice for a fuller picture.`,
+  },
+  {
+    slug: 'supermoon-meaning-astrology',
+    title: 'What Is a Supermoon? The Science and Spiritual Meaning Explained',
+    excerpt:
+      'A supermoon is a full moon at its closest point to Earth. Here is the orbital mechanics behind it, the upcoming dates, and how to work with the energy.',
+    date: '2026-06-18',
+    category: 'Moon',
+    tags: ['supermoon', 'full moon', 'moon phases', 'astrology', 'astronomy'],
+    body: `Once or twice a year the full moon looks bigger and brighter than usual, hanging low over the horizon like it has shifted closer overnight. It has, very slightly. That close-pass full moon is what we call a supermoon. The word started as a marketing term in the late 1970s and has stuck because the experience itself is real. The Moon really is nearer, the tides really are stronger, and a lot of people swear that something in the atmosphere feels different. This guide explains the orbital mechanics, the upcoming dates, and how to work with a supermoon night whether your interest is astronomical, astrological, or both.
+
+## What makes a moon super
+
+The Moon does not travel in a perfect circle around Earth. Its orbit is slightly oval, an ellipse. The closest point on that ellipse is called perigee, the farthest is apogee. The two are about fifty thousand kilometres apart, which sounds enormous but is small compared with the average distance of around three hundred and eighty four thousand kilometres.
+
+A supermoon happens when a full moon occurs within about ninety percent of perigee. That makes it appear up to fourteen percent larger and about thirty percent brighter than a moon at apogee. The exact threshold depends on which astronomer you ask. There is no formal scientific definition.
+
+Photographers know the effect well. A supermoon shot low on the horizon, framed against a recognisable landmark, looks colossal. Much of that extra size is the famous Moon illusion, which makes a low moon look bigger no matter the night. The real perigee bonus is more subtle, but it stacks on top.
+
+## How often supermoons happen
+
+Most years see three or four supermoons. Some years stretch to five. They tend to cluster, because the Moon's orbit shifts slowly enough that a few consecutive full moons can fall near perigee in a row. The widely cited NASA threshold counts any full moon within ninety percent of the closest perigee in a given year as a supermoon.
+
+Closest of the close moons are called perigee syzygy in technical literature. These are full moons that fall on the same day as the absolute closest perigee of the year. They can appear up to fourteen percent wider than the tiniest full moons, which are nicknamed micromoons.
+
+The cycle that drives this is roughly four hundred and eleven days, so the closest supermoon of the year drifts forward through the calendar over time. Keep that in mind if you read a list of supermoon dates that already feels out of date. Always check the current year.
+
+## Upcoming supermoon dates
+
+The supermoon calendar drifts year to year. Portal Astra tracks the active lunar cycle on its main dashboard, with eclipse and major event alerts available to premium members. The simplest way to check the next one without doing the maths yourself is to open the dashboard.
+
+The general rule of thumb: late summer and autumn in the Northern Hemisphere tend to host the showiest supermoons, because the geometry of Earth around the Sun puts the Moon high in the sky on long winter nights. A late October or November supermoon often gives the most striking visual.
+
+If you want to plan a watch, pick a clear horizon to the east at moonrise. Low moons look most dramatic because the eye reads them against the landscape. Once high overhead, even a supermoon looks like a regular full moon, just brighter.
+
+## The energetic and astrological meaning
+
+In astrology, a full moon is already considered a peak. It is the point in the lunar cycle when intentions planted at the new moon come to harvest, where emotions feel amplified and intuition runs loud. A supermoon takes that up a notch. Many astrologers treat it as a full moon with the volume turned higher.
+
+What that means in practice is highly personal. People often report sleeping less well on a supermoon night, feeling restless, or finding old emotional material rising to the surface. Whether you read that as a real lunar pull or a self-fulfilling expectation, the response is the same. Slow down, journal, and treat the day around a supermoon as one for finishing rather than launching.
+
+The other layer is sign and house. A supermoon, like any full moon, falls in a particular zodiac sign. That sign colours the themes that come up. A supermoon in Aries amplifies questions of independence and self-direction. A supermoon in Cancer brings home, family, and emotional roots into focus. A supermoon in Scorpio invites a hard, honest look at intimacy and power. The Moon tab on Portal Astra shows which sign hosts each full moon, including any supermoons.
+
+## What to do on a supermoon night
+
+The most reliable advice is also the simplest. Step outside. Look at the Moon. Spend a few minutes watching how it sits in the sky. Even on the most loaded astrological night, that small act of attention does most of the work.
+
+Beyond that, the traditional practices for a powerful full moon all apply. Write a release list: the habits, beliefs, or attachments you are ready to let go of. Some people read the list aloud, then tear or burn it safely. Others fold it into a journal entry. The act of naming what you are releasing matters more than the method.
+
+If you would rather receive than release, do the reverse. Write down what you are calling in for the next lunar cycle. The full moon is read as a high-charge moment, and a supermoon is sometimes treated as a triple charge because of its proximity. Many ritualists charge crystals, water, or sentimental objects under the supermoon, leaving them on a windowsill overnight. Portal Astra's premium intention guides include a printable supermoon practice.
+
+## Supermoons, tides, and the real science of pull
+
+The Moon's gravity raises the tides, and a supermoon does pull a little harder. King tides, the highest tides of the year, often line up with full moons near perigee. Coastal communities can see exceptionally high water and slightly stronger low tides for a day or two on either side.
+
+What a supermoon does not do is cause earthquakes, severe weather, or any other catastrophe that internet rumours like to attribute to it. Multiple studies, including reviews by the United States Geological Survey, find no statistically significant link between perigee full moons and seismic activity. The pull is real but very small compared with the forces already at work inside Earth. Enjoy the spectacle. Skip the doom.
+
+## How to photograph a supermoon
+
+If you want a good picture, the secret is to shoot the rising moon against something in the foreground. A tree, a building, a hill on the horizon. The contrast makes the Moon look enormous. Use a long lens if you have one. A telephoto compresses distance and exaggerates the Moon's size relative to the foreground.
+
+Smartphones can do this too. Look for a clear horizon at moonrise, frame against something recognisable, and avoid the auto exposure that washes the surface out. Most phones now have a night mode or pro mode that lets you drop the exposure and recover surface detail.
+
+## Quick reference
+
+Definition: a full moon within about ninety percent of perigee, the Moon's closest point to Earth.
+
+Visual difference: up to fourteen percent larger and thirty percent brighter than a moon at apogee.
+
+How often: three or four per year, sometimes more.
+
+Best viewing: at moonrise against a foreground horizon.
+
+What it really does: stronger tides on the day, including king tides at the coast.
+
+What it does not do: cause earthquakes, severe weather, or other catastrophes.
+
+Energetic reading: amplified full moon. Use the day for releasing, finishing, and reflecting rather than launching.
+
+Where to track: the Portal Astra dashboard, with eclipse and supermoon alerts available to premium members.`,
+  },
+  {
+    slug: 'aries-zodiac-sign-complete-guide',
+    title: 'Aries Zodiac Sign: Complete Guide to Personality, Love, Career, and Compatibility',
+    excerpt:
+      'Aries is the first sign of the zodiac, ruled by Mars and the element of fire. A complete guide to Aries personality, love, career, season energy, and compatibility.',
+    date: '2026-06-19',
+    category: 'Astrology',
+    tags: ['aries', 'zodiac', 'astrology', 'star sign'],
+    body: `Aries is the opening note of the zodiac, the sign the Sun moves into right after the spring equinox in the Northern Hemisphere. It is the season of green shoots and bright impulses, and the sign itself carries that quality. Ruled by Mars, the warrior planet, and built from the element of fire, Aries is the first instinct made into a personality. This guide covers the dates, the ruling forces, the strengths and the shadows, love compatibility, career, and what Aries season means for every other sign in the chart.
+
+## Aries dates and the basics
+
+Sun sign Aries runs from roughly 21 March to 19 April each year. Exact start and end dates shift by a day depending on the year and time zone. Anyone born in this window has the Sun in Aries, though their moon, rising, and other placements may sit elsewhere on the wheel.
+
+The symbol is the Ram. Aries is a cardinal sign, meaning it starts a season. It is also the first of the three fire signs, ahead of Leo and Sagittarius. Its ruling planet is Mars, named for the Roman god of war. Mars is the planet of drive, energy, and the will to act. That ruling combination of cardinal and fire makes Aries an initiator.
+
+The element of fire shows up in temperament. Fire signs are warm, direct, and quick to ignite. The cardinal quality means they prefer to be at the front, leading the charge, rather than maintaining or refining a project already in motion.
+
+## Personality strengths and shadows
+
+The strengths of an Aries reads like a list of useful first-mover traits. They are bold, decisive, and energetic. They have a natural appetite for new projects and a tolerance for risk that calmer signs lack. They get things going.
+
+They are also direct. An Aries will tell you what they think the moment they think it. There is little political dressing in their communication. If you ask their opinion, you will get it.
+
+The shadow side is the same fire seen from a less flattering angle. Aries can be impulsive, leaping before they look, and abandoning a project the moment it becomes routine. They can run hot tempered, especially when they feel blocked. The same energy that lights the fuse can scorch the room.
+
+The work of an Aries life, in astrological terms, is learning to harness the fire without burning out. To finish what they start. To channel the heat into sustained effort rather than a series of bright explosions.
+
+## Love and relationships
+
+In love, Aries leads with intensity. They are the sign most likely to ask you out first, to plan a memorable date, to declare their feelings before the timing is ready. That courage is appealing. It can also overwhelm a slower partner.
+
+What an Aries wants from a relationship is partnership with momentum. Stagnation is the killer for them. They thrive with a partner who has their own fire, their own goals, their own willingness to grow. They need to be both inspired and respected.
+
+Compatibility, the traditional way of reading it, looks like this. Aries blends easily with the other fire signs, Leo and Sagittarius, because the temperaments match. Air signs Gemini, Libra, and Aquarius tend to fan the fire well, since air feeds flame. Water signs Cancer, Scorpio, and Pisces can either soften an Aries beautifully or feel constantly overheated, depending on the chart. Earth signs Taurus, Virgo, and Capricorn move at a slower pace, which can ground or frustrate Aries.
+
+None of these pairings are written in stone. Sun sign compatibility is a starting point. A full chart reading, which Portal Astra can help you generate from your birth date, will give a much richer view.
+
+## Career and ambition
+
+Aries is built for the front line. They excel where speed, courage, and self direction are rewarded. Sales, entrepreneurship, emergency services, athletics, leadership, the military. Anywhere the path forward is unmade and someone has to walk it first.
+
+They are less suited to environments that reward patience, consensus, and slow refinement. Long bureaucratic processes drain them. Meetings without action items wear them down. They want to do the thing and adjust as they go.
+
+In a team, Aries is often the spark. They will name the goal first, push for the early decision, and rally energy when others are flagging. Their growing edge is to slow down enough to let other voices in, and to handle the long middle of any project where the excitement fades and the grind takes over.
+
+## Aries season and what it means for every sign
+
+When the Sun enters Aries, every sign feels a little of the start-fresh energy. It is the astrological new year in many traditions, the moment the wheel turns over. Whatever else your chart is doing, Aries season is a useful time to begin.
+
+For Aries themselves, it is a birthday season and a personal new year. Set goals. Take stock. Pick the next direction.
+
+For the other fire signs, Leo and Sagittarius, Aries season brings a tailwind of energy and confidence. For the air signs it sparks ideas and conversation. For the water signs it can feel jarring after the dreamy end of Pisces season. For the earth signs it is a prompt to take action on plans that have been on paper too long.
+
+The daily horoscope on Portal Astra refreshes through Aries season with this energy, and the birth calculator on the Sky tab will show you where Aries sits in your full chart, even if your Sun is elsewhere.
+
+## Famous Aries to know
+
+Lady Gaga, Mariah Carey, Vincent van Gogh, Maya Angelou, Robert Downey Jr, Leonardo da Vinci, Lana Del Rey, Quentin Tarantino. Bold creatives, fierce performers, restless makers. The list is heavy on artists and innovators who happily disrupted whatever room they walked into. That tracks.
+
+## How to live well as an Aries
+
+The healthier expression of Aries energy is courage tempered by patience. The same instinct that wants to lead is also the instinct that learns. An Aries who has done the inner work knows when to charge and when to wait, and the difference is often what separates a brilliant career from a string of half finished projects.
+
+Physical movement helps. Aries is a body sign as much as a mind sign. Regular exercise, especially something competitive or intense, drains the excess heat that otherwise turns into irritability. Cold water, fresh air, and a clear physical goal are reliable allies.
+
+The other practice is finishing. Pick something. Stick with it through the boring middle. Cross it off. Repeat. The reward an Aries does not always realise they are chasing is the deep satisfaction of completion, which is different from the rush of beginning.
+
+## Quick reference
+
+Dates: 21 March to 19 April.
+
+Symbol: the Ram.
+
+Element: fire.
+
+Modality: cardinal.
+
+Ruling planet: Mars.
+
+Strengths: courage, decisiveness, energy, leadership, honesty.
+
+Shadows: impulsivity, temper, impatience, restlessness.
+
+Best matches by tradition: Leo, Sagittarius, Gemini, Libra, Aquarius.
+
+Career strengths: leadership, entrepreneurship, sales, athletics, emergency response.
+
+Season: 21 March to 19 April. Time for new starts and bold moves.
+
+Where to dig deeper: the birth calculator and daily horoscope on the Sky tab of Portal Astra.`,
+  },
+  {
+    slug: 'taurus-zodiac-sign-complete-guide',
+    title: 'Taurus Zodiac Sign: Complete Guide to Personality, Love, Career, and Compatibility',
+    excerpt:
+      'Taurus is the second sign of the zodiac, ruled by Venus and the element of earth. A complete guide to Taurus personality, love, career, and compatibility.',
+    date: '2026-06-20',
+    category: 'Astrology',
+    tags: ['taurus', 'zodiac', 'astrology', 'star sign'],
+    body: `If Aries is the spark, Taurus is the slow burn that follows. The Sun moves into Taurus in late April, deep into spring in the Northern Hemisphere. The world is greening, flowers are arriving, and the impatient energy of Aries gives way to a more sensual, grounded sign. Ruled by Venus and built from the element of earth, Taurus is the zodiac at its most embodied. This guide covers the dates, the ruling forces, the strengths and the shadows, love, career, season energy, and how to live well as a Taurus.
+
+## Taurus dates and the basics
+
+Sun sign Taurus runs from roughly 20 April to 20 May. Exact dates shift by a day depending on the year and time zone. Anyone born in this window has the Sun in Taurus, though their moon and rising signs may sit elsewhere.
+
+The symbol is the Bull. Taurus is a fixed sign, meaning it sits in the middle of a season and holds steady. It is the first of three earth signs, joined later by Virgo and Capricorn. Its ruling planet is Venus, the planet of love, beauty, and pleasure.
+
+That combination, fixed and earth, ruled by Venus, gives Taurus its core qualities. Steady. Sensual. Loyal. Slow to start, slower to change, beautifully patient once committed. The bull does not chase. It grazes, and when it decides to move it moves with surprising force.
+
+## Personality strengths and shadows
+
+A Taurus shines in the quieter virtues. Reliability. Patience. A talent for building things that last. They tend to be the friends you trust to actually show up, the colleagues who finish what they start, the partners who stick around when things get hard.
+
+They have a strong appreciation for the physical world. Good food, soft fabrics, time in nature, the warmth of a familiar place. This is not shallow. It is a deep wisdom about the senses as a way of being present.
+
+The shadow of this same energy is stubbornness. A Taurus who has made up their mind is hard to move. They can resist change long past the point it would have served them, and they can hold a grudge with the same patience they bring to gardening. They can also slide into possessiveness, treating people and things as property to be kept rather than gifts to be enjoyed.
+
+The work of a Taurus life is learning to distinguish between healthy persistence and stubborn refusal. Between sensual appreciation and consumption. Between loyalty and possession.
+
+## Love and relationships
+
+In love, Taurus is the long burn. They are not the sign most likely to declare love on the second date. They are the sign most likely to still be there ten years in, showing up, building a home, making small sustained gestures of care.
+
+What a Taurus wants in a relationship is depth that you can feel. Touch. Shared meals. Predictable rhythms. They are deeply sensual without being theatrical. They want partners who appreciate quality, who notice details, who can stay.
+
+Tradition matches Taurus well with the other earth signs, Virgo and Capricorn, where the values align. Water signs Cancer, Scorpio, and Pisces bring emotional depth that Taurus can hold beautifully. Fire signs can feel exciting but tiring over time. Other air signs may struggle with the slower pace.
+
+As always, sun sign matching is a starting point. The birth calculator on Portal Astra layers your sun, moon, and rising signs to give a more honest read on what you actually look for in love.
+
+## Career and ambition
+
+Taurus thrives where patience, craft, and quality pay off. Architecture, fine arts, finance, real estate, hospitality, food, design, music. Any field where a slow accumulation of skill is rewarded over flashy short term wins.
+
+They are less suited to rapid pivots and frequent crises. A Taurus in a high churn startup will probably burn out faster than they admit. A Taurus in a craft business they own will quietly outlast competitors.
+
+In a team they are the stabilising force. They will not push for the daring decision, but they will execute reliably when one is made. They are excellent at building processes, holding institutional memory, and protecting the things that work.
+
+The growing edge for Taurus at work is to embrace some level of change. The world moves faster than a bull is comfortable with. Learning to accept new tools, new methods, and new colleagues without resentment is a Taurus career milestone.
+
+## Taurus season and what it means for every sign
+
+When the Sun enters Taurus, the whole zodiac slows down a little. The frenetic energy of Aries season gives way to something earthier. It is a good time to plant gardens, both literal and metaphorical, and to commit to what you actually want to grow.
+
+For Taurus, it is a birthday season and a personal new year. A good time to make commitments and to invest in things that take time to mature.
+
+For the other earth signs, Taurus season brings traction and follow through. For water signs it offers grounding and nourishment. For fire signs it is a chance to slow down and savour. For air signs it is a prompt to come down from ideas into action.
+
+The daily horoscope on Portal Astra reflects this shift each year. The Sky tab will also tell you where Taurus sits in your full birth chart.
+
+## Famous Taurus to know
+
+Audrey Hepburn, Stevie Wonder, William Shakespeare, Adele, David Beckham, Cher, Salvador Dali, George Clooney. A mix of artists, performers, and craftsmen whose work has aged into deep recognisability. Many built careers slowly, on their own terms, and stuck around long enough to define their fields.
+
+## How to live well as a Taurus
+
+The healthier expression of Taurus energy is patient appreciation. The bull who has done the inner work knows the difference between savouring a thing and clinging to it, and that knowledge is what separates a peaceful life from a stuck one.
+
+Time outside helps. Taurus is the most physically rooted sign, and it tends to feel right when standing in a garden, walking in a forest, or simply sitting on grass. Even short doses make a noticeable difference.
+
+The other practice is to release without panic. A Taurus who can let go of a friendship that has soured, a job that no longer fits, a possession that has lost meaning, becomes much freer than one who keeps everything just in case. The bull is allowed to walk to a new field.
+
+## Quick reference
+
+Dates: 20 April to 20 May.
+
+Symbol: the Bull.
+
+Element: earth.
+
+Modality: fixed.
+
+Ruling planet: Venus.
+
+Strengths: patience, reliability, loyalty, sensual appreciation, craft.
+
+Shadows: stubbornness, possessiveness, resistance to change.
+
+Best matches by tradition: Virgo, Capricorn, Cancer, Scorpio, Pisces.
+
+Career strengths: finance, real estate, design, hospitality, music, craft.
+
+Season: 20 April to 20 May. Time for commitment and slow growth.
+
+Where to dig deeper: the birth calculator and daily horoscope on the Sky tab of Portal Astra.`,
+  },
+  {
+    slug: 'gemini-zodiac-sign-complete-guide',
+    title: 'Gemini Zodiac Sign: Complete Guide to Personality, Love, Career, and Compatibility',
+    excerpt:
+      'Gemini is the third sign of the zodiac, ruled by Mercury and the element of air. A complete guide to Gemini personality, love, career, and compatibility.',
+    date: '2026-06-21',
+    category: 'Astrology',
+    tags: ['gemini', 'zodiac', 'astrology', 'star sign'],
+    body: `Gemini opens the air phase of the zodiac. The Sun moves into Gemini around late May, the moment in the Northern Hemisphere when school year energy peaks and summer feels close enough to touch. Ruled by Mercury, the planet of language and thought, and built from the element of air, Gemini is the zodiac in conversation with itself. This guide covers the dates, the ruling forces, the strengths and the shadows, love, career, season energy, and how to live well as a Gemini.
+
+## Gemini dates and the basics
+
+Sun sign Gemini runs from roughly 21 May to 20 June. Exact dates shift by a day depending on the year and time zone. Anyone born in this window has the Sun in Gemini.
+
+The symbol is the Twins, and the duality matters. Gemini is mutable, meaning it ends a season and prepares for the next. It is the first of three air signs, ahead of Libra and Aquarius. Its ruling planet is Mercury, the planet of communication, thinking, and movement.
+
+The mutable air combination is what gives Gemini its restless, quicksilver quality. Adaptive, curious, in constant motion mentally if not physically. The Twins are often misread as two-faced. The truer reading is that Gemini can hold two ideas, two moods, two interests at once, and considers this normal.
+
+## Personality strengths and shadows
+
+Gemini is the great communicator of the zodiac. They are articulate, witty, and quick. They tend to learn fast, hold a wide range of interests, and move easily between contexts. A Gemini at their best can talk to anyone and find common ground.
+
+They are also curious by nature. The world is interesting. Information is intoxicating. New ideas, new people, new books and shows and conversations are the substances Gemini chases.
+
+The shadow is scatter. The same energy that lets a Gemini start ten projects can stop them finishing any of them. They can be inconsistent in commitments, present in conversation but absent in follow through. They can also be a little restless with intimacy, leaning on words instead of feelings when emotional depth would serve them better.
+
+The work of a Gemini life is learning to choose. To say yes to fewer things and finish them. To stay long enough to discover what becomes interesting after the initial novelty wears off.
+
+## Love and relationships
+
+In love, Gemini wants conversation. They are the sign most likely to fall for someone in a long text thread, an interesting argument, a shared joke. Words are foreplay for them, and intellectual chemistry matters more than nearly any other compatibility factor.
+
+What a Gemini wants in a relationship is a partner who is endlessly interesting and who gives them room to be themselves. Possessive partners suffocate them. Predictable routines without intellectual sparks bore them. They need both stability and surprise, which is harder to deliver than it sounds.
+
+Tradition matches Gemini well with fellow air signs, Libra and Aquarius, where the wavelengths align. Fire signs Aries, Leo, and Sagittarius bring excitement that fuels Gemini conversation. Earth signs can offer grounding but may find Gemini exhausting. Water signs vary widely.
+
+These are starting points. The birth calculator on Portal Astra lets you look beyond sun sign matching and compare moons and Venus placements, which often matter more for romance.
+
+## Career and ambition
+
+Gemini thrives where words, ideas, and quick thinking are rewarded. Journalism, teaching, marketing, sales, writing, broadcasting, translation, software, design. Anywhere a varied workday and constant new input is a feature, not a bug.
+
+They are less suited to roles with unchanging routines or long stretches of solitary work. A Gemini in a back office data entry job will likely look bored within months. The same Gemini in a busy newsroom or a fast moving agency may thrive.
+
+In a team they are the connector. They spot the link between two ideas. They translate between specialists. They keep the social fabric of the workplace alive. Their growing edge is to commit to a single domain long enough to develop deep expertise, which is the thing Gemini chases least naturally.
+
+## Gemini season and what it means for every sign
+
+When the Sun enters Gemini, the zodiac speeds up. Conversations multiply. Plans pile up. The energy is curious, social, and a little scattered. It is a good season to learn, to network, and to write things down.
+
+For Gemini, it is a birthday season and a personal new year. Set learning goals. Pick the conversations you want to start. Decide what you want to be talking about a year from now.
+
+For the other air signs, it is a tailwind. For fire signs it sparks ideas and connections. For earth signs it is a useful disruption to routine. For water signs it can feel overwhelming, but offers a chance to engage with the world through language.
+
+The daily horoscope on Portal Astra reflects this each year, and the Sky tab will show where Gemini sits in your chart.
+
+## Famous Gemini to know
+
+Marilyn Monroe, Bob Dylan, Angelina Jolie, Kanye West, Paul McCartney, Anne Frank, Morgan Freeman, Stevie Nicks. Performers, writers, communicators. The list is heavy on people who shaped culture through what they said, sang, or wrote.
+
+## How to live well as a Gemini
+
+The healthier expression of Gemini energy is choosing a few things well. The same mind that can pick up anything can also commit deeply once it picks something. Gemini who has done the inner work knows how to stay through the part where the novelty fades.
+
+Writing helps. Gemini processes through language, and a regular writing practice, whether a journal, a newsletter, or letters to friends, organises the buzz. Reading widely helps too, which Gemini barely needs to be told.
+
+The other practice is presence. Gemini lives in language, and language can be a way of skating over feeling. Pausing in a conversation, naming a feeling instead of analysing it, sitting with a friend in silence: these are radical acts for Gemini and they pay off.
+
+## Quick reference
+
+Dates: 21 May to 20 June.
+
+Symbol: the Twins.
+
+Element: air.
+
+Modality: mutable.
+
+Ruling planet: Mercury.
+
+Strengths: communication, curiosity, adaptability, intelligence, wit.
+
+Shadows: scatter, inconsistency, restlessness, surface skating.
+
+Best matches by tradition: Libra, Aquarius, Aries, Leo, Sagittarius.
+
+Career strengths: writing, journalism, teaching, marketing, sales, translation.
+
+Season: 21 May to 20 June. Time for learning, networking, and conversation.
+
+Where to dig deeper: the birth calculator and daily horoscope on the Sky tab of Portal Astra.`,
+  },
+  {
+    slug: 'cancer-zodiac-sign-complete-guide',
+    title: 'Cancer Zodiac Sign: Complete Guide to Personality, Love, Career, and Compatibility',
+    excerpt:
+      'Cancer is the fourth sign of the zodiac, ruled by the Moon and the element of water. A complete guide to Cancer personality, love, career, and compatibility.',
+    date: '2026-06-22',
+    category: 'Astrology',
+    tags: ['cancer', 'zodiac', 'astrology', 'star sign'],
+    body: `Cancer opens the water phase of the zodiac. The Sun enters Cancer at the summer solstice in the Northern Hemisphere, the longest day of the year, the moment light hits its peak before slowly beginning to fade. That timing is part of the sign. Cancer is the keeper of light at its fullest, and the steward of what we choose to bring inside. Ruled by the Moon and made of water, Cancer is the most emotionally fluent sign in the zodiac. This guide covers the dates, the ruling forces, the strengths and shadows, love, career, season, and how to live well as a Cancer.
+
+## Cancer dates and the basics
+
+Sun sign Cancer runs from roughly 21 June to 22 July. Exact dates shift by a day depending on the year and time zone. Anyone born in this window has the Sun in Cancer.
+
+The symbol is the Crab, a creature with a hard outer shell protecting a soft inner body. Cancer is cardinal, meaning it starts a season. It is the first of three water signs, ahead of Scorpio and Pisces. Its ruling celestial body is the Moon, the closest object in the sky and the one that most directly influences tides, moods, and rhythms.
+
+That combination, cardinal and water, ruled by the Moon, produces a sign that initiates emotionally. Cancer is the one who builds the home, calls the family together, organises the birthday, holds the memory. Soft inside, structured outside.
+
+## Personality strengths and shadows
+
+Cancer's strengths cluster around care. They are nurturing, loyal, and emotionally attentive. They notice when someone in the room is off. They remember the small things that matter to people. They are protective of those they love in a way that can be fierce when tested.
+
+They are also creative. The Moon ruled signs tend to have rich inner lives, vivid imaginations, and a knack for translating emotion into something tangible. Music, writing, cooking, gardening, parenting: Cancer turns feeling into form.
+
+The shadow side is hard-shelled defensiveness. A wounded Cancer can retreat hard, holding grudges, becoming passive aggressive, or building walls so high that intimacy becomes impossible. They can also slip into a martyr role, giving and giving until resentment builds. Their moods can swing with the lunar cycle in ways they themselves struggle to track.
+
+The work of a Cancer life is learning to soften the shell without losing the body underneath. To care without losing themselves. To trust that they can show feelings without being annihilated by them.
+
+## Love and relationships
+
+In love, Cancer is the long term builder. They are not the most casual sign. They want commitment, depth, and home. Once they have chosen you, they will fight for the relationship in ways other signs might not.
+
+What a Cancer wants is to feel safe enough to be soft. They need a partner who can hold space for emotion, who keeps their word, who shows up in the small consistent ways that build trust over time. Big romantic gestures matter less than reliable presence.
+
+Tradition matches Cancer with the other water signs, Scorpio and Pisces, where the emotional fluency aligns. Earth signs Taurus, Virgo, and Capricorn bring grounding that Cancer often needs. Fire signs can feel exciting but burn the shell. Air signs may struggle to meet Cancer at the depth they need.
+
+These are starting points. The Portal Astra birth calculator will help you read your moon sign, which matters even more than your sun sign for emotional compatibility, especially for Cancers.
+
+## Career and ambition
+
+Cancer thrives where care, intuition, and craft are valued. Healthcare, education, hospitality, real estate, food, social work, parenting, museums, the arts, anything that involves making people feel held. They make excellent leaders in places that need a sense of family.
+
+They are less suited to ruthlessly competitive, emotionally cold environments. A Cancer in a finance trading floor may survive but probably will not thrive. The same Cancer running a beloved café or a small clinic often outperforms expectations because customers and staff sense the care.
+
+In a team they are the emotional centre. They will notice morale before anyone else, will check in on the colleague who is struggling, will create the rituals that hold the group together. Their growing edge is to advocate for themselves with the same energy they use to advocate for others.
+
+## Cancer season and what it means for every sign
+
+When the Sun enters Cancer, the whole zodiac softens. The frenetic energy of Gemini gives way to something quieter, more domestic, more reflective. It is a good season to tend to home and family.
+
+For Cancer, it is birthday season and personal new year. Set intentions about emotional life, about home, about what you want to nurture in the year ahead.
+
+For other water signs, Cancer season brings depth and creative flow. For earth signs it offers reflection and emotional reconnection. For air signs it is a useful slowdown. For fire signs it may feel hard to sit with, but offers important rest.
+
+The Portal Astra dashboard surfaces both moon phase and zodiac season transitions. Cancer season is a particularly good time to engage with the moon ritual content on the platform.
+
+## Famous Cancer to know
+
+Frida Kahlo, Tom Hanks, Princess Diana, Ariana Grande, Lionel Messi, Selena Gomez, Robin Williams, Meryl Streep. Performers, athletes, and humanitarians whose work touched people emotionally. The list includes some of the most beloved figures in modern culture.
+
+## How to live well as a Cancer
+
+The healthier expression of Cancer energy is grounded care. The crab who has done the inner work knows how to feel without drowning, to give without resentment, and to ask for what they need without apology.
+
+Time near water helps. Cancer is a water sign in the most literal sense, and time at the beach, by a river, or even taking a long bath restores them in ways that exercise alone does not. Moon tracking helps too. Many Cancers find that simply knowing which phase the moon is in helps them make sense of their mood swings.
+
+The other practice is naming feelings out loud. Cancer feels deeply but often communicates indirectly. Saying the actual feeling, in plain words, to a trusted person, is one of the most freeing acts a Cancer can practise.
+
+## Quick reference
+
+Dates: 21 June to 22 July.
+
+Symbol: the Crab.
+
+Element: water.
+
+Modality: cardinal.
+
+Ruling body: the Moon.
+
+Strengths: care, loyalty, emotional intelligence, creativity, memory.
+
+Shadows: defensiveness, moodiness, martyrdom, grudges.
+
+Best matches by tradition: Scorpio, Pisces, Taurus, Virgo, Capricorn.
+
+Career strengths: healthcare, education, hospitality, food, real estate, the arts.
+
+Season: 21 June to 22 July. Time for home, family, and emotional reset.
+
+Where to dig deeper: the birth calculator on the Sky tab and the moon phase tracker on Portal Astra.`,
+  },
+  {
+    slug: 'leo-zodiac-sign-complete-guide',
+    title: 'Leo Zodiac Sign: Complete Guide to Personality, Love, Career, and Compatibility',
+    excerpt:
+      'Leo is the fifth sign of the zodiac, ruled by the Sun and the element of fire. A complete guide to Leo personality, love, career, and compatibility.',
+    date: '2026-06-23',
+    category: 'Astrology',
+    tags: ['leo', 'zodiac', 'astrology', 'star sign'],
+    body: `Leo is the only sign ruled directly by the Sun. The Sun enters Leo in late July, the height of summer in the Northern Hemisphere, when light is at full strength and life feels expansive. The sign carries that quality. Leo is the zodiac at its most radiant, generous, and confident. Ruled by the Sun and built from the element of fire, this is a sign that lights up rooms and invites others in. This guide covers the dates, the ruling forces, the strengths and shadows, love, career, season, and how to live well as a Leo.
+
+## Leo dates and the basics
+
+Sun sign Leo runs from roughly 23 July to 22 August. Exact dates shift by a day depending on year and time zone. Anyone born in this window has the Sun in Leo.
+
+The symbol is the Lion, the king of the savanna and the iconic image of regal presence. Leo is fixed, meaning it sits in the middle of a season and holds steady. It is the second of three fire signs, between Aries and Sagittarius. Its ruling body is the Sun itself, the centre of the solar system and the source of all light and life.
+
+The fixed fire combination, ruled by the Sun, gives Leo its core qualities. Confident. Warm. Loyal. Magnetic. Where Aries is the spark and Sagittarius is the flame that travels, Leo is the steady fire that holds court and warms the room.
+
+## Personality strengths and shadows
+
+Leo's strengths cluster around presence. They are confident, charismatic, and naturally drawn to leadership. They light up the spaces they walk into, often without trying. They tend to be generous, giving freely of time, attention, and resources to people they love.
+
+They are also creative. Leo is the sign of self expression, performance, and joyful creation. They want to make things that bring delight, both to themselves and to others. Music, theatre, fashion, hospitality, and the arts attract Leos.
+
+The shadow side is the ego turned up too loud. A wounded or unaware Leo can become attention seeking, controlling, or unable to share the stage. They can confuse being seen with being loved, and demand validation rather than asking for connection. Pride can keep them from apologising even when they know they were wrong.
+
+The work of a Leo life is learning to be confident without needing applause. To shine in service of something bigger than themselves. To handle criticism without collapsing or counter attacking.
+
+## Love and relationships
+
+In love, Leo is the romantic. They want courtship. They want to feel chosen, celebrated, and adored. They give back in kind, often spoiling partners with attention and generosity.
+
+What a Leo wants is a partner who matches their warmth and confidence, who is not threatened by their spotlight, and who can offer steady affection. They need both passion and loyalty, and they need to know they are seen.
+
+Tradition matches Leo with the other fire signs, Aries and Sagittarius, where the temperaments align. Air signs Gemini, Libra, and Aquarius bring conversation and stimulation. Earth signs can offer grounding but may need to learn to praise. Water signs vary widely, with Cancer and Scorpio sometimes bringing depth that Leo respects.
+
+These are starting points. Portal Astra's birth calculator helps you look beyond sun matching to compare moon and Venus placements, which are often more telling.
+
+## Career and ambition
+
+Leo thrives where presence, creativity, and leadership are rewarded. Performance, fashion, entertainment, sales, executive leadership, teaching, hospitality, politics. Anywhere the role rewards visibility and personality.
+
+They are less suited to invisible, thankless work that never gets acknowledged. Leo can do hard work, but they need the work to matter and to be recognised. Long stretches without feedback wear them down.
+
+In a team they are the leader by default. They will rally morale, set vision, and represent the group externally. Their growing edge is to share credit, to coach the people behind them, and to listen as much as they project.
+
+## Leo season and what it means for every sign
+
+When the Sun enters Leo, the zodiac shines. Energy is high, social life expands, creative projects find momentum. It is a good season to perform, to celebrate, and to put yourself forward.
+
+For Leo, it is birthday season and personal new year. A good time to launch creative projects, to claim what you want, to celebrate the past year and set intentions for the next.
+
+For other fire signs, Leo season brings party energy and creative flow. For air signs it fuels conversation and connection. For earth signs it is a prompt to play more, work less. For water signs it can feel a bit overwhelming, but offers an invitation to be more visible.
+
+The daily horoscope on Portal Astra reflects this energy. The Sky tab shows where Leo sits in your chart.
+
+## Famous Leo to know
+
+Barack Obama, Madonna, Jennifer Lopez, Mick Jagger, Coco Chanel, Andy Warhol, Halle Berry, Daniel Radcliffe. Performers, leaders, fashion icons. The list is full of people who built careers on charisma and willingness to be seen.
+
+## How to live well as a Leo
+
+The healthier expression of Leo energy is generous confidence. The lion who has done the inner work knows the difference between ego and pride, between attention and love, between showing up for themselves and demanding the spotlight from others.
+
+Creative practice helps. Leo needs an outlet for self expression. Without one, the energy turns inward and becomes drama. Singing, drawing, writing, dancing, cooking. The form matters less than the regular act of making.
+
+The other practice is humility. Leo benefits enormously from learning to ask for help, to credit others, to say thank you generously. The lion who can be both confident and humble becomes magnetic in a way that pure ego never achieves.
+
+## Quick reference
+
+Dates: 23 July to 22 August.
+
+Symbol: the Lion.
+
+Element: fire.
+
+Modality: fixed.
+
+Ruling body: the Sun.
+
+Strengths: confidence, charisma, generosity, creativity, loyalty.
+
+Shadows: ego, attention seeking, pride, control.
+
+Best matches by tradition: Aries, Sagittarius, Gemini, Libra, Aquarius.
+
+Career strengths: performance, leadership, entertainment, hospitality, fashion, teaching.
+
+Season: 23 July to 22 August. Time for creativity, celebration, and self expression.
+
+Where to dig deeper: the birth calculator and daily horoscope on the Sky tab of Portal Astra.`,
+  },
+  {
+    slug: 'virgo-zodiac-sign-complete-guide',
+    title: 'Virgo Zodiac Sign: Complete Guide to Personality, Love, Career, and Compatibility',
+    excerpt:
+      'Virgo is the sixth sign of the zodiac, ruled by Mercury and the element of earth. A complete guide to Virgo personality, love, career, and compatibility.',
+    date: '2026-06-24',
+    category: 'Astrology',
+    tags: ['virgo', 'zodiac', 'astrology', 'star sign'],
+    body: `Virgo arrives at the end of summer in the Northern Hemisphere, when the long days start to shorten and harvest season begins. The Sun moves into Virgo in late August. The sign carries that turn from expansion into preparation, from playing in the field to tending the field. Ruled by Mercury and built from the element of earth, Virgo is the zodiac in its most practical, analytical, and service oriented form. This guide covers the dates, the ruling forces, the strengths and shadows, love, career, season, and how to live well as a Virgo.
+
+## Virgo dates and the basics
+
+Sun sign Virgo runs from roughly 23 August to 22 September. Exact dates shift by a day depending on year and time zone. Anyone born in this window has the Sun in Virgo.
+
+The symbol is the Virgin, often depicted as a young woman holding a sheaf of wheat. The image is harvest, careful, and discerning, not innocent. Virgo is mutable, meaning it ends a season and prepares for the next. It is the second of three earth signs, between Taurus and Capricorn. Its ruling planet is Mercury, the same planet that rules Gemini, but here expressed through earth rather than air.
+
+That combination, mutable earth, ruled by Mercury, gives Virgo its core qualities. Analytical. Precise. Practical. Adaptive within structure. Mercury in earth thinks in systems and process rather than ideas and conversation.
+
+## Personality strengths and shadows
+
+Virgo's strengths cluster around competence. They are detail oriented, organised, and reliable. They notice what others miss. They tend to be the people who quietly make systems work, often without recognition, because they cannot bear to see disorder.
+
+They are also helpful. Service is a Virgo value. They genuinely want to be useful, and they are often the friend who shows up with the right thing at the right time, the colleague who fixes the broken process before it breaks anything else.
+
+The shadow side is criticism turned inward and outward. A stressed Virgo can become hypercritical, picking holes in themselves and the people around them. Perfectionism can paralyse them. They can also become anxious in ways that drain joy from what would otherwise be pleasant experiences.
+
+The work of a Virgo life is learning to be discerning without being critical. To care about quality without demanding perfection. To accept that some mess is part of being alive.
+
+## Love and relationships
+
+In love, Virgo is the thoughtful one. They show care through practical acts. Bringing soup when you are sick, fixing the broken thing in your house, remembering the appointment you forgot. They are not always the most overtly romantic, but they are deeply attentive.
+
+What a Virgo wants is a partner who notices the effort they put in, who is reasonably tidy and reliable, and who values practical care as much as grand gestures. They need someone who will not be threatened by their high standards.
+
+Tradition matches Virgo with the other earth signs, Taurus and Capricorn, where values align. Water signs Cancer, Scorpio, and Pisces bring emotional depth that grounds Virgo's analytical tendencies. Fire signs can feel exhausting unless there is real respect. Other Mercury ruled signs like Gemini can spark intellectually but irritate at the practical level.
+
+These are starting points. The Portal Astra birth calculator helps you look at moon and Venus placements for a richer read.
+
+## Career and ambition
+
+Virgo thrives where precision, analysis, and quality control are rewarded. Healthcare, accounting, editing, research, software, project management, craft, food, anything that involves careful attention to detail.
+
+They are less suited to chaotic environments with no clear standards or processes. A Virgo in a poorly run organisation will likely burn out trying to fix everything. The same Virgo in a well structured one becomes invaluable quickly.
+
+In a team they are the quality assurance. They will catch the bug, find the typo, refine the process. Their growing edge is to delegate, to accept good enough on some things, and to ease up on the colleagues who do not share their standards.
+
+## Virgo season and what it means for every sign
+
+When the Sun enters Virgo, the zodiac focuses. Energy turns from celebration toward preparation. It is a good season to organise, to clean up, to refine systems before the year heads into autumn.
+
+For Virgo, it is birthday season and personal new year. A good time to take stock, to set health goals, to commit to better routines.
+
+For other earth signs, Virgo season brings momentum on practical projects. For water signs it offers structure and routine that supports emotional life. For air signs it grounds floating ideas into actual action. For fire signs it is a prompt to refine before launching the next big thing.
+
+The daily horoscope on Portal Astra reflects this each year.
+
+## Famous Virgo to know
+
+Beyoncé, Keanu Reeves, Mother Teresa, Stephen King, Cameron Diaz, Freddie Mercury, Salma Hayek, Tim Burton. Detail oriented makers, dedicated craftspeople, and quietly intense performers. The list features people whose work shows careful attention and significant private discipline.
+
+## How to live well as a Virgo
+
+The healthier expression of Virgo energy is service without self sacrifice. The Virgo who has done the inner work knows how to care for others without losing themselves, to maintain standards without becoming a tyrant, and to rest before they crash.
+
+Physical routines help. Virgo is the most body conscious of the earth signs, and consistent sleep, movement, and food rhythms make a noticeable difference to mood. So does time in nature, especially walking.
+
+The other practice is gentleness with self. Virgo is hardest on themselves, and learning to extend the same patience to themselves that they offer others is one of the biggest growth edges in this sign. A simple practice: at the end of each day, name one thing you did well. Just one. Repeat for a year.
+
+## Quick reference
+
+Dates: 23 August to 22 September.
+
+Symbol: the Virgin holding wheat.
+
+Element: earth.
+
+Modality: mutable.
+
+Ruling planet: Mercury.
+
+Strengths: precision, organisation, helpfulness, reliability, craft.
+
+Shadows: criticism, perfectionism, anxiety, over working.
+
+Best matches by tradition: Taurus, Capricorn, Cancer, Scorpio, Pisces.
+
+Career strengths: healthcare, editing, research, software, project management, food.
+
+Season: 23 August to 22 September. Time for refinement, routine, and quality.
+
+Where to dig deeper: the birth calculator and daily horoscope on the Sky tab of Portal Astra.`,
+  },
+  {
+    slug: 'libra-zodiac-sign-complete-guide',
+    title: 'Libra Zodiac Sign: Complete Guide to Personality, Love, Career, and Compatibility',
+    excerpt:
+      'Libra is the seventh sign of the zodiac, ruled by Venus and the element of air. A complete guide to Libra personality, love, career, and compatibility.',
+    date: '2026-06-25',
+    category: 'Astrology',
+    tags: ['libra', 'zodiac', 'astrology', 'star sign'],
+    body: `Libra arrives at the autumn equinox in the Northern Hemisphere, the moment in the year when day and night sit in perfect balance. The Sun enters Libra in late September. That balancing point is the sign in image form. Libra is the zodiac at its most relational, aesthetic, and concerned with fairness. Ruled by Venus and built from the element of air, Libra is the sign that thinks about beauty and weighs every choice carefully. This guide covers the dates, the ruling forces, the strengths and shadows, love, career, season, and how to live well as a Libra.
+
+## Libra dates and the basics
+
+Sun sign Libra runs from roughly 23 September to 22 October. Exact dates shift by a day depending on year and time zone. Anyone born in this window has the Sun in Libra.
+
+The symbol is the Scales, the only inanimate object among the twelve zodiac signs. The choice is deliberate. Libra is about weighing, balancing, and judging fairly. Libra is cardinal, meaning it starts a season. It is the second of three air signs, between Gemini and Aquarius. Its ruling planet is Venus, the planet of love, beauty, and harmony.
+
+The combination of cardinal air ruled by Venus gives Libra its core qualities. Diplomatic. Aesthetic. Relationship focused. Quietly strategic. Where Gemini chases ideas and Aquarius chases revolutions, Libra chases agreement.
+
+## Personality strengths and shadows
+
+Libra's strengths cluster around connection. They are charming, fair minded, and naturally good at building bridges. They tend to see all sides of an argument, often to a frustrating degree for the people they are arguing with. They are skilled at smoothing tension and finding common ground.
+
+They also have a strong aesthetic sense. Libras tend to care deeply about beauty in their environment, their clothing, their relationships. The Venus rulership shows up in attention to presentation and a real appreciation for art, design, and harmonious surroundings.
+
+The shadow side is indecision. The same mind that sees all sides can struggle to commit to one. Libra can avoid conflict to the point of dishonesty, telling people what they want to hear rather than the truth. They can also become dependent on relationships for identity, losing themselves in partnership.
+
+The work of a Libra life is learning to choose. To say the hard thing when fairness requires it. To stand alone when a relationship is asking too much.
+
+## Love and relationships
+
+In love, Libra is the partner of the zodiac. The sign is literally about relationship. Libras tend to be at their most themselves when in healthy partnership, and they invest deeply in the work of being a good companion.
+
+What a Libra wants is a partner who shares their values, who can engage in real conversation, and who appreciates beauty and harmony in life. They need someone who can hold their own opinions, because a partner who only agrees bores them quickly.
+
+Tradition matches Libra with the other air signs, Gemini and Aquarius, where wavelengths align. Fire signs Aries, Leo, and Sagittarius can bring excitement that energises Libra. Earth signs offer grounding. Water signs vary widely, with Pisces particularly compatible at the dreamy aesthetic level.
+
+These are starting points. Portal Astra's birth calculator helps you look beyond sun matching.
+
+## Career and ambition
+
+Libra thrives where relationships, fairness, and design are rewarded. Law, diplomacy, design, art, fashion, hospitality, counselling, mediation, public relations. Anywhere relational skill and aesthetic sense are real assets.
+
+They are less suited to harsh competitive environments that reward ruthlessness. A Libra in a cutthroat trading floor will likely find the dynamic exhausting. The same Libra in a design firm or law practice often shines.
+
+In a team they are the diplomat. They will smooth conflicts, broker agreements, and bring elegance to whatever the team produces. Their growing edge is to advocate firmly for their own ideas, even when it risks conflict, and to make decisions without needing complete consensus.
+
+## Libra season and what it means for every sign
+
+When the Sun enters Libra, the zodiac balances. Energy turns toward relationships, partnerships, and aesthetic refinement. It is a good season to renegotiate agreements, refresh wardrobes, and clean up the relational corners of your life.
+
+For Libra, it is birthday season and personal new year. A good time to reflect on partnerships, set relational goals, and refresh personal style.
+
+For other air signs, Libra season brings creative collaboration. For fire signs it offers softening and relational warmth. For water signs it brings beauty and conversation. For earth signs it is a prompt to attend to design and relationships.
+
+The daily horoscope on Portal Astra reflects this energy.
+
+## Famous Libra to know
+
+John Lennon, Kim Kardashian, Bruno Mars, Gwen Stefani, Will Smith, Serena Williams, Mahatma Gandhi, Oscar Wilde. Diplomats, artists, athletes, performers. The list features people whose work involves charm, fairness, or significant aesthetic vision.
+
+## How to live well as a Libra
+
+The healthier expression of Libra energy is decisive grace. The Libra who has done the inner work knows how to choose without losing kindness, how to disagree without being cruel, and how to be alone without losing themselves.
+
+Beauty practices help. Libra is genuinely soothed by beautiful surroundings, so investing in a well designed living space, a curated wardrobe, or regular time in art galleries and design rich environments pays off in mood.
+
+The other practice is making faster decisions. Libra often spends so long weighing options that the choice itself becomes harder. Setting time limits on small decisions, then sticking to whatever you choose, builds the muscle for the bigger ones.
+
+## Quick reference
+
+Dates: 23 September to 22 October.
+
+Symbol: the Scales.
+
+Element: air.
+
+Modality: cardinal.
+
+Ruling planet: Venus.
+
+Strengths: diplomacy, fairness, charm, aesthetic sense, relational skill.
+
+Shadows: indecision, conflict avoidance, dependence, surface charm.
+
+Best matches by tradition: Gemini, Aquarius, Leo, Sagittarius, Pisces.
+
+Career strengths: law, design, diplomacy, hospitality, counselling, public relations.
+
+Season: 23 September to 22 October. Time for partnership, beauty, and balance.
+
+Where to dig deeper: the birth calculator and daily horoscope on the Sky tab of Portal Astra.`,
+  },
+  {
+    slug: 'scorpio-zodiac-sign-complete-guide',
+    title: 'Scorpio Zodiac Sign: Complete Guide to Personality, Love, Career, and Compatibility',
+    excerpt:
+      'Scorpio is the eighth sign of the zodiac, ruled by Pluto and the element of water. A complete guide to Scorpio personality, love, career, and compatibility.',
+    date: '2026-06-26',
+    category: 'Astrology',
+    tags: ['scorpio', 'zodiac', 'astrology', 'star sign'],
+    body: `Scorpio arrives in late autumn in the Northern Hemisphere, when leaves are falling and the year is dying back into its own roots. The Sun enters Scorpio in late October, the period that hosts Halloween, Day of the Dead, and a long cultural tradition of looking at darkness honestly. The sign carries that quality. Scorpio is the zodiac at its most intense, transformative, and unafraid of what lies beneath. Ruled by Pluto and built from the element of water, this is the sign that goes deep. This guide covers the dates, the ruling forces, the strengths and shadows, love, career, season, and how to live well as a Scorpio.
+
+## Scorpio dates and the basics
+
+Sun sign Scorpio runs from roughly 23 October to 21 November. Exact dates shift by a day depending on year and time zone. Anyone born in this window has the Sun in Scorpio.
+
+The symbol is the Scorpion, sometimes also drawn as the Eagle or the Phoenix to represent the sign's capacity for transformation. Scorpio is fixed, meaning it holds steady in the middle of a season. It is the second of three water signs, between Cancer and Pisces. Its modern ruling planet is Pluto, planet of transformation, power, and the underworld. Traditional astrology gave the sign to Mars, and many astrologers still consider both relevant.
+
+That combination, fixed water with Pluto's influence, gives Scorpio its core qualities. Intense. Loyal. Penetrating. Drawn to the truth even when it is uncomfortable. Scorpio does not stay on the surface.
+
+## Personality strengths and shadows
+
+Scorpio's strengths cluster around depth. They are emotionally fearless, capable of looking at things other signs flinch from. They are intensely loyal once you have earned their trust. They tend to perceive what is really going on in a room, even when no one is saying it.
+
+They are also magnetic. Scorpios have an undeniable presence that others either find compelling or unsettling. There is rarely indifference around them. The same intensity makes them excellent in any role that requires holding focus on hard material.
+
+The shadow side is intensity turned destructive. A wounded Scorpio can become controlling, jealous, or vengeful. They can hold grudges with extraordinary patience and strike when an offender least expects it. They can also disappear into themselves, becoming secretive, suspicious, and isolated.
+
+The work of a Scorpio life is learning to use their depth in service of growth rather than power. To trust without losing themselves. To let people in without giving them weapons.
+
+## Love and relationships
+
+In love, Scorpio is the most intense sign. There is no casual Scorpio relationship in the long run. They either commit completely or move on completely. When they love, they love wholeheartedly.
+
+What a Scorpio wants is total honesty and unconditional commitment. They need to know they can show their darkest sides without being abandoned. They want a partner who can match their depth, hold their secrets, and stay through transformation.
+
+Tradition matches Scorpio with the other water signs, Cancer and Pisces, where emotional depth is shared. Earth signs Taurus, Virgo, and Capricorn offer the stability Scorpio's intensity needs. Fire signs can feel either thrilling or destructive, depending on the chart. Air signs may struggle to meet Scorpio at the level they require.
+
+The Portal Astra birth calculator helps with the deeper compatibility read. For Scorpios, looking at Venus and Mars placements matters as much as the sun sign.
+
+## Career and ambition
+
+Scorpio thrives where depth, research, and transformation are rewarded. Psychology, surgery, investigation, research, finance, occult studies, crisis management, transformation work of any kind. Anywhere the role requires looking unflinchingly at what others avoid.
+
+They are less suited to superficial, image driven roles that require constant performance without real substance. A Scorpio in a job that demands fake enthusiasm will quietly suffer and likely sabotage themselves to escape.
+
+In a team they are the strategist. They will see through the office politics, name the unspoken issue, and push for the change that everyone else has been avoiding. Their growing edge is to share their perceptions diplomatically, and to let go of grudges that no longer serve them.
+
+## Scorpio season and what it means for every sign
+
+When the Sun enters Scorpio, the zodiac deepens. Energy turns inward, toward what is hidden, what needs to be transformed, what we have been avoiding. It is a good season to do shadow work, confront hard truths, and release what is dying anyway.
+
+For Scorpio, it is birthday season and personal new year. A good time for deep reflection, for shedding old skins, and for setting transformation goals.
+
+For other water signs, Scorpio season brings emotional intensity that can be cathartic if you let it. For earth signs it offers depth and grounding. For air signs it may feel heavy, but rewards engagement with feeling. For fire signs it is a useful slowdown into reflection.
+
+The daily horoscope on Portal Astra reflects this. Scorpio season is also a powerful time to engage with the moon ritual content available through the platform.
+
+## Famous Scorpio to know
+
+Marie Curie, Pablo Picasso, Drake, Hillary Clinton, Leonardo DiCaprio, Joaquin Phoenix, Whoopi Goldberg, Bill Gates. Investigators, transformers, intensely focused workers. The list features people whose work involved going deeper than their contemporaries.
+
+## How to live well as a Scorpio
+
+The healthier expression of Scorpio energy is fierce honesty in service of love. The Scorpio who has done the inner work knows how to confront without destroying, to transform without losing their core, and to trust without needing total control.
+
+Therapy or deep reflection practices help. Scorpio is built for inner work, and engaging that inner world consciously rather than letting it run them keeps the sign at its best. Many Scorpios benefit from journalling, talk therapy, or deep meditation practices.
+
+The other practice is forgiveness. Not the saccharine kind that pretends harm did not happen, but the real kind that releases the grip a grievance has on your own heart. Scorpios who can let go become unstoppable. Scorpios who cannot become trapped in their own webs.
+
+## Quick reference
+
+Dates: 23 October to 21 November.
+
+Symbol: the Scorpion, sometimes the Eagle or Phoenix.
+
+Element: water.
+
+Modality: fixed.
+
+Ruling planets: Pluto (modern), Mars (traditional).
+
+Strengths: depth, loyalty, intensity, perception, transformation.
+
+Shadows: jealousy, control, vengeance, secrecy.
+
+Best matches by tradition: Cancer, Pisces, Taurus, Virgo, Capricorn.
+
+Career strengths: psychology, research, surgery, investigation, finance, crisis work.
+
+Season: 23 October to 21 November. Time for shadow work and transformation.
+
+Where to dig deeper: the birth calculator and daily horoscope on the Sky tab of Portal Astra.`,
+  },
+  {
+    slug: 'sagittarius-zodiac-sign-complete-guide',
+    title: 'Sagittarius Zodiac Sign: Complete Guide to Personality, Love, Career, and Compatibility',
+    excerpt:
+      'Sagittarius is the ninth sign of the zodiac, ruled by Jupiter and the element of fire. A complete guide to Sagittarius personality, love, career, and compatibility.',
+    date: '2026-06-27',
+    category: 'Astrology',
+    tags: ['sagittarius', 'zodiac', 'astrology', 'star sign'],
+    body: `Sagittarius arrives in late autumn as the days shorten in the Northern Hemisphere, often coinciding with the holiday travel season. The Sun moves into Sagittarius in late November. The sign carries that mood of adventure, of long journeys, of looking past the immediate horizon. Ruled by Jupiter, the largest planet and the traditional bringer of luck and expansion, and built from the element of fire, Sagittarius is the zodiac at its most adventurous, philosophical, and optimistic. This guide covers the dates, the ruling forces, the strengths and shadows, love, career, season, and how to live well as a Sagittarius.
+
+## Sagittarius dates and the basics
+
+Sun sign Sagittarius runs from roughly 22 November to 21 December. Exact dates shift by a day depending on year and time zone. Anyone born in this window has the Sun in Sagittarius.
+
+The symbol is the Archer, often depicted as a centaur drawing a bow. The image is movement, aim, and reach beyond the obvious target. Sagittarius is mutable, meaning it ends a season and prepares for the next. It is the last of three fire signs, after Aries and Leo. Its ruling planet is Jupiter, the planet of growth, philosophy, and good fortune.
+
+That combination, mutable fire ruled by Jupiter, gives Sagittarius its core qualities. Adventurous. Optimistic. Philosophical. Restless. Where Aries lights the fire and Leo holds court around it, Sagittarius takes the flame on the road.
+
+## Personality strengths and shadows
+
+Sagittarius's strengths cluster around growth. They are curious, generous, and naturally inclined toward expansion. They love learning, travelling, and meeting people from different backgrounds. They tend to have a global perspective, often literally.
+
+They are also honest. Sagittarius is famously blunt. They will say what they think, and they tend to assume others want the same. There is a refreshing directness to their company.
+
+The shadow side is restlessness that becomes flight. The same drive to expand can keep a Sagittarius from settling into anything long enough to develop depth. They can over commit and under deliver. They can also be tactless, mistaking honesty for permission to wound, and preachy, mistaking their own philosophy for universal truth.
+
+The work of a Sagittarius life is learning to ground their wisdom in lived experience. To stay long enough to actually master something. To temper honesty with care.
+
+## Love and relationships
+
+In love, Sagittarius is the adventurer. They want a partnership that grows them, takes them places, introduces them to new ideas and experiences. They get bored fast in relationships that settle into pure routine.
+
+What a Sagittarius wants is freedom inside commitment. They need a partner who is secure enough to give them room, who shares their love of learning and travel, and who will not try to clip the archer's wings.
+
+Tradition matches Sagittarius with the other fire signs, Aries and Leo, where temperaments align. Air signs Gemini, Libra, and Aquarius bring ideas and conversation. Earth signs can offer grounding but may struggle with the wandering. Water signs can soften but may feel constrained.
+
+Portal Astra's birth calculator helps you look beyond sun sign matching to find deeper compatibility.
+
+## Career and ambition
+
+Sagittarius thrives where exploration, teaching, and big picture thinking are rewarded. Travel, publishing, higher education, philosophy, marketing, foreign service, sports, adventure work, hospitality at scale. Anywhere a wide perspective and willingness to move are assets.
+
+They are less suited to highly routine office work in small spaces. A Sagittarius confined to repetitive tasks behind a desk will likely look for a way out. The same Sagittarius leading expeditions, teaching, or consulting across cultures often thrives.
+
+In a team they are the visionary. They will see the bigger trend, push for ambitious goals, and rally enthusiasm. Their growing edge is to commit to follow through, to handle the details others find tedious, and to recognise that small steady work is what makes big visions real.
+
+## Sagittarius season and what it means for every sign
+
+When the Sun enters Sagittarius, the zodiac expands. Energy turns toward learning, travel, and big questions. It is a good season to plan adventures, take courses, and ask what you actually want your life to be about.
+
+For Sagittarius, it is birthday season and personal new year. A good time to set learning goals, plan travel, and refresh personal philosophy.
+
+For other fire signs, Sagittarius season brings restless excitement. For air signs it fuels conversation and curiosity. For earth signs it is a prompt to look up from the practical. For water signs it offers light and movement in the depths of late autumn.
+
+The daily horoscope on Portal Astra reflects this each year.
+
+## Famous Sagittarius to know
+
+Taylor Swift, Walt Disney, Bruce Lee, Tina Turner, Brad Pitt, Jane Austen, Jay Z, Steven Spielberg. Storytellers, travellers, adventurers in their fields. The list features people whose work involved expanding into territory others had not yet mapped.
+
+## How to live well as a Sagittarius
+
+The healthier expression of Sagittarius energy is grounded wisdom. The archer who has done the inner work knows the difference between movement and avoidance, between honesty and tactlessness, between philosophy and preaching.
+
+Travel helps, even small versions of it. A Sagittarius who cannot travel often will find their sign expressing itself through reading, courses, and conversations with people from other cultures. The need for fresh perspective is real and worth honouring.
+
+The other practice is finishing. Pick one thing. Stay with it. Master it. The Sagittarius who can finish becomes formidable in a way the perpetually starting Sagittarius never quite achieves.
+
+## Quick reference
+
+Dates: 22 November to 21 December.
+
+Symbol: the Archer.
+
+Element: fire.
+
+Modality: mutable.
+
+Ruling planet: Jupiter.
+
+Strengths: optimism, curiosity, honesty, generosity, vision.
+
+Shadows: restlessness, tactlessness, over commitment, preaching.
+
+Best matches by tradition: Aries, Leo, Gemini, Libra, Aquarius.
+
+Career strengths: travel, publishing, higher education, philosophy, sports, marketing.
+
+Season: 22 November to 21 December. Time for adventure, learning, and big questions.
+
+Where to dig deeper: the birth calculator and daily horoscope on the Sky tab of Portal Astra.`,
+  },
+  {
+    slug: 'capricorn-zodiac-sign-complete-guide',
+    title: 'Capricorn Zodiac Sign: Complete Guide to Personality, Love, Career, and Compatibility',
+    excerpt:
+      'Capricorn is the tenth sign of the zodiac, ruled by Saturn and the element of earth. A complete guide to Capricorn personality, love, career, and compatibility.',
+    date: '2026-06-28',
+    category: 'Astrology',
+    tags: ['capricorn', 'zodiac', 'astrology', 'star sign'],
+    body: `Capricorn arrives at the winter solstice in the Northern Hemisphere, the shortest day of the year, the moment darkness peaks before light begins to return. The Sun enters Capricorn in late December, just as most cultures are marking new year. That timing is part of the sign. Capricorn is the zodiac at its most disciplined, ambitious, and oriented toward building things that last. Ruled by Saturn, the planet of structure and time, and built from the element of earth, Capricorn is the master builder of the wheel. This guide covers the dates, the ruling forces, the strengths and shadows, love, career, season, and how to live well as a Capricorn.
+
+## Capricorn dates and the basics
+
+Sun sign Capricorn runs from roughly 22 December to 19 January. Exact dates shift by a day depending on year and time zone. Anyone born in this window has the Sun in Capricorn.
+
+The symbol is the Sea Goat, an unusual hybrid that climbs mountains and swims oceans. The image suggests range. Capricorn is cardinal, meaning it starts a season. It is the last of three earth signs, after Taurus and Virgo. Its ruling planet is Saturn, the planet of discipline, time, and consequence.
+
+That combination, cardinal earth ruled by Saturn, gives Capricorn its core qualities. Ambitious. Disciplined. Patient. Built for the long climb. Capricorns think in decades. They are not chasing this month's win. They are building the institution that lasts.
+
+## Personality strengths and shadows
+
+Capricorn's strengths cluster around competence and persistence. They are responsible, hard working, and unusually patient with long term projects. They understand that real achievement takes time, and they are willing to put in the years.
+
+They are also dryly funny. The Saturn ruled signs often have a quiet wit that catches you off guard. Their humour tends toward the observational, the deadpan, the gently cutting.
+
+The shadow side is workaholism turned into self denial. A wounded Capricorn can sacrifice all joy on the altar of achievement. They can become cynical, dismissive of dreams and feelings, and rigidly hierarchical. They can also be unforgiving, both of others and of themselves.
+
+The work of a Capricorn life is learning to rest before they collapse. To enjoy the climb, not just the summit. To trust that they are worthy without constant achievement.
+
+## Love and relationships
+
+In love, Capricorn is the long term partner. They want serious commitment. They want to build something. They are not the most overtly romantic sign, but their love is shown through reliability, planning, and quiet steady support.
+
+What a Capricorn wants is a partner who respects their ambition, who can handle the years when work is demanding, and who appreciates depth over flash. They need someone who shares their values about building a life together.
+
+Tradition matches Capricorn with the other earth signs, Taurus and Virgo, where values align. Water signs Cancer, Scorpio, and Pisces bring emotional warmth that softens the Saturn rulership. Fire signs can either energise or exhaust. Air signs may struggle with the slower pace.
+
+These are starting points. The Portal Astra birth calculator helps with deeper readings.
+
+## Career and ambition
+
+Capricorn thrives where structure, hierarchy, and long term planning are rewarded. Business, law, government, finance, engineering, architecture, executive leadership, project management. Anywhere institutions are built and patient effort compounds.
+
+They are less suited to chaotic creative environments without clear standards. A Capricorn in a perpetually changing startup may find the lack of structure draining. The same Capricorn building a company over twenty years often becomes a major figure in their field.
+
+In a team they are the project manager and long term planner. They will set realistic timelines, build the infrastructure, and stay late to finish. Their growing edge is to delegate, to lighten up, and to recognise the contributions of less hierarchical colleagues.
+
+## Capricorn season and what it means for every sign
+
+When the Sun enters Capricorn, the zodiac sobers up. Energy turns toward goals, discipline, and structure. It coincides with the secular new year in many cultures, which is fitting. It is a good season to set ambitious goals and build the systems to achieve them.
+
+For Capricorn, it is birthday season and personal new year. A good time to plan the next decade, build new habits, and commit to the long climb.
+
+For other earth signs, Capricorn season brings momentum on practical projects. For water signs it offers structure to emotional life. For fire signs it grounds vision into plan. For air signs it is a useful focus on implementation.
+
+The daily horoscope on Portal Astra reflects this energy each year.
+
+## Famous Capricorn to know
+
+Michelle Obama, Martin Luther King Jr, Denzel Washington, David Bowie, Diane Keaton, Stephen Hawking, Muhammad Ali, Elvis Presley. Builders, leaders, athletes, and serious creatives. The list features people whose work changed institutions and standards.
+
+## How to live well as a Capricorn
+
+The healthier expression of Capricorn energy is grounded ambition. The Capricorn who has done the inner work knows how to climb without losing themselves, to lead without becoming cold, and to achieve without sacrificing joy.
+
+Rest practices help. Capricorn is the sign most likely to push past sustainable limits, and consciously building in rest, vacation, and play makes a major difference. Even one hour a day of non productive activity helps.
+
+The other practice is celebrating wins. Capricorns often hit a goal and immediately set the next one without pausing. Building rituals to actually acknowledge accomplishment, with friends and family, helps the climb feel less lonely.
+
+## Quick reference
+
+Dates: 22 December to 19 January.
+
+Symbol: the Sea Goat.
+
+Element: earth.
+
+Modality: cardinal.
+
+Ruling planet: Saturn.
+
+Strengths: discipline, ambition, patience, responsibility, dry wit.
+
+Shadows: workaholism, cynicism, rigidity, self denial.
+
+Best matches by tradition: Taurus, Virgo, Cancer, Scorpio, Pisces.
+
+Career strengths: business, law, finance, government, engineering, architecture.
+
+Season: 22 December to 19 January. Time for ambitious goals and long term planning.
+
+Where to dig deeper: the birth calculator and daily horoscope on the Sky tab of Portal Astra.`,
+  },
+  {
+    slug: 'aquarius-zodiac-sign-complete-guide',
+    title: 'Aquarius Zodiac Sign: Complete Guide to Personality, Love, Career, and Compatibility',
+    excerpt:
+      'Aquarius is the eleventh sign of the zodiac, ruled by Uranus and the element of air. A complete guide to Aquarius personality, love, career, and compatibility.',
+    date: '2026-06-29',
+    category: 'Astrology',
+    tags: ['aquarius', 'zodiac', 'astrology', 'star sign'],
+    body: `Aquarius arrives in the heart of winter in the Northern Hemisphere, when the world is still and the mind has space to imagine other ways things could be. The Sun moves into Aquarius in late January. The sign carries that quality of stepping back to see the bigger picture and asking why things have to be the way they are. Ruled by Uranus, the planet of revolution and innovation, and built from the element of air, Aquarius is the zodiac at its most original, humanitarian, and future facing. This guide covers the dates, the ruling forces, the strengths and shadows, love, career, season, and how to live well as an Aquarius.
+
+## Aquarius dates and the basics
+
+Sun sign Aquarius runs from roughly 20 January to 18 February. Exact dates shift by a day depending on year and time zone. Anyone born in this window has the Sun in Aquarius.
+
+The symbol is the Water Bearer, which often confuses people because Aquarius is an air sign, not a water sign. The water carried is symbolic, often read as the water of knowledge or consciousness being poured out for humanity. Aquarius is fixed, meaning it holds steady in the middle of a season. It is the last of three air signs, after Gemini and Libra. Its modern ruling planet is Uranus, planet of innovation and disruption. Traditional astrology assigned it to Saturn.
+
+That combination, fixed air with Uranus influence, gives Aquarius its core qualities. Original. Independent. Humanitarian. Mentally fixed on ideas that may take generations to land. Aquarius lives a little ahead of their time.
+
+## Personality strengths and shadows
+
+Aquarius's strengths cluster around vision. They are intellectually independent, willing to think differently, and naturally inclined toward improving systems. They tend to care deeply about humanity in the abstract, and to fight for causes that benefit groups rather than individuals.
+
+They are also genuinely original. Aquarius tends to resist conformity in style, thought, and behaviour. They are often the family member, friend, or colleague who does things their own way without bending to fit in.
+
+The shadow side is detachment that becomes cold. The same intellectual independence that lets them see clearly can also distance them from feelings, both their own and others. They can become preachy about their ideals while struggling with intimacy. They can also be stubborn in a peculiarly intellectual way, holding to ideas they have decided are correct even in the face of contradictory evidence.
+
+The work of an Aquarius life is learning to bring their vision down into intimate human connection. To care about the person in front of them as much as the cause. To stay flexible in their thinking.
+
+## Love and relationships
+
+In love, Aquarius is the friend who became a partner. They tend to build relationships on shared intellectual interest, mutual respect, and friendship first. Pure romantic intensity is less their style.
+
+What an Aquarius wants is a partner who is interesting, independent, and respectful of their space. They need room to be themselves, mental engagement, and a relationship that does not demand constant emotional processing.
+
+Tradition matches Aquarius with the other air signs, Gemini and Libra, where wavelengths align. Fire signs Aries, Leo, and Sagittarius bring excitement and warmth. Earth signs can offer grounding but may find the unconventionality frustrating. Water signs may struggle with Aquarius's emotional distance.
+
+The Portal Astra birth calculator helps you look beyond sun sign matching, particularly important for Aquarius whose moon and Venus placements often reveal hidden warmth.
+
+## Career and ambition
+
+Aquarius thrives where innovation, social impact, and independent thinking are rewarded. Technology, science, social activism, research, writing, design, anything involving systems thinking and willingness to challenge orthodoxy.
+
+They are less suited to rigid hierarchical environments where original thinking is punished. An Aquarius in a traditional corporate role that rewards conformity will likely chafe. The same Aquarius in a research lab, a startup, or a social movement often shines.
+
+In a team they are the innovator. They will see the problem with the current approach and propose the unorthodox solution. Their growing edge is to communicate their ideas in ways colleagues can actually use, and to follow through on the practical work of implementation.
+
+## Aquarius season and what it means for every sign
+
+When the Sun enters Aquarius, the zodiac thinks. Energy turns toward ideas, community, and the question of how things could be different. It is a good season to brainstorm, organise with others around causes, and consider unconventional approaches.
+
+For Aquarius, it is birthday season and personal new year. A good time to set vision based goals, refresh community connections, and commit to ideas you believe in.
+
+For other air signs, Aquarius season brings intellectual ferment. For fire signs it adds vision to action. For earth signs it offers a useful disruption to routine. For water signs it can feel cool, but invites engagement with broader purpose.
+
+The daily horoscope on Portal Astra reflects this each year.
+
+## Famous Aquarius to know
+
+Oprah Winfrey, Bob Marley, Charles Darwin, Galileo Galilei, Toni Morrison, Abraham Lincoln, Ellen DeGeneres, Shakira. Innovators, humanitarians, revolutionaries. The list features people whose work shifted how society thinks about something fundamental.
+
+## How to live well as an Aquarius
+
+The healthier expression of Aquarius energy is warm vision. The Aquarius who has done the inner work knows how to hold the bigger picture while also showing up for the people closest to them, to advocate for systems while remembering the individual.
+
+Community involvement helps. Aquarius is genuinely energised by being part of groups working on shared goals, whether activism, research collectives, or creative communities. Without that, the visionary energy can curdle into isolation.
+
+The other practice is emotional presence. Aquarius lives in ideas, and ideas can be a way of avoiding feelings. Pausing to ask what you actually feel, not what you think about what you feel, is a radical Aquarius practice and pays off in deeper relationships.
+
+## Quick reference
+
+Dates: 20 January to 18 February.
+
+Symbol: the Water Bearer.
+
+Element: air.
+
+Modality: fixed.
+
+Ruling planets: Uranus (modern), Saturn (traditional).
+
+Strengths: originality, vision, humanitarianism, intellectual independence.
+
+Shadows: detachment, stubbornness, coldness, preaching.
+
+Best matches by tradition: Gemini, Libra, Aries, Leo, Sagittarius.
+
+Career strengths: technology, science, activism, research, writing, design.
+
+Season: 20 January to 18 February. Time for vision, community, and original ideas.
+
+Where to dig deeper: the birth calculator and daily horoscope on the Sky tab of Portal Astra.`,
+  },
+  {
+    slug: 'pisces-zodiac-sign-complete-guide',
+    title: 'Pisces Zodiac Sign: Complete Guide to Personality, Love, Career, and Compatibility',
+    excerpt:
+      'Pisces is the twelfth sign of the zodiac, ruled by Neptune and the element of water. A complete guide to Pisces personality, love, career, and compatibility.',
+    date: '2026-06-30',
+    category: 'Astrology',
+    tags: ['pisces', 'zodiac', 'astrology', 'star sign'],
+    body: `Pisces closes the zodiac. The Sun moves into Pisces in late February, when winter is releasing its grip in the Northern Hemisphere and the natural world is beginning to dream of spring. The sign carries that liminal quality, the place where one cycle ends and the next has not yet begun. Ruled by Neptune, the planet of dreams and spiritual connection, and built from the element of water, Pisces is the zodiac at its most empathic, creative, and dissolved into something larger than itself. This guide covers the dates, the ruling forces, the strengths and shadows, love, career, season, and how to live well as a Pisces.
+
+## Pisces dates and the basics
+
+Sun sign Pisces runs from roughly 19 February to 20 March. Exact dates shift by a day depending on year and time zone. Anyone born in this window has the Sun in Pisces.
+
+The symbol is two fish swimming in opposite directions, often depicted bound together by a thread. The image suggests duality, the pull between worlds, the tension between staying and leaving. Pisces is mutable, meaning it ends the wheel and prepares the next cycle to begin. It is the last of three water signs, after Cancer and Scorpio. Its modern ruling planet is Neptune, planet of dreams, illusion, and spiritual connection. Traditional astrology assigned it to Jupiter.
+
+That combination, mutable water with Neptune influence, gives Pisces its core qualities. Empathic. Imaginative. Spiritually inclined. Often a little dissolved at the edges. Pisces is the sign that holds the whole zodiac in its closing chapter.
+
+## Personality strengths and shadows
+
+Pisces's strengths cluster around empathy and imagination. They are emotionally permeable, often picking up the moods of those around them. They are deeply creative, with rich inner lives that translate into art, music, writing, and other expressive forms. They tend to be compassionate in ways that go beyond conscious effort.
+
+They are also spiritually inclined. Pisces often have a natural sense of connection to something larger than themselves, whether they frame that in religious, mystical, or artistic terms. The sign is associated with the dreaming mind and the place where waking and sleeping consciousness overlap.
+
+The shadow side is the loss of self in others, and escapism. A wounded Pisces can absorb so much from the environment that they cannot find their own centre. They can drift into addiction, denial, or escape patterns when reality becomes too painful. They can also play the martyr, sacrificing themselves in ways that no one asked for.
+
+The work of a Pisces life is learning to keep their own boundaries while staying soft. To channel their imagination into form. To engage with hard reality without numbing themselves.
+
+## Love and relationships
+
+In love, Pisces is the romantic dreamer. They are capable of deep soul level connection. They tend to idealise partners, sometimes seeing who someone could be rather than who they actually are. The right relationship feels almost destined to them.
+
+What a Pisces wants is a partner who can match their emotional depth, who shares their sense that life is more than the material surface, and who can be a stabilising anchor when the Pisces tides run high. They need someone who can love them and also gently call them back to reality when needed.
+
+Tradition matches Pisces with the other water signs, Cancer and Scorpio, where emotional fluency aligns. Earth signs Taurus, Virgo, and Capricorn provide the grounding Pisces benefits from. Fire signs can either inspire or overwhelm. Air signs may struggle to meet Pisces at the depth they need.
+
+The Portal Astra birth calculator helps you look beyond sun matching to find deeper compatibility, especially through moon placements which matter enormously for Pisces.
+
+## Career and ambition
+
+Pisces thrives where empathy, imagination, and spiritual sensitivity are valued. Art, music, film, writing, therapy, healthcare, social work, spiritual leadership, anything involving healing or making. The traditional rulership by Jupiter also gives many Pisces a strong pull toward higher learning and meaningful causes.
+
+They are less suited to ruthlessly competitive environments that reward emotional armour. A Pisces in a sales cutthroat or trading floor will likely suffer in ways less sensitive signs would not even register. The same Pisces in a creative or healing profession often does work that touches people deeply.
+
+In a team they are the soul. They will bring vision, care, and creative imagination. Their growing edge is to advocate for themselves practically, to set clear boundaries with colleagues, and to follow through on the administrative details that translate vision into reality.
+
+## Pisces season and what it means for every sign
+
+When the Sun enters Pisces, the zodiac dreams. Energy turns inward and softens. The boundaries between waking and sleeping, between self and other, between practical and spiritual, all blur. It is a good season for art, rest, dream work, and spiritual practice.
+
+For Pisces, it is birthday season and personal new year. A good time to dream big, refresh creative projects, and tend to the soul before the new zodiac year begins with Aries.
+
+For other water signs, Pisces season brings deep emotional flow. For earth signs it offers a useful release from the practical. For fire signs it can feel slow but rewarding if engaged. For air signs it is an invitation into feeling.
+
+The daily horoscope on Portal Astra reflects this energy. Pisces season also pairs well with the moon ritual content on the platform.
+
+## Famous Pisces to know
+
+Albert Einstein, Rihanna, Steve Jobs, Kurt Cobain, Elizabeth Taylor, George Washington, Frédéric Chopin, Justin Bieber. Visionaries, artists, mystics in their fields. The list features people who worked at the edges of conventional reality, whether in science, art, or culture.
+
+## How to live well as a Pisces
+
+The healthier expression of Pisces energy is grounded creativity. The Pisces who has done the inner work knows how to hold their softness while keeping their feet on the ground, to give without losing themselves, to dream without escaping reality.
+
+Creative practice helps. Pisces needs an outlet for the rich inner world they carry. Without one, the energy turns inward and becomes restless or self destructive. Music, art, writing, movement practice, anything that gives the imagination a body.
+
+The other practice is healthy boundary setting. Pisces benefits enormously from learning to say no, to limit time with draining people, and to protect their own energy. The fish who can swim home as well as out to sea becomes the most powerful expression of the sign.
+
+## Quick reference
+
+Dates: 19 February to 20 March.
+
+Symbol: two fish swimming in opposite directions.
+
+Element: water.
+
+Modality: mutable.
+
+Ruling planets: Neptune (modern), Jupiter (traditional).
+
+Strengths: empathy, imagination, creativity, spiritual sensitivity, compassion.
+
+Shadows: escapism, lost boundaries, martyrdom, illusion.
+
+Best matches by tradition: Cancer, Scorpio, Taurus, Virgo, Capricorn.
+
+Career strengths: art, music, film, writing, therapy, healthcare, spiritual work.
+
+Season: 19 February to 20 March. Time for dreaming, creating, and soul rest.
+
+Where to dig deeper: the birth calculator and daily horoscope on the Sky tab of Portal Astra.`,
+  },
+  {
+    slug: 'new-moon-ritual-guide',
+    title: 'New Moon Ritual: How to Set Intentions and Plant Seeds for the Month Ahead',
+    excerpt:
+      'The new moon is the most powerful intention setting point in the lunar cycle. A step by step ritual guide for planting seeds and beginning fresh each month.',
+    date: '2026-07-01',
+    category: 'Moon',
+    tags: ['new moon ritual', 'moon ritual', 'intention setting', 'manifestation'],
+    body: `Once every twenty-nine and a half days the Moon goes dark. It rises and sets with the Sun, vanishing from the night sky, and for a brief window the lunar light is gone entirely. For thousands of years cultures have read that dark moment as a reset. The new moon is the lunar equivalent of a clean page, the moment to set intentions for the month ahead. This guide walks you through a complete new moon ritual, from preparation to the journal prompts that anchor the work, with a clear separation between the symbolic practice and the astronomy underneath.
+
+## Why the new moon is the planting point
+
+The new moon is the start of the synodic lunar cycle, the rhythm that runs about every twenty-nine and a half days. Astronomically, it is the moment when the Moon sits between Earth and Sun, with its lit face turned away from us. It is the only phase of the cycle where the Moon is effectively invisible, present without showing itself.
+
+For ritual purposes, that invisibility is the whole point. The dark moon is a blank slate. There is no light to react to, no fullness to harvest. There is only potential. Traditions that work with the lunar cycle often treat the new moon as the seed point, the moment to plant intentions that will grow as the Moon waxes toward full.
+
+If you have read our companion piece on the full moon ritual, you already know the cycle. New moon is for planting. Waxing moon is for tending. Full moon is for harvesting and releasing. Waning moon is for letting go and resting. The new moon ritual is the first step of that wheel.
+
+## What darkness means energetically
+
+The new moon is sometimes called the black moon, and the language is intentional. Western culture often treats darkness as negative, but lunar tradition treats it as fertile. Darkness is where seeds germinate. It is the womb before the birth, the silence before the song, the page before the writing.
+
+A new moon ritual works with that quality. It is not a celebration. It is a quiet, often interior practice. You are not announcing anything to the world. You are planting something with yourself.
+
+That tone matters when you plan the ritual. The mood is contemplative. Lights low. Phone away. No music or quiet instrumental only. The energy you are matching is the dark sky outside, not the bright social energy of a full moon gathering.
+
+## What to prepare
+
+You need very little. A journal or notebook you actually like writing in. A pen. A candle, ideally white or unscented. A quiet space where you will not be interrupted for thirty to sixty minutes. That is enough.
+
+If you want to add traditional elements, a few options. Bay leaves are commonly used in intention rituals because they hold ink and burn cleanly. A small fire safe bowl gives you a place to burn paper or herbs. Crystals associated with the new moon include moonstone, labradorite, and clear quartz, but they are decoration not requirement.
+
+Water in a clear glass is another traditional element. Some practitioners drink it after the ritual as a way of carrying the intention inward. Others leave it on a windowsill overnight to absorb the new moon energy, though there is no light to absorb. The act is symbolic.
+
+## The ritual, step by step
+
+Find the date of the next new moon. Portal Astra surfaces this on the main dashboard, and major events show up in eclipse alerts available to premium members. Choose the day of the new moon or the night after.
+
+Begin by clearing the space. Tidy the room briefly. Light the candle. Settle in.
+
+Take three slow breaths. Let the rhythm of your breathing match the slowness you want for the ritual.
+
+Reflect on the cycle ending. The new moon is also the close of the previous cycle. Spend a few minutes thinking about what happened in the last month. What worked. What did not. What you are ready to leave behind. You do not have to write this down, but you can.
+
+Now turn to intentions. Write in your journal answers to these prompts. What are you calling in over the next lunar cycle. What feels ready to grow. What seeds are you planting. Be specific. Vague intentions stay vague. A clear specific intention has somewhere to take root.
+
+Write until you feel complete, not until you fill a page. Three clear sentences are better than three vague pages.
+
+If you want to use bay leaves, write a single word intention on each leaf, no more than three or four words. Hold the leaves over the candle flame and let them catch, then drop them safely into your fire safe bowl. The smoke is read as the intention rising. The ash is read as the seed planted.
+
+Close the ritual with one statement of gratitude. Out loud, in a journal, in silence. The gratitude grounds the intention in the present rather than leaving it floating in the future.
+
+Blow out the candle. Sit for another minute. The ritual is done.
+
+## What not to do on a new moon
+
+A few traditional cautions. The new moon is not considered a launch day. Avoid signing major contracts, starting big public projects, or launching products if you can wait a few days. The cycle is just starting. The energy is still underground.
+
+Avoid harsh decisions about people. The dark moon can amplify emotional shadow, and decisions made under that influence often look different a week later.
+
+Avoid trying to do a full moon ritual on a new moon. The energies are opposites. Releasing rituals belong to the waning cycle leading into the new moon. The new moon itself is for planting, not letting go. If you have material to release, save it for the full moon ahead.
+
+## Journal prompts for each phase
+
+The new moon is the start of a longer cycle, and the deepest practice tracks the whole month. Some prompts that work at each phase.
+
+New moon. What am I planting. What do I want to grow this cycle.
+
+Waxing crescent, two to three days in. What small action have I taken today toward the intention.
+
+First quarter, about a week in. What obstacles are showing up. What needs to be adjusted.
+
+Waxing gibbous, about ten days in. What is the intention starting to look like. What needs refining.
+
+Full moon. What has come to fruition. What needs to be released to complete the harvest.
+
+Waning gibbous and last quarter. What am I learning. What can I let go of.
+
+Waning crescent, the days before the next new moon. What needs to rest. What needs to die back so something new can be planted.
+
+Even doing one or two of these check ins through the month transforms the new moon ritual from a single event into a connected practice.
+
+## How to track the new moon
+
+The new moon can be hard to find without help, because it is invisible. The Portal Astra dashboard shows the current phase and the date of the next new moon, updated daily. Premium members receive event alerts for major lunar events including eclipses, which often fall at the new or full moon.
+
+You can also track it the old way. Note the date of any new moon. Add twenty-nine days. That is roughly the next one, give or take a day. Keep counting.
+
+## Combining the ritual with other practices
+
+The new moon pairs well with several other practices. The premium intention guides on Portal Astra include printable new moon worksheets that build on the ritual structure above. Many people pair the new moon with their angel number practice, drawing the day's number after the ritual as a kind of seal on the intention.
+
+Some practitioners draw a tarot card after the ritual, asking what energy will support the new intention. This works well because the dark mind of the new moon is receptive to symbolic input.
+
+The most important pairing, though, is the daily one. The ritual is only the seed planting. The work of tending happens day by day for the next four weeks. That sustained attention is what turns intentions into lived experience.
+
+## Quick reference
+
+What it is: a ritual for setting intentions and planting seeds at the start of each lunar cycle.
+
+When: the day of the new moon or the night after. Lunar dates available on Portal Astra.
+
+What you need: a journal, a pen, a candle, a quiet space. Optionally bay leaves, a fire safe bowl, water.
+
+Core practice: clear the space, light the candle, reflect on the cycle ending, write clear intentions, optionally burn bay leaves, close with gratitude.
+
+Length: thirty to sixty minutes is plenty.
+
+What to avoid: launching big public projects, signing major contracts, trying to release rather than plant.
+
+Follow up: journal at each phase through the cycle, check in with the intentions, adjust as needed.
+
+Where to deepen: the Portal Astra dashboard for lunar dates, premium intention guides for printable worksheets, the companion full moon ritual guide for the harvest end of the cycle.`,
+  },
 ]
 
 export function getAllPosts(): BlogPost[] {
