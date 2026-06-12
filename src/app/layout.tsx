@@ -51,6 +51,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/images/portalastraicon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/images/portalastraicon.png" />
+        <meta name="p:domain_verify" content="24dc89856b3a12b94ef001337ec74015"/>
       </head>
       <body>
         {children}
