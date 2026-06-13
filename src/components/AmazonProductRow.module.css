@@ -1,0 +1,142 @@
+.section {
+  margin: 3rem 0 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.heading {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  margin: 0 0 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.875rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(201, 168, 76, 0.3);
+}
+
+.imageWrap {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  margin-bottom: 0.25rem;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.title {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.author {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.price {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #c9a84c;
+  margin: 0;
+}
+
+.cta {
+  font-size: 0.7rem;
+  color: rgba(201, 168, 76, 0.7);
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+/* Skeleton loading state */
+.skeleton {
+  pointer-events: none;
+}
+
+.skeletonImage {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonText {
+  height: 12px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  animation: pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.1s;
+}
+
+.skeletonTextShort {
+  height: 12px;
+  width: 60%;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  animation: pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+.skeletonPrice {
+  height: 14px;
+  width: 40%;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  animation: pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.disclosure {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.25);
+  margin: 1rem 0 0;
+  line-height: 1.5;
+}
