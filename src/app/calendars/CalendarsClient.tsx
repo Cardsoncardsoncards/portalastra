@@ -357,19 +357,19 @@ export default function CalendarsClient() {
             </p>
 
             <div className={styles.dobRow}>
-              <select className={styles.dobSelect} style={{ color: '#0a0a0f' }} aria-label="Day" value={day} onChange={(e) => setDay(e.target.value)}>
+              <select className={styles.dobSelect} aria-label="Day" value={day} onChange={(e) => setDay(e.target.value)}>
                 <option value="">Day</option>
                 {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
                   <option key={d} value={d}>{d}</option>
                 ))}
               </select>
-              <select className={styles.dobSelect} style={{ color: '#0a0a0f' }} aria-label="Month" value={month} onChange={(e) => setMonth(e.target.value)}>
+              <select className={styles.dobSelect} aria-label="Month" value={month} onChange={(e) => setMonth(e.target.value)}>
                 <option value="">Month</option>
                 {MONTHS.map((mName, i) => (
                   <option key={mName} value={i + 1}>{mName}</option>
                 ))}
               </select>
-              <select className={styles.dobSelect} style={{ color: '#0a0a0f' }} aria-label="Year" value={year} onChange={(e) => setYear(e.target.value)}>
+              <select className={styles.dobSelect} aria-label="Year" value={year} onChange={(e) => setYear(e.target.value)}>
                 <option value="">Year</option>
                 {years.map((y) => (
                   <option key={y} value={y}>{y}</option>
