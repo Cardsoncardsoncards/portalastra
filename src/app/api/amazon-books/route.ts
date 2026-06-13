@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
 const CACHE_TTL_HOURS = 24
+const ASSOCIATE_TAG = process.env.AMAZON_ASSOCIATE_TAG || 'blasdigital-22'
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
@@ -17,91 +18,101 @@ interface AmazonProduct {
   url: string
 }
 
-async function getAmazonToken(): Promise<string> {
-  // Amazon Creators API uses OAuth2 client credentials
-  const params = new URLSearchParams({
-    grant_type: 'client_credentials',
-    client_id: process.env.AMAZON_CLIENT_ID!,
-    client_secret: process.env.AMAZON_CLIENT_SECRET!,
-  })
+// In-process token cache — avoids re-fetching on every request
+let cachedToken: { value: string; expiresAt: number } | null = null
 
+async function getAmazonToken(): Promise<string> {
+  // Return cached token if still valid (with 60s safety buffer)
+  if (cachedToken && cachedToken.expiresAt > Date.now() + 60_000) {
+    return cachedToken.value
+  }
+
+  // Creators API v3.3 (FE region) uses JSON body, not form-encoded
   const res = await fetch('https://api.amazon.com/auth/o2/token', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: params.toString(),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      grant_type: 'client_credentials',
+      client_id: process.env.AMAZON_CLIENT_ID!,
+      client_secret: process.env.AMAZON_CLIENT_SECRET!,
+      scope: 'creatorsapi::default',
+    }),
   })
 
   if (!res.ok) {
-    throw new Error(`Amazon auth failed: ${res.status}`)
+    const errText = await res.text()
+    throw new Error(`Amazon auth failed ${res.status}: ${errText}`)
   }
 
   const data = await res.json()
-  return data.access_token
+  cachedToken = {
+    value: data.access_token,
+    expiresAt: Date.now() + data.expires_in * 1000,
+  }
+  return cachedToken.value
 }
 
 async function fetchFromAmazon(query: string, count: number): Promise<AmazonProduct[]> {
   const token = await getAmazonToken()
 
-  const payload = {
-    Keywords: query,
-    SearchIndex: 'Books',
-    ItemCount: count,
-    PartnerTag: process.env.AMAZON_ASSOCIATE_TAG || 'blasdigital-22',
-    PartnerType: 'Associates',
-    Marketplace: 'www.amazon.com.au',
-    Resources: [
-      'Images.Primary.Medium',
-      'ItemInfo.Title',
-      'ItemInfo.ByLineInfo',
-      'Offers.Listings.Price',
-    ],
-  }
-
-  const res = await fetch('https://webservices.amazon.com.au/paapi5/searchitems', {
+  // Creators API endpoint — note the .amazon TLD and lowerCamelCase fields
+  const res = await fetch('https://creatorsapi.amazon/catalog/v1/searchItems', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
-      'x-amz-access-token': token,
+      'x-marketplace': 'www.amazon.com.au',
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      keywords: query,
+      searchIndex: 'Books',
+      itemCount: count,
+      partnerTag: ASSOCIATE_TAG,
+      partnerType: 'Associates',
+      marketplace: 'www.amazon.com.au',
+      resources: [
+        'images.primary.medium',
+        'itemInfo.title',
+        'itemInfo.byLineInfo',
+        'offersV2.listings.price',
+      ],
+    }),
   })
 
   if (!res.ok) {
-    const errorText = await res.text()
-    throw new Error(`Amazon API error ${res.status}: ${errorText}`)
+    const errText = await res.text()
+    throw new Error(`Amazon search failed ${res.status}: ${errText}`)
   }
 
   const data = await res.json()
-  const items = data.SearchResult?.Items ?? []
+  const items: Record<string, unknown>[] = data.searchResult?.items ?? []
 
-  return items.map((item: Record<string, unknown>) => {
-    const info = item.ItemInfo as Record<string, unknown> ?? {}
-    const titleData = info.Title as Record<string, unknown> ?? {}
-    const byLine = info.ByLineInfo as Record<string, unknown> ?? {}
-    const contributors = byLine.Contributors as Record<string, unknown>[] ?? []
-    const offers = item.Offers as Record<string, unknown> ?? {}
-    const listings = offers.Listings as Record<string, unknown>[] ?? []
-    const images = item.Images as Record<string, unknown> ?? {}
-    const primary = images.Primary as Record<string, unknown> ?? {}
-    const medium = primary.Medium as Record<string, unknown> ?? {}
+  return items.map((item) => {
+    const info = (item.itemInfo as Record<string, unknown>) ?? {}
+    const titleData = (info.title as Record<string, unknown>) ?? {}
+    const byLine = (info.byLineInfo as Record<string, unknown>) ?? {}
+    const contributors = (byLine.contributors as Record<string, unknown>[]) ?? []
+    const offersV2 = (item.offersV2 as Record<string, unknown>) ?? {}
+    const listings = (offersV2.listings as Record<string, unknown>[]) ?? []
+    const images = (item.images as Record<string, unknown>) ?? {}
+    const primary = (images.primary as Record<string, unknown>) ?? {}
+    const medium = (primary.medium as Record<string, unknown>) ?? {}
 
-    const firstContributor = contributors[0] ?? {}
-    const nameData = firstContributor.Name as Record<string, unknown> ?? {}
+    const firstContributor = (contributors[0] as Record<string, unknown>) ?? {}
+    const nameData = (firstContributor.name as Record<string, unknown>) ?? {}
 
-    const firstListing = listings[0] ?? {}
-    const priceData = firstListing.Price as Record<string, unknown> ?? {}
-    const displayAmount = priceData.DisplayAmount as string ?? ''
+    const firstListing = (listings[0] as Record<string, unknown>) ?? {}
+    const priceData = (firstListing.price as Record<string, unknown>) ?? {}
 
     return {
-      asin: item.ASIN as string ?? '',
-      title: titleData.DisplayValue as string ?? 'Unknown title',
-      author: nameData.DisplayValue as string ?? '',
-      price: displayAmount,
-      image: medium.URL as string ?? '',
-      url: `https://www.amazon.com.au/dp/${item.ASIN as string}?tag=${process.env.AMAZON_ASSOCIATE_TAG || 'blasdigital-22'}`,
+      asin: (item.asin as string) ?? '',
+      title: (titleData.displayValue as string) ?? 'Unknown title',
+      author: (nameData.displayValue as string) ?? '',
+      price: (priceData.displayAmount as string) ?? '',
+      image: (medium.url as string) ?? '',
+      url: `https://www.amazon.com.au/dp/${item.asin as string}?tag=${ASSOCIATE_TAG}`,
     }
-  }).filter((p: AmazonProduct) => p.asin && p.image)
+  }).filter((p) => p.asin && p.image)
 }
 
 async function getCachedProducts(queryKey: string): Promise<AmazonProduct[] | null> {
@@ -115,14 +126,7 @@ async function getCachedProducts(queryKey: string): Promise<AmazonProduct[] | nu
 
   const cachedAt = new Date(data.cached_at)
   const ageHours = (Date.now() - cachedAt.getTime()) / (1000 * 60 * 60)
-
   if (ageHours > CACHE_TTL_HOURS) return null
-
-  // Increment hit counter (fire and forget — don't await)
-  supabase
-    .from('portal_astra_product_cache')
-    .update({ hit_count: (data as Record<string, unknown> & { hit_count?: number }).hit_count ?? 0 + 1 })
-    .eq('query_key', queryKey)
 
   return data.products as AmazonProduct[]
 }
@@ -149,24 +153,19 @@ export async function GET(req: NextRequest) {
   const queryKey = `${query.toLowerCase().trim()}__${count}`
 
   try {
-    // Try cache first
     const cached = await getCachedProducts(queryKey)
     if (cached) {
       return NextResponse.json({ products: cached, source: 'cache' })
     }
 
-    // Cache miss — fetch from Amazon
     const products = await fetchFromAmazon(query, count)
-
-    // Store result
     await setCachedProducts(queryKey, products)
 
     return NextResponse.json({ products, source: 'api' })
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error'
     console.error('[amazon-books] Error:', message)
-
-    // Return empty array rather than 500 so the page still renders
+    // Return empty rather than 500 so pages still render
     return NextResponse.json({ products: [], error: message }, { status: 200 })
   }
 }
