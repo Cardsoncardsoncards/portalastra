@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import AmazonProductRow from '@/components/AmazonProductRow'
 import { CheckoutBanners, CheckoutButton } from './CheckoutClient'
 import styles from './page.module.css'
 
@@ -62,6 +63,12 @@ export default function PricingPage() {
               ))}
             </ul>
             <Link href="/" className={styles.ctaBtn}>Start exploring</Link>
+
+            <AmazonProductRow
+              heading="Begin your journey"
+              searchQuery="cosmic spiritual journal"
+              count={1}
+            />
           </div>
 
           {/* Premium */}

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import PlantingCalendar from '@/components/PlantingCalendar'
+import AmazonProductRow from '@/components/AmazonProductRow'
 import styles from './page.module.css'
 
 // --- moon phase (same calculation as the Moon page) -------------------------
@@ -431,6 +432,11 @@ export default function CalendarsClient() {
                 </a>
 
                 <ShareRow text={`I am a Life Path ${result.num} — ${result.info.name} on Portal Astra`} />
+
+                <AmazonProductRow
+                  heading="Explore your path deeper"
+                  searchQuery="numerology life path guide"
+                />
               </div>
             )}
           </div>
