@@ -398,6 +398,7 @@ async function createMailerLiteCampaign(subject, htmlContent, month, year) {
         from_name: 'Portal Astra',
         from: 'theportalastra@gmail.com',
         content: htmlContent,
+        type: 'html',
       }],
       groups: [PAID_GROUP_ID],
     }),

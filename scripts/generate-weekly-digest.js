@@ -441,6 +441,7 @@ async function createAndScheduleCampaign(subject, htmlContent, scheduledAt) {
         from_name: 'Portal Astra',
         from:      'theportalastra@gmail.com',
         content:   htmlContent,
+        type:      'html',
       }],
       groups: [GROUP_ID],
     }),
