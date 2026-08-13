@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 //
 // which trusted a value the visitor could type into a console, for 30 days.
 //
-// Now: the entitlement is an httpOnly, HMAC-signed, 24-hour cookie that only
+// Now: the entitlement is an httpOnly, HMAC-signed, 7-day cookie that only
 // the magic-link consume route can mint, and every gate asks the server on
 // mount. Nothing about the answer lives in a place page JavaScript can write.
 
@@ -90,7 +90,11 @@ export default function PremiumUnlock({
   const [email, setEmail] = useState('')
   // Honeypot. Same field name, same hidden treatment as the homepage subscribe
   // form, deliberately not a second invented pattern.
-  const [honeypot, setHoneypot] = useState('')
+  //
+  // The name is deliberately meaningless. It used to be `website`, which is a
+  // field name password managers recognise and helpfully fill in — with the
+  // visitor's email, which tripped the honeypot on every real submission.
+  const [hpField, setHpField] = useState('')
   const [busy, setBusy] = useState(false)
   const [note, setNote] = useState<{ tone: 'ok' | 'warn' | 'err'; msg: string } | null>(null)
 
@@ -106,7 +110,7 @@ export default function PremiumUnlock({
       const res = await fetch('/api/premium/request-link', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, website: honeypot }),
+        body: JSON.stringify({ email, pa_hp_field: hpField }),
       })
       const data = await res.json().catch(() => ({}))
 
@@ -141,21 +145,13 @@ export default function PremiumUnlock({
         {blurb}
       </p>
 
-      {/* Honeypot, hidden from real users, catches bots */}
-      <input
-        type="text"
-        name="website"
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden="true"
-        value={honeypot}
-        onChange={(e) => setHoneypot(e.target.value)}
-        style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
-      />
-
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        {/* Named and typed so autofill has an obvious correct target. It comes
+            first in DOM order for the same reason. */}
         <input
           type="email"
+          name="email"
+          autoComplete="email"
           placeholder="your@email.com"
           aria-label="Email address"
           value={email}
@@ -183,6 +179,19 @@ export default function PremiumUnlock({
           {busy ? 'Sending...' : 'Email me a link'}
         </button>
       </div>
+
+      {/* Honeypot, hidden from real users, catches bots. Last in DOM order and
+          `new-password` so password managers leave it alone. */}
+      <input
+        type="text"
+        name="pa_hp_field"
+        tabIndex={-1}
+        autoComplete="new-password"
+        aria-hidden="true"
+        value={hpField}
+        onChange={(e) => setHpField(e.target.value)}
+        style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+      />
 
       {note && <p style={{ color: toneColour, fontSize: '12px', marginTop: '10px', lineHeight: 1.6 }}>{note.msg}</p>}
 

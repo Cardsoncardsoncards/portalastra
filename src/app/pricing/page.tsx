@@ -122,7 +122,7 @@ export default function PricingPage() {
           <p style={{ fontSize: '12px', color: 'rgba(232,224,255,0.5)', lineHeight: '1.7' }}>
             No password needed. After subscribing, visit the Sky tab or Calendars page
             and enter your email. We send a one-time link that unlocks premium on that
-            browser for 24 hours. Request a fresh link any time, on any device.
+            browser for 7 days. Request a fresh link any time, on any device.
           </p>
         </div>
 

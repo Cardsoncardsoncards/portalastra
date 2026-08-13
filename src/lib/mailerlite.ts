@@ -31,7 +31,7 @@ export async function getPaidStatus(email: string): Promise<PaidStatus> {
 
   let res: Response
   try {
-    res = await fetch(`${API}/subscribers/${encodeURIComponent(email)}`, {
+    res = await fetch(`${API}/subscribers/${encodeURIComponent(email)}?include=groups`, {
       headers: {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',

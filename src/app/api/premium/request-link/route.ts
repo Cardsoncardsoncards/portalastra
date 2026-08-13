@@ -78,9 +78,15 @@ export async function POST(req: Request) {
     const email = typeof body?.email === 'string' ? body.email.trim().toLowerCase() : ''
 
     // Honeypot. Exactly the field name and semantics the homepage subscribe
-    // form already uses: a hidden `website` input that real users never fill.
+    // form already uses: a hidden `pa_hp_field` input real users never fill.
     // Silently no-op so bots get no signal that they were caught.
-    const honeypot = typeof body?.website === 'string' ? body.website.trim() : ''
+    //
+    // `website` is the old name, still read so that bots scraping a cached
+    // copy of the previous form are still caught. It was renamed because
+    // password managers recognised it and autofilled it with the visitor's
+    // email, tripping the honeypot on legitimate submissions.
+    const hp = body?.pa_hp_field ?? body?.website
+    const honeypot = typeof hp === 'string' ? hp.trim() : ''
     if (honeypot) return uniform()
 
     if (!EMAIL_RE.test(email)) {

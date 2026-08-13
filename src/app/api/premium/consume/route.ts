@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
 // GET, because this is the URL in the email that the subscriber clicks.
 //
 // On success it burns the single-use token, re-confirms the subscription is
-// still active, mints a signed 24-hour entitlement, sets it as an httpOnly
+// still active, mints a signed 7-day entitlement, sets it as an httpOnly
 // cookie and redirects to the site. The browser never sees the token value and
 // page JavaScript cannot read, forge or extend it.
 

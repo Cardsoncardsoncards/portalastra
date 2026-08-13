@@ -13,8 +13,14 @@ import { createHmac, timingSafeEqual } from 'crypto'
 // two-field payload; HMAC-SHA256 over base64url JSON is the same guarantee
 // with no dependency.
 
-/** 24 hours. Was 30 days. */
-export const ENTITLEMENT_TTL_MS = 24 * 60 * 60 * 1000
+/**
+ * 7 days. Was 24 hours, and 30 days before that.
+ *
+ * The single source of truth for the entitlement lifetime: the token's `exp`
+ * claim and the cookie's `Max-Age` are both derived from it, so they cannot
+ * drift apart. Change it here and nowhere else.
+ */
+export const ENTITLEMENT_TTL_MS = 7 * 24 * 60 * 60 * 1000
 
 export const PREMIUM_COOKIE = 'pa_premium'
 

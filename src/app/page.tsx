@@ -286,7 +286,9 @@ export default function Home() {
 
   // Email capture
   const [email, setEmail] = useState('')
-  const [honeypot, setHoneypot] = useState('')
+  // Honeypot. The name is deliberately meaningless: it used to be `website`,
+  // which password managers recognise and fill with the visitor's email.
+  const [hpField, setHpField] = useState('')
   const [subscribing, setSubscribing] = useState(false)
   const [subscribeNote, setSubscribeNote] = useState<{ ok: boolean; msg: string } | null>(null)
 
@@ -418,7 +420,7 @@ export default function Home() {
       const r = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, website: honeypot }),
+        body: JSON.stringify({ email, pa_hp_field: hpField }),
       })
       const d = await r.json()
       if (r.ok) {
@@ -481,7 +483,7 @@ export default function Home() {
             lineHeight: 1.7,
             textAlign: 'center',
           }}>
-            Astra Premium is unlocked on this browser for the next 24 hours. Your ritual
+            Astra Premium is unlocked on this browser for the next 7 days. Your ritual
             prompt is on the Sky tab.
           </div>
         )}
@@ -517,25 +519,30 @@ export default function Home() {
         {/* Email capture strip */}
         <div className={styles.emailStrip}>
           <form className={styles.emailForm} onSubmit={subscribe}>
-            {/* Honeypot, hidden from real users, catches bots */}
-            <input
-              type="text"
-              name="website"
-              tabIndex={-1}
-              autoComplete="off"
-              aria-hidden="true"
-              value={honeypot}
-              onChange={e => setHoneypot(e.target.value)}
-              style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
-            />
+            {/* Named and typed so autofill has an obvious correct target, and
+                first in DOM order for the same reason. */}
             <input
               type="email"
+              name="email"
+              autoComplete="email"
               className={styles.emailInput}
               placeholder="you@example.com"
               aria-label="Email address"
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
+            />
+            {/* Honeypot, hidden from real users, catches bots. Last in DOM
+                order and `new-password` so password managers leave it alone. */}
+            <input
+              type="text"
+              name="pa_hp_field"
+              tabIndex={-1}
+              autoComplete="new-password"
+              aria-hidden="true"
+              value={hpField}
+              onChange={e => setHpField(e.target.value)}
+              style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
             />
             <button type="submit" className={styles.emailBtn} disabled={subscribing}>
               {subscribing ? 'Joining...' : 'Get the cosmos in your inbox weekly'}
