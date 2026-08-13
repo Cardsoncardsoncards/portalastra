@@ -13,9 +13,32 @@ import {
 } from '@/lib/pricing'
 import styles from './page.module.css'
 
+const DESCRIPTION =
+  'Start free, always. Upgrade to Astra Premium for daily ritual prompts, the lunar planting calendar, intention guides and eclipse alerts.'
+
 export const metadata: Metadata = {
   title: 'Pricing | Portal Astra',
-  description: "Start free, always. Upgrade to Astra Premium for the full cosmic experience.",
+  description: DESCRIPTION,
+  alternates: { canonical: '/pricing' },
+  openGraph: {
+    title: 'Astra Premium, Portal Astra',
+    description: DESCRIPTION,
+    url: '/pricing',
+    type: 'website',
+    images: [
+      {
+        url: '/images/portalastralogohorizontal.png',
+        width: 1200,
+        height: 630,
+        alt: 'Astra Premium',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Astra Premium, Portal Astra',
+    description: DESCRIPTION,
+  },
 }
 
 const FREE_FEATURES = [

@@ -170,7 +170,8 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const query = (searchParams.get('q') ?? '').toLowerCase().trim()
   const count = parseCount(searchParams.get('count'))
-  // The nightly warm job passes force=1 to bypass a still-fresh cache entry.
+  // The daily warm job (.github/workflows/amazon-refresh.yml) passes force=1 to
+  // bypass a still-fresh cache entry.
   const force = searchParams.get('force') === '1'
 
   if (!query) {

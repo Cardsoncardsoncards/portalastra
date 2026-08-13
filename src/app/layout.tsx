@@ -13,13 +13,24 @@ export const metadata: Metadata = {
     'moon phases', 'lunar calendar', 'astrology', 'horoscope', 'space weather', 'NASA',
     'tarot', 'angel numbers', 'moon phase calendar', 'life path number', 'cosmic guide',
   ],
+  // Relative, so it resolves against metadataBase to the homepage. It was an
+  // absolute homepage URL, which every child route inherited verbatim: /moon
+  // and /calendars both declared the homepage as their canonical. Each route
+  // below sets its own.
   alternates: {
-    canonical: 'https://portalastra.com',
+    canonical: '/',
   },
+  // These are the site-wide defaults AND the homepage's own card: src/app/page.tsx
+  // is a Client Component and so cannot export metadata of its own. Every other
+  // route overrides `openGraph` (and `alternates.canonical`) in its own
+  // page.tsx. Note that `url` is deliberately NOT set here: a hardcoded value
+  // was being inherited by every page, so /moon and /calendars each advertised
+  // the homepage as their Open Graph URL and Facebook attributed shares of them
+  // to the homepage. `metadataBase` above resolves each page's own relative URL.
   openGraph: {
-    title: 'Portal Astra',
-    description: 'Where science meets the stars. Live NASA data meets ancient cosmic wisdom.',
-    url: 'https://portalastra.com',
+    title: 'Portal Astra, Your daily cosmic guide',
+    description:
+      'Live NASA imagery, moon phases, horoscopes, tarot and angel numbers, updated daily.',
     siteName: 'Portal Astra',
     type: 'website',
     locale: 'en_AU',

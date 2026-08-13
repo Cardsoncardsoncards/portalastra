@@ -157,102 +157,6 @@ function DataAsOf({ fetchedAt }: { fetchedAt?: string }) {
   return <p className={styles.sublabel} style={{ opacity: 0.55, marginTop: '8px' }}>{label}</p>
 }
 
-// Open a share dialog in a small popup window instead of a full tab.
-function openSharePopup(shareUrl: string) {
-  window.open(shareUrl, '_blank', 'width=600,height=400,noopener,noreferrer')
-}
-
-// Coloured social share row, reused by every tab. Manages its own
-// "Copied" confirmation so multiple rows don't share state. Pinterest,
-// Reddit and the email subject are opt-in per tab.
-function ShareButtons({ text, url }: { text: string; url: string }) {
-  const [copied, setCopied] = useState(false)
-  const enc = encodeURIComponent
-
-  // Platforms that don't take a separate URL field need it inside the text.
-  const textWithUrl = `${text} ${url}`
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch {}
-  }
-
-  const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}&quote=${enc(text)}`
-  const xUrl = `https://twitter.com/intent/tweet?text=${enc(textWithUrl)}`
-  const redditUrl = `https://www.reddit.com/submit?url=${enc(url)}&title=${enc(text)}`
-  const pinUrl = `https://pinterest.com/pin/create/button/?url=${enc(url)}&description=${enc(text)}`
-
-  return (
-    <div className={styles.shareRow}>
-      <a
-        className={styles.shareBtn}
-        style={{ background: '#1877F2', borderColor: '#1877F2', color: '#fff' }}
-        href={fbUrl}
-        onClick={(e) => { e.preventDefault(); openSharePopup(fbUrl) }}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Facebook
-      </a>
-      <a
-        className={styles.shareBtn}
-        style={{ background: '#000000', borderColor: '#000000', color: '#fff' }}
-        href={xUrl}
-        onClick={(e) => { e.preventDefault(); openSharePopup(xUrl) }}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Post
-      </a>
-      <a
-        className={styles.shareBtn}
-        style={{ background: '#25D366', borderColor: '#25D366', color: '#fff' }}
-        href={`https://wa.me/?text=${enc(textWithUrl)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        WhatsApp
-      </a>
-      <a
-        className={styles.shareBtn}
-        style={{ background: '#FF4500', borderColor: '#FF4500', color: '#fff' }}
-        href={redditUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Reddit
-      </a>
-      <a
-        className={styles.shareBtn}
-        style={{ background: '#E60023', borderColor: '#E60023', color: '#fff' }}
-        href={pinUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Pinterest
-      </a>
-      <a
-        className={styles.shareBtn}
-        style={{ background: '#E1306C', borderColor: '#E1306C', color: '#fff' }}
-        href="https://www.instagram.com/portalastra"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Instagram
-      </a>
-      <button
-        className={styles.shareBtn}
-        style={{ background: '#b8a4ff', borderColor: '#b8a4ff', color: '#07070d' }}
-        onClick={copy}
-      >
-        {copied ? 'Copied!' : 'Copy Link'}
-      </button>
-    </div>
-  )
-}
 
 export default function Home() {
   const [tab, setTab] = useState<Tab>('space')
@@ -324,10 +228,6 @@ export default function Home() {
   const angelNum = getAngelNumber(today)
   const angelMeaning = ANGEL_NUMBER_MEANINGS[angelNum]
 
-  // Share the live canonical URL (set on client) rather than a hardcoded host.
-  const [shareUrl, setShareUrl] = useState('https://portalastra.com')
-  useEffect(() => { setShareUrl(window.location.href) }, [])
-
   const daily = getDailyCard(today)
   const weekly = getWeeklySpread(today)
 
@@ -335,8 +235,9 @@ export default function Home() {
   const lifePath = birthDate && !birthDateInFuture ? getLifePathFromISO(birthDate) : null
   const lifePathMeaning = lifePath ? LIFE_PATHS[lifePath] : null
 
-  // Social sharing: title reflects whichever tab is currently active (and its
-  // live data); shareUrl (above) is the live canonical URL.
+  // Social sharing: the title reflects whichever tab is currently active (and
+  // its live data). It is handed to the footer's ShareButtons, which is now the
+  // page's only share row; the URL is read live by that component.
   const TAB_SHARE: Record<Tab, string> = {
     space: "Check out today's NASA Picture of the Day on Portal Astra",
     earth: 'See Earth from a million miles away on Portal Astra',
@@ -983,12 +884,6 @@ export default function Home() {
                   >
                     🔄 Redraw
                   </button>
-                  <div style={{ marginTop: '1rem' }}>
-                    <ShareButtons
-                      text={`I just drew ${personalDraw[0].name}, ${personalDraw[1].name} and ${personalDraw[2].name} in my personal tarot reading on Portal Astra`}
-                      url={shareUrl}
-                    />
-                  </div>
                 </>
               )}
             </div>
@@ -1035,9 +930,6 @@ export default function Home() {
           </div>
         )}
 
-        {/* Share row, reflects the active tab, rendered at the bottom of every panel */}
-        <ShareButtons text={shareTitle} url={shareUrl} />
-
         {/* APOD lightbox */}
         {lightboxOpen && apod && !apod.error && (
           <div className={styles.lightbox} onClick={() => setLightboxOpen(false)}>
@@ -1051,7 +943,12 @@ export default function Home() {
         )}
 
       </div>
-      <Footer />
+      {/* The site's only share row lives in the footer. `shareText` carries the
+          active tab's context; on the Space tab the APOD image becomes the pin. */}
+      <Footer
+        shareText={shareTitle}
+        shareImage={tab === 'space' && apod && !apod.error ? apod.hdurl || apod.url : undefined}
+      />
     </main>
   )
 }

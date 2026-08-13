@@ -60,7 +60,6 @@ export default function MoonClient() {
   const [viewDate, setViewDate] = useState<Date | null>(null)
   const [eventsPaused, setEventsPaused] = useState(false)
   const [guidePaused, setGuidePaused] = useState(false)
-  const [pageUrl, setPageUrl] = useState('')
 
   // Server-validated on mount. Never read from localStorage.
   const premium = usePremium()
@@ -75,7 +74,6 @@ export default function MoonClient() {
     const d = new Date()
     setNow(d)
     setViewDate(new Date(d.getFullYear(), d.getMonth(), 1))
-    setPageUrl(window.location.href)
   }, [])
 
   const todayPhase = now ? getMoonPhase(now) : null
@@ -352,20 +350,14 @@ export default function MoonClient() {
             <p className={styles.loading}>Loading data…</p>
           )}
         </section>
-        {/* Pinterest share */}
-        <section className={styles.section} style={{ textAlign: 'center' }}>
-          <a
-            className={styles.pinBtn}
-            href={`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(pageUrl)}&description=${encodeURIComponent('Track the lunar cycle on Portal Astra, Moon Phase Calendar')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Pin this on Pinterest
-          </a>
-        </section>
       </div>
 
-      <Footer title="Moon Phase Calendar" />
+      {/* The Pinterest-only block that used to sit here is gone: the footer's
+          ShareButtons already carries Pinterest, plus six other targets. */}
+      <Footer
+        shareText="Track the lunar cycle on Portal Astra, Moon Phase Calendar"
+        shareImage="https://portalastra.com/images/portalastralogohorizontal.png"
+      />
     </main>
   )
 }

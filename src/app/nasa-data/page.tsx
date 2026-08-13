@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   title: 'Our Data Sources | Portal Astra',
   description:
     'Every number on Portal Astra comes from a real NASA Open API. Here is exactly where each piece of data comes from.',
+  alternates: { canonical: '/nasa-data' },
+  openGraph: { title: 'Our Data Sources, Portal Astra', url: '/nasa-data', type: 'website' },
 }
 
 const SOURCES = [

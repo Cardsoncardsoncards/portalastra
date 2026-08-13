@@ -6,6 +6,8 @@ import styles from '../page.module.css'
 export const metadata: Metadata = {
   title: 'Terms of Service, Portal Astra',
   description: 'The terms that govern your use of Portal Astra and Astra Premium.',
+  alternates: { canonical: '/terms' },
+  openGraph: { title: 'Terms of Service, Portal Astra', url: '/terms', type: 'website' },
 }
 
 export default function TermsPage() {

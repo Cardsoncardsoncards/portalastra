@@ -1,0 +1,38 @@
+name: Refresh Amazon Product Cache
+
+# Daily, to match the 24-hour cache TTL in src/app/api/amazon-books/route.ts.
+#
+# This used to be the last step of weekly-digest.yml, which meant two unrelated
+# things shared a schedule and a failure path: the cache was refreshed once a
+# week against a 24-hour TTL, so it sat expired six days out of seven and the
+# first visitor to /moon, /calendars or /pricing paid for a live Amazon call;
+# and any failure in the digest script aborted the job before the refresh ran
+# at all.
+on:
+  schedule:
+    # Every day at 8:00am UTC = 6:00pm AEST, an hour before the digest window.
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+    # Allow manual trigger from the GitHub Actions tab for testing
+
+env:
+  # Opt JavaScript actions into Node.js 24 and silence the deprecation warning
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  refresh-cache:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Refresh Amazon product cache
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}
+        run: node scripts/refresh-amazon-cache.js

@@ -21,11 +21,26 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return {
     title: `${post.title}, Portal Astra`,
     description: post.excerpt,
+    alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: 'article',
       url: `${SITE_URL}/blog/${post.slug}`,
+      publishedTime: post.date,
+      images: [
+        {
+          url: '/images/portalastralogohorizontal.png',
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
     },
   }
 }
@@ -127,17 +142,8 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           <div className={styles.articleBody}>{renderBody(post.body)}</div>
         </article>
 
-        <div className={styles.shareRow}>
-          <a
-            className={styles.shareBtn}
-            style={{ background: '#E60023', borderColor: '#E60023', color: '#fff' }}
-            href={`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(`${SITE_URL}/blog/${post.slug}`)}&description=${encodeURIComponent(`${post.title} on Portal Astra`)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className={styles.shareIcon}>P</span> Pin it
-          </a>
-        </div>
+        {/* The Pinterest-only row that used to sit here is gone: the footer's
+            ShareButtons carries Pinterest plus six other targets. */}
 
         {related.length > 0 && (
           <section className={styles.relatedSection}>
@@ -155,7 +161,11 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         )}
 
       </div>
-      <Footer title="Portal Astra" shareText={`${post.title}, portalastra.com`} />
+      <Footer
+        title="Portal Astra"
+        shareText={`${post.title}, portalastra.com`}
+        shareImage={`${SITE_URL}/images/portalastralogohorizontal.png`}
+      />
     </main>
   )
 }

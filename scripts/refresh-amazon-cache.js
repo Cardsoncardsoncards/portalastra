@@ -1,13 +1,12 @@
 /**
  * refresh-amazon-cache.js
- * Run nightly via GitHub Actions to pre-warm the Supabase cache
- * so pages never cold-load against the Amazon API.
+ * Pre-warms the Supabase cache so pages never cold-load against the Amazon API.
  *
- * Add to GitHub Actions workflow:
- *   - name: Refresh Amazon cache
- *     run: node scripts/refresh-amazon-cache.js
- *     env:
- *       SITE_URL: ${{ secrets.SITE_URL }}
+ * Scheduled daily by .github/workflows/amazon-refresh.yml, matching the
+ * 24-hour CACHE_TTL_HOURS in src/app/api/amazon-books/route.ts. It previously
+ * described itself as nightly while actually running as a step inside the
+ * weekly digest workflow, so the cache was refreshed once a week against a
+ * 24-hour TTL and sat expired six days out of seven.
  */
 
 const SITE_URL = process.env.SITE_URL || 'https://portalastra.com'

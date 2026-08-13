@@ -6,6 +6,8 @@ import styles from '../page.module.css'
 export const metadata: Metadata = {
   title: 'Privacy Policy, Portal Astra',
   description: 'How Portal Astra collects, uses, and protects your information.',
+  alternates: { canonical: '/privacy' },
+  openGraph: { title: 'Privacy Policy, Portal Astra', url: '/privacy', type: 'website' },
 }
 
 const SHARING = [

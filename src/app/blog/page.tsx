@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   title: 'Blog — Portal Astra',
   description:
     'Guides to the night sky and the symbolism we read into it — moon phases, angel numbers, tarot, zodiac signs, space weather and more.',
+  alternates: { canonical: '/blog' },
+  openGraph: { title: 'Blog, Portal Astra', url: '/blog', type: 'website' },
 }
 
 export default function BlogPage() {

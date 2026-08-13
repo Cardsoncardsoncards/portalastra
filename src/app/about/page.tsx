@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   title: 'About, Portal Astra',
   description:
     'What Portal Astra is, who built it, the NASA data sources behind it, and our editorial approach: science labelled as science, spiritual content as reflection.',
+  alternates: { canonical: '/about' },
+  openGraph: { title: 'About Portal Astra', url: '/about', type: 'website' },
 }
 
 const jsonLd = {

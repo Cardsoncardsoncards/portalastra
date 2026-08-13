@@ -46,26 +46,6 @@ function zodiacElement(sign: string): string {
   return 'Water'
 }
 
-const CALENDARS_URL = 'https://portalastra.com/calendars'
-
-function ShareRow({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false)
-  const enc = encodeURIComponent
-  const url = CALENDARS_URL
-  const copy = async () => {
-    try { await navigator.clipboard.writeText(url); setCopied(true); setTimeout(() => setCopied(false), 2000) } catch {}
-  }
-  return (
-    <div className={styles.shareRow}>
-      <a className={styles.shareBtn} style={{ background: '#1877F2' }} href={`https://www.facebook.com/sharer/sharer.php?u=${enc(url)}`} target="_blank" rel="noopener noreferrer">Facebook</a>
-      <a className={styles.shareBtn} style={{ background: '#000000' }} href={`https://twitter.com/intent/tweet?url=${enc(url)}&text=${enc(text)}`} target="_blank" rel="noopener noreferrer">X</a>
-      <a className={styles.shareBtn} style={{ background: '#25D366' }} href={`https://wa.me/?text=${enc(text)}%20${enc(url)}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
-      <a className={styles.shareBtn} style={{ background: '#FF4500' }} href={`https://www.reddit.com/submit?url=${enc(url)}&title=${enc(text)}`} target="_blank" rel="noopener noreferrer">Reddit</a>
-      <button className={styles.shareBtn} style={{ background: '#b8a4ff', color: '#0a0a0f' }} onClick={copy}>{copied ? 'Copied!' : 'Copy Link'}</button>
-    </div>
-  )
-}
-
 type TabId = 'moon' | 'planting' | 'birth'
 
 export default function CalendarsClient() {
@@ -352,8 +332,6 @@ export default function CalendarsClient() {
                   Shop {result.birthstone} crystals on Amazon
                 </a>
 
-                <ShareRow text={`I am a Life Path ${result.num}, ${result.info.name} on Portal Astra`} />
-
                 <AmazonProductRow
                   heading="Explore your path deeper"
                   searchQuery="numerology life path guide"
@@ -364,7 +342,17 @@ export default function CalendarsClient() {
         )}
       </div>
 
-      <Footer title="Cosmic Calendars" shareText="Explore the cosmic calendars on Portal Astra" />
+      {/* One share row for the page. When a life-path result is on screen the
+          share text carries it, which is what the removed inline row did. */}
+      <Footer
+        title="Cosmic Calendars"
+        shareText={
+          result
+            ? `I am a Life Path ${result.num}, ${result.info.name} on Portal Astra`
+            : 'Explore the cosmic calendars on Portal Astra'
+        }
+        shareImage="https://portalastra.com/images/portalastralogohorizontal.png"
+      />
     </main>
   )
 }
