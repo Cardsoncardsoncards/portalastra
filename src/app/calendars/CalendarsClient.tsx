@@ -5,7 +5,6 @@ import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import PlantingCalendar from '@/components/PlantingCalendar'
-import AmazonProductRow from '@/components/AmazonProductRow'
 import PremiumUnlock, { usePremium } from '@/components/PremiumUnlock'
 import {
   getMoonPhase,
@@ -331,11 +330,6 @@ export default function CalendarsClient() {
                 >
                   Shop {result.birthstone} crystals on Amazon
                 </a>
-
-                <AmazonProductRow
-                  heading="Explore your path deeper"
-                  searchQuery="numerology life path guide"
-                />
               </div>
             )}
           </div>

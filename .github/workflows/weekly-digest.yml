@@ -34,6 +34,5 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: node scripts/generate-weekly-digest.js
 
-      # The Amazon cache refresh used to run here as a final step. It now has
-      # its own daily schedule in amazon-refresh.yml, so a digest failure can no
-      # longer stop it running.
+      # The Amazon product cache refresh used to run here as a final step. The
+      # Amazon integration has been removed, so there is nothing left to warm.

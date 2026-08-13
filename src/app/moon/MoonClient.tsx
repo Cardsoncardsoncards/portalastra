@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import IntentionGuides from '@/components/IntentionGuides'
-import AmazonProductRow from '@/components/AmazonProductRow'
 import PremiumUnlock, { usePremium } from '@/components/PremiumUnlock'
 import {
   SYNODIC_MONTH,
@@ -317,12 +316,6 @@ export default function MoonClient() {
             )}
           </div>
         </section>
-
-        {/* Recommended reading */}
-        <AmazonProductRow
-          heading="Deepen your lunar practice"
-          searchQuery="moon phases astrology guide"
-        />
 
         {/* Astronomical data */}
         <section className={styles.section}>
