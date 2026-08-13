@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
-import { formatDate } from '@/lib/utils'
+import { formatDate } from '@/lib/shared'
 import styles from '../page.module.css'
 
 // Fixed, ordered filter list so the pills stay consistent regardless of posts.

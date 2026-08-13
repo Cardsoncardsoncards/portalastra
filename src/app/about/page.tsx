@@ -7,7 +7,7 @@ const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.portalastra.c
 const CONTACT_EMAIL = 'theportalastra@gmail.com'
 
 export const metadata: Metadata = {
-  title: 'About — Portal Astra',
+  title: 'About, Portal Astra',
   description:
     'What Portal Astra is, who built it, the NASA data sources behind it, and our editorial approach: science labelled as science, spiritual content as reflection.',
 }
@@ -44,8 +44,8 @@ export default function AboutPage() {
         <div className={styles.card}>
           <h2 className={styles.legalH} style={{ marginTop: 0 }}>What Portal Astra is</h2>
           <p className={styles.infoText}>
-            Portal Astra is a daily cosmic dashboard. It brings together real astronomy — the night
-            sky, the Sun&apos;s weather, the Moon&apos;s phase, the asteroids passing nearby — with the
+            Portal Astra is a daily cosmic dashboard. It brings together real astronomy, the night
+            sky, the Sun&apos;s weather, the Moon&apos;s phase, the asteroids passing nearby, with the
             symbolism humans have always read into the sky: horoscopes, tarot, angel numbers and
             numerology. The idea is simple: look up, both ways. One side is observable science; the
             other is reflection and personal meaning. We keep them clearly distinct.
@@ -64,13 +64,13 @@ export default function AboutPage() {
             The astronomy on Portal Astra is powered by NASA&apos;s free, public Open APIs:
           </p>
           <p className={styles.infoText}>
-            <strong>APOD</strong> — the Astronomy Picture of the Day, NASA&apos;s daily featured image
+            <strong>APOD</strong>, the Astronomy Picture of the Day, NASA&apos;s daily featured image
             of the cosmos.<br />
-            <strong>NeoWs</strong> — the Near-Earth Object Web Service, providing data on asteroids
+            <strong>NeoWs</strong>, the Near-Earth Object Web Service, providing data on asteroids
             making close approaches to Earth.<br />
-            <strong>DONKI</strong> — the Space Weather Database of Notifications, Knowledge and
+            <strong>DONKI</strong>, the Space Weather Database of Notifications, Knowledge and
             Information, tracking solar flares, coronal mass ejections and geomagnetic storms.<br />
-            <strong>EPIC</strong> — the Earth Polychromatic Imaging Camera aboard the DSCOVR satellite,
+            <strong>EPIC</strong>, the Earth Polychromatic Imaging Camera aboard the DSCOVR satellite,
             which photographs the full sunlit face of Earth from deep space.
           </p>
           <p className={styles.infoText}>
@@ -80,7 +80,7 @@ export default function AboutPage() {
 
           <h2 className={styles.legalH}>Our editorial approach</h2>
           <p className={styles.infoText}>
-            We label science as science and reflection as reflection — always. Astronomical data is
+            We label science as science and reflection as reflection, always. Astronomical data is
             presented factually and sourced from NASA. Horoscopes, tarot readings, angel numbers,
             life-path numbers and moon rituals are presented as entertainment and personal reflection
             only. They are not predictions, medical, legal, financial or psychological advice, and we

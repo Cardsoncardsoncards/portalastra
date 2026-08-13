@@ -1,11 +1,11 @@
 'use client'
 
-// IntentionGuides.tsx — Premium component
+// IntentionGuides.tsx, Premium component
 // Full moon + new moon intention-setting guides
 // Add to /app/moon/page.tsx or /app/calendars/page.tsx behind isPremium check
 // Replace the "coming soon" placeholder on the pricing page with this
 
-import { getMoonPhase } from '@/lib/utils'
+import { getMoonPhase } from '@/lib/shared'
 
 type GuideType = 'full' | 'new'
 
@@ -36,7 +36,7 @@ const FULL_MOON_GUIDE: MoonGuide = {
   emoji: '🌕',
   heading: 'Full Moon Ritual',
   subheading: 'Release, celebrate, and receive',
-  intention: 'The full moon illuminates what is ready to be seen and released. This is not a time to start — it is a time to complete, acknowledge, and let go of what no longer belongs to the next chapter of your life.',
+  intention: 'The full moon illuminates what is ready to be seen and released. This is not a time to start, it is a time to complete, acknowledge, and let go of what no longer belongs to the next chapter of your life.',
   colour: 'rgba(201,168,76,0.06)',
   borderColour: 'rgba(201,168,76,0.3)',
   accentColour: '#C9A84C',
@@ -44,12 +44,12 @@ const FULL_MOON_GUIDE: MoonGuide = {
     {
       time: '3 days before',
       title: 'Write your release list',
-      instruction: 'Identify what you are ready to release. Patterns, beliefs, relationships, habits, or emotions that have run their course. Write each one without judgment — simply witness what is ready to leave.',
+      instruction: 'Identify what you are ready to release. Patterns, beliefs, relationships, habits, or emotions that have run their course. Write each one without judgment, simply witness what is ready to leave.',
     },
     {
       time: 'Day of full moon',
       title: 'Cleanse your space',
-      instruction: 'Open windows, light candles, and clear physical clutter from one area of your home. This mirrors the energetic clearing you are doing internally. The full moon amplifies what is already present — make that presence intentional.',
+      instruction: 'Open windows, light candles, and clear physical clutter from one area of your home. This mirrors the energetic clearing you are doing internally. The full moon amplifies what is already present, make that presence intentional.',
     },
     {
       time: 'At moonrise',
@@ -59,7 +59,7 @@ const FULL_MOON_GUIDE: MoonGuide = {
     {
       time: 'After release',
       title: 'State your gratitude',
-      instruction: 'Speak aloud three things that came to fruition in the last lunar cycle. These do not need to be large — a conversation that shifted something, a moment of courage, a boundary held. Acknowledge what grew.',
+      instruction: 'Speak aloud three things that came to fruition in the last lunar cycle. These do not need to be large, a conversation that shifted something, a moment of courage, a boundary held. Acknowledge what grew.',
     },
     {
       time: 'Before sleep',
@@ -84,7 +84,7 @@ const NEW_MOON_GUIDE: MoonGuide = {
   emoji: '🌑',
   heading: 'New Moon Ritual',
   subheading: 'Seed, set intentions, and begin',
-  intention: 'The new moon is the darkest point of the lunar cycle — and the most potent moment to plant seeds. In darkness, roots form before anything is visible. Your intentions set tonight will have the full cycle to grow, build energy, and bloom by the next full moon.',
+  intention: 'The new moon is the darkest point of the lunar cycle, and the most potent moment to plant seeds. In darkness, roots form before anything is visible. Your intentions set tonight will have the full cycle to grow, build energy, and bloom by the next full moon.',
   colour: 'rgba(155,138,255,0.06)',
   borderColour: 'rgba(155,138,255,0.25)',
   accentColour: '#9b8aff',
@@ -92,22 +92,22 @@ const NEW_MOON_GUIDE: MoonGuide = {
     {
       time: 'Evening of new moon',
       title: 'Create a clean slate',
-      instruction: 'Before you begin, clean the surface where you will work. Turn off notifications. Light a single candle. This is a threshold moment — you are stepping from the old cycle into a new one. Honour it with physical stillness.',
+      instruction: 'Before you begin, clean the surface where you will work. Turn off notifications. Light a single candle. This is a threshold moment, you are stepping from the old cycle into a new one. Honour it with physical stillness.',
     },
     {
       time: 'First 10 minutes',
       title: 'Breathe and arrive',
-      instruction: 'Sit with your journal closed. Take ten slow breaths, counting each one. On the exhale, release the residue of the last cycle. On the inhale, draw in the blank-slate energy of the new moon. You are not setting goals yet — you are emptying.',
+      instruction: 'Sit with your journal closed. Take ten slow breaths, counting each one. On the exhale, release the residue of the last cycle. On the inhale, draw in the blank-slate energy of the new moon. You are not setting goals yet, you are emptying.',
     },
     {
       time: 'Intention writing',
       title: 'Write your new moon intentions',
-      instruction: 'Write 3 to 10 intentions for this lunar cycle. Keep them specific enough to feel real, open enough to allow surprise. Use present tense: "I am building...", "I am calling in...", "I am becoming..." Write by hand if possible — the act of writing anchors intention into the physical.',
+      instruction: 'Write 3 to 10 intentions for this lunar cycle. Keep them specific enough to feel real, open enough to allow surprise. Use present tense: "I am building...", "I am calling in...", "I am becoming..." Write by hand if possible, the act of writing anchors intention into the physical.',
     },
     {
       time: 'After writing',
       title: 'Read them aloud',
-      instruction: 'Read each intention aloud to yourself. Your voice carries frequency. Speaking what you have written moves it from inner to outer — from thought into the room around you, and therefore into the world.',
+      instruction: 'Read each intention aloud to yourself. Your voice carries frequency. Speaking what you have written moves it from inner to outer, from thought into the room around you, and therefore into the world.',
     },
     {
       time: 'Close the ritual',
@@ -172,7 +172,7 @@ function GuideCard({ guide }: { guide: MoonGuide }) {
       {/* Steps */}
       <div style={{ padding: '24px 28px' }}>
         <div style={{ fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase', color: guide.accentColour, marginBottom: '16px' }}>
-          The ritual — step by step
+          The ritual, step by step
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
           {guide.steps.map((step, i) => (
@@ -292,7 +292,7 @@ function GuideCard({ guide }: { guide: MoonGuide }) {
           lineHeight: 1.7,
           margin: 0,
         }}>
-          "{guide.affirmation}"
+          &ldquo;{guide.affirmation}&rdquo;
         </p>
       </div>
     </div>
@@ -324,8 +324,8 @@ export default function IntentionGuides() {
           <span style={{ fontSize: '18px' }}>{moon.emoji}</span>
           <span>
             {isNearFullMoon
-              ? `You are in the ${moon.name} phase — the full moon ritual is most potent right now.`
-              : `You are in the ${moon.name} phase — the new moon ritual is most potent right now.`}
+              ? `You are in the ${moon.name} phase, the full moon ritual is most potent right now.`
+              : `You are in the ${moon.name} phase, the new moon ritual is most potent right now.`}
           </span>
         </div>
       )}
@@ -341,7 +341,7 @@ export default function IntentionGuides() {
         color: 'rgba(232,224,255,0.3)',
         lineHeight: 1.6,
       }}>
-        These guides draw from lunar cycle traditions and ritual practice. They are offered as tools for reflection and intention — not as spiritual prescription.
+        These guides draw from lunar cycle traditions and ritual practice. They are offered as tools for reflection and intention, not as spiritual prescription.
         Use what resonates. Leave what does not.
       </div>
     </div>

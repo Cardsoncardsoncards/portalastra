@@ -1,13 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { getSupabase } from '@/lib/supabase'
+import { getClientIp, rateLimit } from '@/lib/rateLimit'
 
 const CACHE_TTL_HOURS = 24
 const ASSOCIATE_TAG = process.env.AMAZON_ASSOCIATE_TAG || 'blasdigital-22'
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-)
+// The complete set of queries the app actually issues. Found by searching src/
+// for `searchQuery=`. Anything else is rejected: without this, /api/amazon-books
+// was an open proxy that would run any keyword string a caller supplied against
+// the Amazon Creators API under Portal Astra's credentials and associate tag,
+// and cache the result in Supabase, one row per distinct query.
+const ALLOWED_QUERIES = new Set([
+  'moon phases astrology guide',   // src/app/moon/MoonClient.tsx
+  'numerology life path guide',    // src/app/calendars/CalendarsClient.tsx
+  'cosmic spiritual journal',      // src/app/pricing/page.tsx
+])
+
+const DEFAULT_COUNT = 3
+const MAX_COUNT = 6
+
+const RATE_LIMIT = 60
+const RATE_WINDOW_MS = 60 * 60 * 1000
 
 interface AmazonProduct {
   asin: string
@@ -115,12 +128,12 @@ async function fetchFromAmazon(query: string, count: number): Promise<AmazonProd
   }).filter((p) => p.asin && p.image)
 }
 
-async function getCachedProducts(queryKey: string): Promise<AmazonProduct[] | null> {
-  const { data, error } = await supabase
+async function getCachedProducts(queryKey: string): Promise<{ products: AmazonProduct[]; cachedAt: string } | null> {
+  const { data, error } = await getSupabase()
     .from('portal_astra_product_cache')
     .select('products, cached_at')
     .eq('query_key', queryKey)
-    .single()
+    .maybeSingle()
 
   if (error || !data) return null
 
@@ -128,11 +141,11 @@ async function getCachedProducts(queryKey: string): Promise<AmazonProduct[] | nu
   const ageHours = (Date.now() - cachedAt.getTime()) / (1000 * 60 * 60)
   if (ageHours > CACHE_TTL_HOURS) return null
 
-  return data.products as AmazonProduct[]
+  return { products: data.products as AmazonProduct[], cachedAt: data.cached_at }
 }
 
 async function setCachedProducts(queryKey: string, products: AmazonProduct[]): Promise<void> {
-  await supabase
+  await getSupabase()
     .from('portal_astra_product_cache')
     .upsert(
       { query_key: queryKey, products, cached_at: new Date().toISOString(), hit_count: 0 },
@@ -140,32 +153,69 @@ async function setCachedProducts(queryKey: string, products: AmazonProduct[]): P
     )
 }
 
+/**
+ * Parse the count parameter.
+ *
+ * `parseInt('abc', 10)` is NaN, and `Math.min(NaN, 6)` is NaN, so
+ * `?count=abc` used to send `itemCount: NaN` straight through to the Amazon
+ * API and poison the cache key with the string "NaN".
+ */
+function parseCount(raw: string | null): number {
+  const parsed = Number.parseInt(raw ?? '', 10)
+  if (!Number.isFinite(parsed) || parsed < 1) return DEFAULT_COUNT
+  return Math.min(parsed, MAX_COUNT)
+}
+
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
-  const query = searchParams.get('q')
-  const countParam = searchParams.get('count')
-  const count = Math.min(parseInt(countParam ?? '3', 10), 6)
+  const query = (searchParams.get('q') ?? '').toLowerCase().trim()
+  const count = parseCount(searchParams.get('count'))
+  // The nightly warm job passes force=1 to bypass a still-fresh cache entry.
+  const force = searchParams.get('force') === '1'
 
   if (!query) {
     return NextResponse.json({ error: 'Missing q parameter' }, { status: 400 })
   }
 
-  const queryKey = `${query.toLowerCase().trim()}__${count}`
+  if (!ALLOWED_QUERIES.has(query)) {
+    return NextResponse.json({ error: 'Unrecognised query' }, { status: 400 })
+  }
+
+  const limited = rateLimit(`amazon-books:ip:${getClientIp(req)}`, RATE_LIMIT, RATE_WINDOW_MS)
+  if (!limited.ok) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again later.' },
+      { status: 429, headers: { 'Retry-After': String(Math.ceil(limited.retryAfterMs / 1000)) } },
+    )
+  }
+
+  const queryKey = `${query}__${count}`
 
   try {
-    const cached = await getCachedProducts(queryKey)
-    if (cached) {
-      return NextResponse.json({ products: cached, source: 'cache' })
+    if (!force) {
+      const cached = await getCachedProducts(queryKey)
+      if (cached) {
+        return NextResponse.json({
+          products: cached.products,
+          source: 'cache',
+          fetchedAt: cached.cachedAt,
+        })
+      }
     }
 
     const products = await fetchFromAmazon(query, count)
     await setCachedProducts(queryKey, products)
 
-    return NextResponse.json({ products, source: 'api' })
+    return NextResponse.json({ products, source: 'api', fetchedAt: new Date().toISOString() })
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error'
-    console.error('[amazon-books] Error:', message)
-    // Return empty rather than 500 so pages still render
-    return NextResponse.json({ products: [], error: message }, { status: 200 })
+    // Log the detail, return a fixed string. The thrown messages here embed raw
+    // Amazon response bodies, which can carry credential and account detail.
+    console.error('[amazon-books] Error:', err instanceof Error ? err.message : 'Unknown error')
+    // Still 200 with an empty list so the product row simply renders nothing
+    // rather than breaking the page around it.
+    return NextResponse.json(
+      { products: [], error: 'Recommendations are temporarily unavailable.' },
+      { status: 200 },
+    )
   }
 }

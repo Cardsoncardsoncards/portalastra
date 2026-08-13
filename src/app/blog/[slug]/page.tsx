@@ -2,13 +2,14 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPost, getAllPosts, getRelatedPosts } from '@/lib/posts'
-import { formatDate } from '@/lib/utils'
+import { formatDate } from '@/lib/shared'
 import ReadingProgress from './ReadingProgress'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import styles from '../../page.module.css'
 
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.portalastra.com').replace(/\/$/, '')
+// Apex, no www, matching sitemap.ts, robots.ts and layout.tsx.
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://portalastra.com').replace(/\/$/, '')
 
 export function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }))
@@ -16,9 +17,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const post = getPost(params.slug)
-  if (!post) return { title: 'Post not found — Portal Astra' }
+  if (!post) return { title: 'Post not found, Portal Astra' }
   return {
-    title: `${post.title} — Portal Astra`,
+    title: `${post.title}, Portal Astra`,
     description: post.excerpt,
     openGraph: {
       title: post.title,
@@ -154,7 +155,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         )}
 
       </div>
-      <Footer title="Portal Astra" shareText={`${post.title} — portalastra.com`} />
+      <Footer title="Portal Astra" shareText={`${post.title}, portalastra.com`} />
     </main>
   )
 }

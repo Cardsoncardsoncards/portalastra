@@ -5,61 +5,21 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import IntentionGuides from '@/components/IntentionGuides'
 import AmazonProductRow from '@/components/AmazonProductRow'
+import PremiumUnlock, { usePremium } from '@/components/PremiumUnlock'
+import {
+  SYNODIC_MONTH,
+  getMoonPhase,
+  getMoonDistanceKm,
+  nextPhase,
+  ECLIPSES,
+} from '@/lib/shared'
 import styles from './page.module.css'
 
-const CYCLE = 29.53059
-const KNOWN_NEW_MOON = Date.UTC(2000, 0, 6, 18, 14) // Jan 6 2000 new moon (UTC)
-const ANOM = 27.55455
-const KNOWN_PERIGEE = Date.UTC(2024, 0, 13) // approx perigee epoch (for supermoon estimate)
-
-const PHASE_NAMES = [
-  'New Moon', 'Waxing Crescent', 'First Quarter', 'Waxing Gibbous',
-  'Full Moon', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent',
-]
-const PHASE_EMOJIS = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘']
 const MONTH_NAMES = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
 ]
 const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-
-interface Phase {
-  name: string
-  emoji: string
-  index: number
-  illumination: number
-  age: number
-  frac: number
-}
-
-function getMoonPhase(date: Date): Phase {
-  const days = (date.getTime() - KNOWN_NEW_MOON) / 86400000
-  let age = days % CYCLE
-  if (age < 0) age += CYCLE
-  const frac = age / CYCLE
-  const illumination = Math.round(((1 - Math.cos(frac * 2 * Math.PI)) / 2) * 100)
-  const index = Math.floor(frac * 8 + 0.5) % 8
-  return { name: PHASE_NAMES[index], emoji: PHASE_EMOJIS[index], index, illumination, age, frac }
-}
-
-function phaseDistanceKm(frac: number): number {
-  return Math.round(381600 - 25100 * Math.cos(frac * 2 * Math.PI))
-}
-
-function anomDistanceKm(date: Date): number {
-  let p = ((date.getTime() - KNOWN_PERIGEE) / 86400000) % ANOM
-  if (p < 0) p += ANOM
-  return Math.round(385000 - 28500 * Math.cos((p / ANOM) * 2 * Math.PI))
-}
-
-function nextPhase(from: Date, targetAge: number): Date {
-  const days = (from.getTime() - KNOWN_NEW_MOON) / 86400000
-  let age = days % CYCLE
-  if (age < 0) age += CYCLE
-  let delta = (targetAge - age + CYCLE) % CYCLE
-  if (delta < 0.01) delta += CYCLE
-  return new Date(from.getTime() + delta * 86400000)
-}
 
 function daysBetween(target: Date, from: Date): number {
   return Math.max(0, Math.ceil((target.getTime() - from.getTime()) / 86400000))
@@ -68,13 +28,6 @@ function daysBetween(target: Date, from: Date): number {
 function fmtDate(d: Date): string {
   return d.toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })
 }
-
-const ECLIPSES = [
-  { date: '2026-08-12', label: 'Total Solar Eclipse' },
-  { date: '2026-02-06', label: 'Annular Solar Eclipse' },
-  { date: '2027-08-02', label: 'Total Solar Eclipse' },
-  { date: '2025-09-07', label: 'Total Lunar Eclipse' },
-]
 
 interface GuideCard {
   name: string
@@ -108,7 +61,10 @@ export default function MoonClient() {
   const [eventsPaused, setEventsPaused] = useState(false)
   const [guidePaused, setGuidePaused] = useState(false)
   const [pageUrl, setPageUrl] = useState('')
-  const [isPremium, setIsPremium] = useState(false)
+
+  // Server-validated on mount. Never read from localStorage.
+  const premium = usePremium()
+  const isPremium = premium.status === 'premium'
 
   // Subscribe form
   const [email, setEmail] = useState('')
@@ -122,28 +78,18 @@ export default function MoonClient() {
     setPageUrl(window.location.href)
   }, [])
 
-  // Restore a previously verified premium session (same pattern as Sky tab and Calendars).
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem('pa_premium_verified')
-      if (stored) {
-        const { verified, expires } = JSON.parse(stored)
-        if (verified && Date.now() < expires) setIsPremium(true)
-      }
-    } catch {}
-  }, [])
-
   const todayPhase = now ? getMoonPhase(now) : null
-  const distance = todayPhase ? phaseDistanceKm(todayPhase.frac) : null
+  // Distance comes from the anomalistic (perigee) cycle, not the phase cycle.
+  const distance = now ? getMoonDistanceKm(now) : null
 
   let events: { name: string; date: Date; emoji: string }[] = []
   if (now) {
     const nextNew = nextPhase(now, 0)
-    const nextFull = nextPhase(now, CYCLE / 2)
+    const nextFull = nextPhase(now, SYNODIC_MONTH / 2)
     let supermoon = nextFull
     for (let i = 0; i < 14; i++) {
-      if (anomDistanceKm(supermoon) < 360000) break
-      supermoon = nextPhase(new Date(supermoon.getTime() + 86400000), CYCLE / 2)
+      if (getMoonDistanceKm(supermoon) < 360000) break
+      supermoon = nextPhase(new Date(supermoon.getTime() + 86400000), SYNODIC_MONTH / 2)
     }
     const upcomingEclipse = ECLIPSES
       .map((e) => ({ ...e, dt: new Date(e.date + 'T00:00:00Z') }))
@@ -197,13 +143,17 @@ export default function MoonClient() {
         setSubNote({ ok: false, msg: d.error || 'Something went wrong.' })
       }
     } catch {
-      setSubNote({ ok: false, msg: 'Network error — try again.' })
+      setSubNote({ ok: false, msg: 'Network error, try again.' })
     }
     setSubscribing(false)
   }
 
   const renderGuideCard = (card: GuideCard, i: number) => {
-    if (card.locked) {
+    // Only lock the card if this visitor actually lacks premium. These two
+    // features are built and gated correctly elsewhere on the site, so showing
+    // a paying subscriber a "Coming Soon" padlock over something they already
+    // have access to was telling them their subscription bought nothing.
+    if (card.locked && !isPremium) {
       return (
         <div key={`${card.name}-${i}`} className={`${styles.carouselCard} ${styles.lockedCard}`}>
           <div className={styles.lockedContent}>
@@ -213,8 +163,18 @@ export default function MoonClient() {
           </div>
           <div className={styles.lockOverlay}>
             <span className={styles.lockIcon}>🔒</span>
-            <span className={styles.lockLabel}>Coming Soon — Premium</span>
+            <span className={styles.lockLabel}>Astra Premium</span>
           </div>
+        </div>
+      )
+    }
+    if (card.locked) {
+      return (
+        <div key={`${card.name}-${i}`} className={styles.carouselCard}>
+          <div className={`${styles.vizBase} ${styles.vizFull}`} aria-hidden />
+          <h3 className={styles.cardName}>{card.name}</h3>
+          <p className={styles.cardDesc}>{card.desc}</p>
+          <p className={styles.cardSci}>Included with your Astra Premium subscription.</p>
         </div>
       )
     }
@@ -242,7 +202,7 @@ export default function MoonClient() {
         {/* Intro */}
         <p className={styles.intro}>
           The moon completes its cycle every 29.5 days, passing through eight distinct phases. Each
-          phase carries its own energy and meaning — scientific, spiritual, and practical. Use this
+          phase carries its own energy and meaning, scientific, spiritual, and practical. Use this
           calendar to track where we are in the current cycle.
         </p>
 
@@ -283,7 +243,7 @@ export default function MoonClient() {
           )}
         </section>
 
-        {/* Upcoming events — auto-scroll carousel */}
+        {/* Upcoming events, auto-scroll carousel */}
         <section className={styles.section}>
           <h2 className={styles.sectionHeading}>Upcoming Events</h2>
           {now ? (
@@ -309,7 +269,7 @@ export default function MoonClient() {
           )}
         </section>
 
-        {/* Phase guide — auto-scroll carousel */}
+        {/* Phase guide, auto-scroll carousel */}
         <section className={styles.section}>
           <h2 className={styles.sectionHeading}>Phase Guide</h2>
           <div className={styles.carouselWrap}>
@@ -324,7 +284,7 @@ export default function MoonClient() {
           </div>
         </section>
 
-        {/* Premium — full moon and new moon intention-setting guides */}
+        {/* Premium, full moon and new moon intention-setting guides */}
         {isPremium && (
           <section className={styles.section}>
             <h2 className={styles.sectionHeading}>Intention Guides</h2>
@@ -337,7 +297,7 @@ export default function MoonClient() {
           <div className={styles.subscribe}>
             <h2 className={styles.subscribeHeading}>Get the cosmos in your inbox</h2>
             <p className={styles.subscribeText}>
-              Every Sunday evening, a weekly cosmic digest — moon phases, space weather, and
+              Every Sunday evening, a weekly cosmic digest, moon phases, space weather, and
               astronomical highlights for the week ahead.
             </p>
             <form className={styles.subscribeForm} onSubmit={subscribe}>
@@ -396,7 +356,7 @@ export default function MoonClient() {
         <section className={styles.section} style={{ textAlign: 'center' }}>
           <a
             className={styles.pinBtn}
-            href={`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(pageUrl)}&description=${encodeURIComponent('Track the lunar cycle on Portal Astra — Moon Phase Calendar')}`}
+            href={`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(pageUrl)}&description=${encodeURIComponent('Track the lunar cycle on Portal Astra, Moon Phase Calendar')}`}
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -1,10 +1,10 @@
 'use client'
 
-// PlantingCalendar.tsx — Premium component
+// PlantingCalendar.tsx, Premium component
 // Drop into src/app/calendars/page.tsx, replacing the existing planting grid
-// Requires: getMoonPhase from @/lib/utils
+// Requires: getMoonPhase from @/lib/shared
 
-import { getMoonPhase } from '@/lib/utils'
+import { getMoonPhase } from '@/lib/shared'
 
 type PhaseKey = 'New Moon' | 'Waxing Crescent' | 'First Quarter' | 'Waxing Gibbous' | 'Full Moon' | 'Waning Gibbous' | 'Last Quarter' | 'Waning Crescent'
 
@@ -29,11 +29,11 @@ const PHASE_DATA: Record<PhaseKey, Omit<PhaseData, 'daysRemaining'>> = {
     tagline: 'The soil drinks in darkness. Set your intentions before breaking ground.',
     colour: '#1a1040',
     goldBorder: false,
-    sow: ['Nothing — this is a rest phase'],
+    sow: ['Nothing, this is a rest phase'],
     avoid: ['Transplanting', 'Harvesting', 'Pruning'],
     tasks: ['Prepare soil', 'Add compost', 'Plan your garden layout', 'Set intentions for the season'],
     zodiacBest: 'Cancer, Scorpio, Pisces',
-    ritual: 'Write what you want to grow — in the garden and in your life — before you sleep.',
+    ritual: 'Write what you want to grow, in the garden and in your life, before you sleep.',
   },
   'Waxing Crescent': {
     emoji: '🌒',
@@ -67,7 +67,7 @@ const PHASE_DATA: Record<PhaseKey, Omit<PhaseData, 'daysRemaining'>> = {
     goldBorder: false,
     sow: ['Fruiting vegetables', 'Climbing plants', 'Melons'],
     avoid: ['Root crops', 'Bulbs'],
-    tasks: ['Deep watering', 'Apply liquid fertiliser', 'Tie and train climbers', 'Watch for pests — plants are most vulnerable'],
+    tasks: ['Deep watering', 'Apply liquid fertiliser', 'Tie and train climbers', 'Watch for pests, plants are most vulnerable'],
     zodiacBest: 'Taurus, Cancer, Virgo',
     ritual: 'Feed your plants at golden hour. Thank them for what they are becoming.',
   },
@@ -102,7 +102,7 @@ const PHASE_DATA: Record<PhaseKey, Omit<PhaseData, 'daysRemaining'>> = {
     colour: '#12101a',
     goldBorder: false,
     sow: ['Root vegetables', 'Garlic', 'Perennial herbs'],
-    avoid: ['Planting anything new — energy is clearing'],
+    avoid: ['Planting anything new, energy is clearing'],
     tasks: ['Weed deeply', 'Prune and deadhead', 'Turn compost', 'Remove diseased plants', 'Aerate soil'],
     zodiacBest: 'Scorpio, Capricorn, Virgo',
     ritual: 'Remove something from your garden that is not thriving. Let it go without guilt.',
@@ -114,7 +114,7 @@ const PHASE_DATA: Record<PhaseKey, Omit<PhaseData, 'daysRemaining'>> = {
     colour: '#12101a',
     goldBorder: false,
     sow: ['Garlic cloves', 'Bulbs for next season'],
-    avoid: ['Most planting — this is a rest phase'],
+    avoid: ['Most planting, this is a rest phase'],
     tasks: ['Rest the soil', 'Prepare beds for the new cycle', 'Spread compost', 'Plan what to plant at New Moon'],
     zodiacBest: 'Pisces, Cancer',
     ritual: 'Sit in the garden at dusk. Notice what has grown. Notice what needs the next cycle.',
@@ -301,7 +301,7 @@ export default function PlantingCalendar() {
         </div>
       </div>
 
-      {/* Ritual card — gold premium */}
+      {/* Ritual card, gold premium */}
       <div style={{
         background: 'linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(155,138,255,0.06) 100%)',
         border: '1px solid rgba(201,168,76,0.3)',
@@ -320,7 +320,7 @@ export default function PlantingCalendar() {
           lineHeight: 1.7,
           margin: 0,
         }}>
-          "{data.ritual}"
+          &ldquo;{data.ritual}&rdquo;
         </p>
       </div>
 

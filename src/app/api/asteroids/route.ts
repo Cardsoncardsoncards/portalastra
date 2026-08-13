@@ -39,7 +39,7 @@ export async function GET() {
           Number(b.close_approach_data[0]?.miss_distance.kilometers ?? Infinity),
       )
     return NextResponse.json(
-      { asteroids: sorted, count: data.element_count },
+      { asteroids: sorted, count: data.element_count, fetchedAt: new Date().toISOString() },
       { headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' } },
     )
   } catch (err) {

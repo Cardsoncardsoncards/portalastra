@@ -7,7 +7,7 @@ const GA_MEASUREMENT_ID = 'G-QMJ074E2JZ'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://portalastra.com'),
-  title: 'Portal Astra \u2014 Your daily cosmic guide',
+  title: 'Portal Astra, Your daily cosmic guide',
   description: 'Space science meets celestial wisdom. Daily NASA imagery, horoscopes, moon phases, angel numbers and more.',
   keywords: [
     'moon phases', 'lunar calendar', 'astrology', 'horoscope', 'space weather', 'NASA',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
         url: '/images/portalastralogohorizontal.png',
         width: 1200,
         height: 630,
-        alt: 'Portal Astra \u2014 Astronomy. Guidance. Discovery.',
+        alt: 'Portal Astra, Astronomy. Guidance. Discovery.',
       },
     ],
   },

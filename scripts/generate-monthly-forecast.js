@@ -1,80 +1,24 @@
 // scripts/generate-monthly-forecast.js
-// Monthly cosmic forecast email — targets Portal Astra Paid group only
+// Monthly cosmic forecast email, targets Portal Astra Paid group only
 // Runs 1st of each month via GitHub Actions cron
 // Content: full month astrology overview, major lunar events, space weather forecast, ritual calendar
+
+// Shared deck, shared draw, shared group IDs. Paid group only, this is a
+// premium email.
+const {
+  getMonthlyCard,
+  cardKeywords,
+  PAID_GROUP_ID,
+  esc,
+  escUrl,
+  emailFooterHTML,
+  validateFields,
+  STYLE_RULES_PROMPT,
+} = require('../src/lib/shared')
 
 const MAILERLITE_API_KEY = process.env.MAILERLITE_API_KEY
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY
 const NASA_API_KEY = process.env.NASA_API_KEY
-
-// Paid group only — this is a premium email
-const PAID_GROUP_ID = '189884548570416247'
-
-// ─── Tarot deck (self-contained copy of src/lib/tarot.ts TAROT_DECK) ────────
-// No imports — replicates the same 22 majors + 56 minors (78 total).
-const TAROT_CARDS = (() => {
-  const MAJORS = [
-    { name: 'The Fool',           emoji: '🃏', arcana: 'Major', theme: 'New beginnings',  upright: 'A leap of faith, fresh starts, and innocent trust in the road ahead.', reversed: 'Recklessness, hesitation, or fear of stepping into the unknown.' },
-    { name: 'The Magician',       emoji: '🪄', arcana: 'Major', theme: 'Manifestation',   upright: 'You hold every tool you need — focus your will and create.',           reversed: 'Scattered energy, untapped talent, or manipulation at play.' },
-    { name: 'The High Priestess', emoji: '🌙', arcana: 'Major', theme: 'Intuition',       upright: 'Inner knowing speaks softly; trust the mystery you already sense.',     reversed: 'Secrets withheld, silenced intuition, surface over depth.' },
-    { name: 'The Empress',        emoji: '👑', arcana: 'Major', theme: 'Abundance',       upright: 'Nurturing, fertility, and creative abundance flow toward you.',         reversed: 'Creative block, neglect, or smothering of what you tend.' },
-    { name: 'The Emperor',        emoji: '🏛️', arcana: 'Major', theme: 'Structure',       upright: 'Authority, stability, and the discipline to build something lasting.',  reversed: 'Rigidity, control, or a structure that no longer serves.' },
-    { name: 'The Hierophant',     emoji: '📜', arcana: 'Major', theme: 'Tradition',       upright: 'Guidance, shared belief, and wisdom passed down through ritual.',       reversed: 'Rebellion against dogma, or freedom from inherited rules.' },
-    { name: 'The Lovers',         emoji: '💞', arcana: 'Major', theme: 'Union',           upright: 'Connection, alignment of values, and a meaningful choice of the heart.',reversed: 'Discord, misalignment, or a difficult choice avoided.' },
-    { name: 'The Chariot',        emoji: '🛞', arcana: 'Major', theme: 'Willpower',       upright: 'Drive and determination carry you to victory — steer with focus.',     reversed: 'Loss of direction, opposing forces, or stalled momentum.' },
-    { name: 'Strength',           emoji: '🦁', arcana: 'Major', theme: 'Courage',         upright: 'Gentle power, patience, and courage that tames the wildest fear.',      reversed: 'Self-doubt, raw emotion, or strength turned to force.' },
-    { name: 'The Hermit',         emoji: '🕯️', arcana: 'Major', theme: 'Reflection',      upright: 'Solitude lights the way; seek the answer that lives within.',           reversed: 'Isolation, withdrawal, or refusing the wisdom of stillness.' },
-    { name: 'Wheel of Fortune',   emoji: '🎡', arcana: 'Major', theme: 'Cycles',          upright: 'Fate turns in your favour — change, luck, and a new chapter open.',     reversed: 'Resistance to change, bad timing, or cycles repeating.' },
-    { name: 'Justice',            emoji: '⚖️', arcana: 'Major', theme: 'Truth',           upright: 'Fairness, accountability, and cause meeting its honest effect.',        reversed: 'Imbalance, dishonesty, or consequences avoided.' },
-    { name: 'The Hanged Man',     emoji: '🙃', arcana: 'Major', theme: 'Surrender',       upright: 'A pause and a new perspective; release the need to control.',           reversed: 'Stalling, martyrdom, or clinging when it is time to let go.' },
-    { name: 'Death',              emoji: '💀', arcana: 'Major', theme: 'Transformation',  upright: 'An ending clears the ground for profound renewal.',                    reversed: 'Resistance to an ending, or change held at bay.' },
-    { name: 'Temperance',         emoji: '🍷', arcana: 'Major', theme: 'Balance',         upright: 'Patience and moderation blend opposites into harmony.',                reversed: 'Excess, impatience, or elements out of proportion.' },
-    { name: 'The Devil',          emoji: '😈', arcana: 'Major', theme: 'Attachment',      upright: 'Face what binds you — desire, habit, or fear holding you in place.',    reversed: 'Release from chains, reclaiming your own power.' },
-    { name: 'The Tower',          emoji: '🗼', arcana: 'Major', theme: 'Upheaval',        upright: 'Sudden change shakes a false foundation so truth can stand.',           reversed: 'Averted disaster, or clinging to a crumbling structure.' },
-    { name: 'The Star',           emoji: '⭐', arcana: 'Major', theme: 'Hope',            upright: 'Healing, renewal, and quiet faith after the storm.',                   reversed: 'Doubt, dimmed hope, or disconnection from your light.' },
-    { name: 'The Moon',           emoji: '🌕', arcana: 'Major', theme: 'Mystery',         upright: 'Dreams, illusion, and intuition guiding you through the unknown.',      reversed: 'Confusion lifting, or fears finally brought to light.' },
-    { name: 'The Sun',            emoji: '☀️', arcana: 'Major', theme: 'Joy',             upright: 'Warmth, success, and radiant clarity — a wholehearted yes.',           reversed: 'Temporary clouds, dimmed optimism, or delayed joy.' },
-    { name: 'Judgement',          emoji: '🎺', arcana: 'Major', theme: 'Awakening',       upright: 'A calling, reckoning, and rebirth into a truer self.',                 reversed: 'Self-doubt, avoidance, or a call left unanswered.' },
-    { name: 'The World',          emoji: '🌍', arcana: 'Major', theme: 'Completion',      upright: 'Fulfilment, wholeness, and the joyful close of a great cycle.',        reversed: 'Loose ends, a goal nearly reached, or closure delayed.' },
-  ]
-  const SUITS = [
-    { suit: 'Wands',     emoji: '🔥', theme: 'energy, passion and ambition' },
-    { suit: 'Cups',      emoji: '💧', theme: 'emotion, intuition and relationships' },
-    { suit: 'Swords',    emoji: '⚔️', theme: 'intellect, truth and conflict' },
-    { suit: 'Pentacles', emoji: '🪙', theme: 'work, money and the material world' },
-  ]
-  const RANKS = [
-    { name: 'Ace',    theme: 'New spark',    up: 'a pure new spark of',                 rev: 'a blocked or delayed beginning in' },
-    { name: 'Two',    theme: 'Choice',       up: 'balance and a meaningful choice in',  rev: 'indecision and imbalance in' },
-    { name: 'Three',  theme: 'Growth',       up: 'early growth and collaboration in',   rev: 'stalled progress or misalignment in' },
-    { name: 'Four',   theme: 'Stability',    up: 'rest, structure and stability in',    rev: 'stagnation or clinging within' },
-    { name: 'Five',   theme: 'Challenge',    up: 'conflict, loss or challenge in',      rev: 'recovery and release from struggle in' },
-    { name: 'Six',    theme: 'Harmony',      up: 'harmony, generosity and progress in', rev: 'imbalance or stalled momentum in' },
-    { name: 'Seven',  theme: 'Perseverance', up: 'perseverance and assessment in',      rev: 'doubt or giving up too soon in' },
-    { name: 'Eight',  theme: 'Movement',     up: 'swift movement and mastery in',       rev: 'delay, scattered focus or haste in' },
-    { name: 'Nine',   theme: 'Resilience',   up: 'resilience and near-fulfilment in',   rev: 'anxiety or guardedness around' },
-    { name: 'Ten',    theme: 'Completion',   up: 'completion and lasting legacy in',    rev: 'burden or an overdue ending in' },
-    { name: 'Page',   theme: 'Curiosity',    up: 'curiosity and a fresh message about', rev: 'immaturity or blocked news about' },
-    { name: 'Knight', theme: 'Action',       up: 'bold action and pursuit of',          rev: 'recklessness or stalled drive in' },
-    { name: 'Queen',  theme: 'Mastery',      up: 'nurturing mastery and depth in',      rev: 'insecurity or imbalance in' },
-    { name: 'King',   theme: 'Command',      up: 'authority and confident command of',  rev: 'control, coldness or misuse of' },
-  ]
-  const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1)
-  const minors = []
-  for (const s of SUITS) {
-    for (const r of RANKS) {
-      minors.push({
-        name: `${r.name} of ${s.suit}`,
-        emoji: s.emoji,
-        arcana: s.suit,
-        theme: r.theme,
-        upright: `${cap(r.up)} ${s.theme}.`,
-        reversed: `${cap(r.rev)} ${s.theme}.`,
-      })
-    }
-  }
-  return [...MAJORS, ...minors]
-})()
 
 // ─── Lunar phase calculator ──────────────────────────────────────────────────
 
@@ -94,7 +38,7 @@ function getLunarEventsForMonth(year, month) {
   const startLunation = Math.floor(sinceStart / SYNODIC_DAYS) - 1
 
   const events = []
-  // 5 lunations covers ~147 days — comfortably more than any month.
+  // 5 lunations covers ~147 days, comfortably more than any month.
   for (let n = startLunation; n < startLunation + 5; n++) {
     const newMs  = KNOWN_NEW_MOON_MS + n * SYNODIC_DAYS * 86400000
     const fullMs = newMs + HALF_SYNODIC * 86400000
@@ -146,37 +90,34 @@ async function generateForecast(month, year, lunarEvents, apod, monthlyCard) {
   const monthName = getMonthName(month)
 
   const lunarEventsList = lunarEvents.map(e => `${e.type} on ${e.date}`).join(', ')
-  const tarotKeywords = `${monthlyCard.theme} — ${monthlyCard.upright}`
+  const tarotKeywords = cardKeywords(monthlyCard)
 
   const prompt = `You are writing the monthly cosmic forecast email for Portal Astra (portalastra.com), a space and astrology platform.
 
 This email goes to premium paid subscribers only. It should feel elevated, thoughtful, and worth the subscription.
 
 Month: ${monthName} ${year}
-Lunar events this month: ${lunarEventsList || 'Standard lunar cycle — check for specific dates'}
+Lunar events this month: ${lunarEventsList || 'Standard lunar cycle, check for specific dates'}
 Today's NASA image title: ${apod?.title || 'Not available'}
 
 Write the monthly cosmic forecast with these exact sections:
 
-1. SUBJECT LINE — compelling, specific to ${monthName}. No em dashes. Under 50 characters.
+1. SUBJECT LINE, compelling, specific to ${monthName}. No em dashes. Under 50 characters.
 
-2. OPENING (2-3 sentences) — set the tone for ${monthName}. What energy does this month carry? Be specific to the lunar events listed above. No generic statements.
+2. OPENING (2-3 sentences), set the tone for ${monthName}. What energy does this month carry? Be specific to the lunar events listed above. No generic statements.
 
-3. KEY LUNAR MOMENTS — for each lunar event listed, write 2-3 sentences about what it means energetically and what to do/focus on. Be specific and practical.
+3. KEY LUNAR MOMENTS, for each lunar event listed, write 2-3 sentences about what it means energetically and what to do/focus on. Be specific and practical.
 
-4. MONTHLY ASTROLOGY OVERVIEW — 3-4 sentences covering the broad astrological themes of ${monthName}. Focus on what people can actually use.
+4. MONTHLY ASTROLOGY OVERVIEW, 3-4 sentences covering the broad astrological themes of ${monthName}. Focus on what people can actually use.
 
-5. SPACE WEATHER WATCH — 2-3 sentences about what to watch in the night sky this month. Tie in the NASA image if relevant.
+5. SPACE WEATHER WATCH, 2-3 sentences about what to watch in the night sky this month. Tie in the NASA image if relevant.
 
-6. RITUAL FOCUS FOR THE MONTH — one specific ritual practice or focus for ${monthName}. Be concrete, not vague.
+6. RITUAL FOCUS FOR THE MONTH, one specific ritual practice or focus for ${monthName}. Be concrete, not vague.
 
-7. CLOSING (1-2 sentences) — warm, grounded. No em dashes. No words: eternal, forever, tapestry, dance, infinite.
+7. CLOSING (1-2 sentences), warm, grounded.
 
 Rules:
-- No em dashes anywhere
-- No words: eternal, forever, tapestry, dance, infinite, profound
-- Sentences under 25 words
-- Tone: mystical but grounded, scientific but accessible
+${STYLE_RULES_PROMPT}
 - Sign off as: Portal Astra
 
 Return your response as JSON with these exact keys:
@@ -233,7 +174,7 @@ EXTEND the JSON response with the additional top-level fields below. Keep all or
     const clean = text.replace(/```json\n?|\n?```/g, '').trim()
     return JSON.parse(clean)
   } catch (err) {
-    console.error('JSON parse failed — raw response:', text.substring(0, 500))
+    console.error('JSON parse failed, raw response:', text.substring(0, 500))
     throw new Error('Claude did not return valid JSON')
   }
 }
@@ -249,8 +190,8 @@ function buildEmailHTML(forecast, month, year, lunarEvents, apod) {
         <table width="100%" cellpadding="0" cellspacing="0" border="0">
           <tr>
             <td style="padding: 16px; background: rgba(155,138,255,0.06); border: 1px solid rgba(155,138,255,0.15); border-radius: 10px;">
-              <p style="margin: 0 0 6px 0; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #9b8aff;">${event.event || ''} · ${event.date || ''}</p>
-              <p style="margin: 0; font-size: 14px; color: rgba(232,224,255,0.85); line-height: 1.7;">${event.guidance || ''}</p>
+              <p style="margin: 0 0 6px 0; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #9b8aff;">${esc(event.event || '')} · ${esc(event.date || '')}</p>
+              <p style="margin: 0; font-size: 14px; color: rgba(232,224,255,0.85); line-height: 1.7;">${esc(event.guidance || '')}</p>
             </td>
           </tr>
         </table>
@@ -262,8 +203,8 @@ function buildEmailHTML(forecast, month, year, lunarEvents, apod) {
     <tr>
       <td style="padding: 0 0 32px 0;">
         <p style="margin: 0 0 12px 0; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #C9A84C;">NASA · This Month's Sky</p>
-        <img src="${apod.url}" alt="${apod.title}" style="width: 100%; border-radius: 10px; display: block; margin-bottom: 10px;" />
-        <p style="margin: 0; font-size: 12px; color: rgba(232,224,255,0.5); font-style: italic;">${apod.title}</p>
+        <img src="${escUrl(apod.url)}" alt="${esc(apod.title)}" style="width: 100%; border-radius: 10px; display: block; margin-bottom: 10px;" />
+        <p style="margin: 0; font-size: 12px; color: rgba(232,224,255,0.5); font-style: italic;">${esc(apod.title)}</p>
       </td>
     </tr>
   ` : ''
@@ -273,10 +214,10 @@ function buildEmailHTML(forecast, month, year, lunarEvents, apod) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${forecast.subject}</title>
+  <title>${esc(forecast.subject)}</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #04060f; font-family: 'DM Mono', 'Courier New', monospace;">
-<span style="display:none;max-height:0;overflow:hidden;mso-hide:all;">${forecast.preheader || ''}</span>
+<span style="display:none;max-height:0;overflow:hidden;mso-hide:all;">${esc(forecast.preheader || '')}</span>
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #04060f;">
     <tr>
       <td align="center" style="padding: 40px 20px;">
@@ -296,7 +237,7 @@ function buildEmailHTML(forecast, month, year, lunarEvents, apod) {
           <!-- Opening -->
           <tr>
             <td style="padding: 32px 0 24px 0;">
-              <p style="margin: 0; font-size: 15px; color: rgba(232,224,255,0.85); line-height: 1.8;">${forecast.opening}</p>
+              <p style="margin: 0; font-size: 15px; color: rgba(232,224,255,0.85); line-height: 1.8;">${esc(forecast.opening)}</p>
             </td>
           </tr>
 
@@ -312,12 +253,12 @@ function buildEmailHTML(forecast, month, year, lunarEvents, apod) {
           <tr>
             <td style="padding: 0 0 32px 0;">
               <p style="margin: 0 0 10px 0; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #C9A84C;">Monthly Astrology</p>
-              <p style="margin: 0; font-size: 14px; color: rgba(232,224,255,0.85); line-height: 1.8;">${forecast.astrologyOverview}</p>
+              <p style="margin: 0; font-size: 14px; color: rgba(232,224,255,0.85); line-height: 1.8;">${esc(forecast.astrologyOverview)}</p>
             </td>
           </tr>
 
           <!-- Monthly tarot -->
-          <tr><td style="padding:0 0 24px 0;"><a href="https://portalastra.com/?tab=tarot" style="text-decoration:none;display:block;"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding:16px 20px;background:rgba(8,10,30,0.75);border:1px solid rgba(155,138,255,0.2);border-radius:10px;"><p style="margin:0 0 4px 0;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C9A84C;">Monthly tarot</p><p style="margin:0 0 4px 0;font-size:16px;font-weight:600;color:#e8e0ff;">${forecast.monthlyTarot?.cardName || ''}</p><p style="margin:0 0 10px 0;font-size:12px;color:rgba(232,224,255,0.55);">${forecast.monthlyTarot?.keywords || ''}</p><p style="margin:0 0 10px 0;font-size:14px;color:rgba(232,224,255,0.85);line-height:1.7;">${forecast.monthlyTarot?.reading || ''}</p><p style="margin:0;font-size:12px;color:#9b8aff;">Draw your full reading →</p></td></tr></table></a></td></tr>
+          <tr><td style="padding:0 0 24px 0;"><a href="https://portalastra.com/?tab=tarot" style="text-decoration:none;display:block;"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding:16px 20px;background:rgba(8,10,30,0.75);border:1px solid rgba(155,138,255,0.2);border-radius:10px;"><p style="margin:0 0 4px 0;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#C9A84C;">Monthly tarot</p><p style="margin:0 0 4px 0;font-size:16px;font-weight:600;color:#e8e0ff;">${esc(forecast.monthlyTarot?.cardName || '')}</p><p style="margin:0 0 10px 0;font-size:12px;color:rgba(232,224,255,0.55);">${esc(forecast.monthlyTarot?.keywords || '')}</p><p style="margin:0 0 10px 0;font-size:14px;color:rgba(232,224,255,0.85);line-height:1.7;">${esc(forecast.monthlyTarot?.reading || '')}</p><p style="margin:0;font-size:12px;color:#9b8aff;">Draw your full reading →</p></td></tr></table></a></td></tr>
 
           <!-- NASA Image -->
           ${apodSection}
@@ -326,7 +267,7 @@ function buildEmailHTML(forecast, month, year, lunarEvents, apod) {
           <tr>
             <td style="padding: 0 0 32px 0;">
               <p style="margin: 0 0 10px 0; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #C9A84C;">Space Weather Watch</p>
-              <p style="margin: 0; font-size: 14px; color: rgba(232,224,255,0.85); line-height: 1.8;">${forecast.spaceWatch}</p>
+              <p style="margin: 0; font-size: 14px; color: rgba(232,224,255,0.85); line-height: 1.8;">${esc(forecast.spaceWatch)}</p>
             </td>
           </tr>
 
@@ -337,7 +278,7 @@ function buildEmailHTML(forecast, month, year, lunarEvents, apod) {
                 <tr>
                   <td style="padding: 20px 24px; background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.25); border-radius: 12px;">
                     <p style="margin: 0 0 10px 0; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #C9A84C;">Ritual Focus for ${monthName}</p>
-                    <p style="margin: 0; font-size: 14px; color: rgba(232,224,255,0.85); line-height: 1.8; font-style: italic; font-family: Georgia, serif;">"${forecast.ritualFocus}"</p>
+                    <p style="margin: 0; font-size: 14px; color: rgba(232,224,255,0.85); line-height: 1.8; font-style: italic; font-family: Georgia, serif;">"${esc(forecast.ritualFocus)}"</p>
                   </td>
                 </tr>
               </table>
@@ -350,24 +291,13 @@ function buildEmailHTML(forecast, month, year, lunarEvents, apod) {
           <!-- Closing -->
           <tr>
             <td style="padding: 0 0 40px 0; border-top: 1px solid rgba(255,255,255,0.07); padding-top: 32px;">
-              <p style="margin: 0 0 16px 0; font-size: 14px; color: rgba(232,224,255,0.75); line-height: 1.8;">${forecast.closing}</p>
+              <p style="margin: 0 0 16px 0; font-size: 14px; color: rgba(232,224,255,0.75); line-height: 1.8;">${esc(forecast.closing)}</p>
               <p style="margin: 0; font-size: 13px; color: #9b8aff;">Portal Astra</p>
             </td>
           </tr>
 
-          <!-- Footer -->
-          <tr>
-            <td style="padding: 24px 0 0 0; border-top: 1px solid rgba(255,255,255,0.07); text-align: center;">
-              <p style="margin: 0 0 6px 0; font-size: 11px; color: rgba(232,224,255,0.3);">
-                <a href="https://portalastra.com" style="color: #9b8aff; text-decoration: none;">portalastra.com</a>
-              </p>
-              <p style="font-size:11px;color:rgba(232,224,255,0.3);margin:0 0 6px 0;text-align:center;">You are receiving this as a Portal Astra subscriber at {$email}.</p>
-              <p style="margin: 0; font-size: 10px; color: rgba(232,224,255,0.2);">
-                You received this as an Astra Premium subscriber.
-                <a href="{$unsubscribe}" style="color: rgba(232,224,255,0.3);">Unsubscribe</a>
-              </p>
-            </td>
-          </tr>
+          <!-- Footer (shared across all three generated emails) -->
+          ${emailFooterHTML()}
 
         </table>
       </td>
@@ -390,7 +320,7 @@ async function createMailerLiteCampaign(subject, htmlContent, month, year) {
       'Authorization': `Bearer ${MAILERLITE_API_KEY}`,
     },
     body: JSON.stringify({
-      name: `Monthly Forecast — ${monthName} ${year}`,
+      name: `Monthly Forecast, ${monthName} ${year}`,
       type: 'regular',
       status: 'draft',
       emails: [{
@@ -412,7 +342,7 @@ async function createMailerLiteCampaign(subject, htmlContent, month, year) {
 
   console.log('Campaign created:', campaign.data?.id)
 
-  // Schedule for today at 7pm AEST (9am UTC — but this cron runs at 9am UTC on the 1st)
+  // Schedule for today at 7pm AEST (9am UTC, but this cron runs at 9am UTC on the 1st)
   // We schedule for the same day at 11am UTC to give a buffer
   const now = new Date()
   const scheduleDate = new Date(now)
@@ -456,7 +386,7 @@ async function createMailerLiteCampaign(subject, htmlContent, month, year) {
 // ─── Main ────────────────────────────────────────────────────────────────────
 
 async function main() {
-  // Forecast NEXT month — the cron runs on the 1st of the current month,
+  // Forecast NEXT month, the cron runs on the 1st of the current month,
   // and the email previews the month ahead.
   const forecastDate = new Date()
   forecastDate.setMonth(forecastDate.getMonth() + 1)
@@ -464,8 +394,10 @@ async function main() {
   const forecastYear      = forecastDate.getFullYear()
   const forecastMonthName = getMonthName(forecastMonth)
 
-  // Monthly tarot uses the CURRENT month index, per spec.
-  const monthlyCard = TAROT_CARDS[new Date().getMonth() % TAROT_CARDS.length]
+  // Seeded on the forecast year AND month. Indexing the deck by month number
+  // alone could only ever surface the first 12 Major Arcana, in the identical
+  // order, every single year.
+  const monthlyCard = getMonthlyCard(forecastYear, forecastMonth)
 
   console.log(`Generating monthly forecast for ${forecastMonthName} ${forecastYear}...`)
   console.log(`Monthly tarot: ${monthlyCard.name}`)
@@ -479,15 +411,54 @@ async function main() {
   const apod = await fetchMonthAPOD()
   console.log('APOD:', apod?.title || 'not available')
 
-  // 3. Generate forecast with Claude
+  // 3. Generate forecast with Claude, then check it against house style.
+  // One retry, then abort: for an email there is no static fallback worth
+  // sending, so a second failure stops the send rather than mailing copy that
+  // breaks the style rules to every paying subscriber.
   console.log('Generating forecast with Claude...')
-  const forecast = await generateForecast(forecastMonth, forecastYear, lunarEvents, apod, monthlyCard)
+  let forecast = null
+  for (let attempt = 0; attempt < 2; attempt++) {
+    let candidate
+    try {
+      candidate = await generateForecast(forecastMonth, forecastYear, lunarEvents, apod, monthlyCard)
+    } catch (err) {
+      console.error(`Forecast generation failed (attempt ${attempt + 1}): ${err.message}`)
+      continue
+    }
+
+    const check = validateFields({
+      subject: candidate.subject,
+      opening: candidate.opening,
+      astrologyOverview: candidate.astrologyOverview,
+      spaceWatch: candidate.spaceWatch,
+      ritualFocus: candidate.ritualFocus,
+      closing: candidate.closing,
+      preheader: candidate.preheader,
+      monthlyTarotReading: candidate.monthlyTarot?.reading,
+      ...Object.fromEntries(
+        (candidate.lunarMoments || []).map((m, i) => [`lunarMoments[${i}].guidance`, m.guidance]),
+      ),
+    })
+
+    if (!check.ok) {
+      console.error(`Output failed house style (attempt ${attempt + 1}): ${check.problems.join('; ')}`)
+      continue
+    }
+
+    forecast = candidate
+    break
+  }
+
+  if (!forecast) {
+    throw new Error('Could not produce a forecast that passes the output validator. Nothing sent.')
+  }
+
   console.log('Subject line:', forecast.subject)
 
   // Backfill monthlyTarot from local data if Claude omitted cardName/keywords.
   forecast.monthlyTarot = {
-    cardName: monthlyCard.name,
-    keywords: `${monthlyCard.theme} — ${monthlyCard.upright}`,
+    cardName: `${monthlyCard.name} (${monthlyCard.orientation})`,
+    keywords: cardKeywords(monthlyCard),
     reading:  forecast.monthlyTarot?.reading || '',
   }
 

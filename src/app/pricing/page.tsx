@@ -5,11 +5,17 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import AmazonProductRow from '@/components/AmazonProductRow'
 import { CheckoutBanners, CheckoutButton } from './CheckoutClient'
+import {
+  PREMIUM_PRICE_DISPLAY,
+  PREMIUM_PRICE_COMPARE_AT,
+  PREMIUM_PRICE_SYMBOL,
+  PREMIUM_PRICE_INTERVAL,
+} from '@/lib/pricing'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
   title: 'Pricing | Portal Astra',
-  description: "Start free forever. Upgrade to Astra Premium for the full cosmic experience.",
+  description: "Start free, always. Upgrade to Astra Premium for the full cosmic experience.",
 }
 
 const FREE_FEATURES = [
@@ -28,14 +34,15 @@ const FREE_FEATURES = [
   'Share your cosmic readings',
 ]
 
+// No "Early access to new features": there is no mechanism behind it and none
+// is being built, so it was a promise nothing could keep.
 const PREMIUM_FEATURES: { label: string; comingSoon?: boolean }[] = [
   { label: 'Everything in Free' },
   { label: 'Daily ritual prompts and journal questions per phase' },
   { label: 'Lunar planting calendar (best days to sow, prune, harvest)' },
   { label: 'Full moon and new moon intention-setting guides' },
-  { label: 'Eclipse and supermoon email alerts 7 days prior', comingSoon: true },
+  { label: 'Eclipse and supermoon email alerts 7 days prior' },
   { label: 'Monthly cosmic forecast email' },
-  { label: 'Early access to new features' },
 ]
 
 export default function PricingPage() {
@@ -75,9 +82,17 @@ export default function PricingPage() {
           <div className={`${styles.tierCard} ${styles.tierPremium}`}>
             <span className={styles.badge}>Founder Pricing</span>
             <h2 className={styles.tierName}>Astra Premium ✦</h2>
-            <p className={styles.tierPrice}>AUD $7.95<span className={styles.tierPer}>/month</span></p>
-            <p className={styles.tierFounder}>Founder pricing, locked in forever</p>
-            <p className={styles.tierStandard}>Usually AUD $9.95/month or $79/year</p>
+            <p className={styles.tierPrice}>
+              {PREMIUM_PRICE_DISPLAY}
+              <span className={styles.tierPer}>/{PREMIUM_PRICE_INTERVAL}</span>
+              <span
+                style={{ marginLeft: '10px', fontSize: '0.55em', opacity: 0.5, textDecoration: 'line-through' }}
+                aria-label={`Usually ${PREMIUM_PRICE_SYMBOL}${PREMIUM_PRICE_COMPARE_AT} per month`}
+              >
+                {PREMIUM_PRICE_SYMBOL}{PREMIUM_PRICE_COMPARE_AT}/{PREMIUM_PRICE_INTERVAL}
+              </span>
+            </p>
+            <p className={styles.tierFounder}>Founder pricing, locked in while you stay subscribed</p>
             <ul className={styles.featureList}>
               {PREMIUM_FEATURES.map((f) => (
                 <li key={f.label} className={styles.feature}>
@@ -106,8 +121,8 @@ export default function PricingPage() {
         }}>
           <p style={{ fontSize: '12px', color: 'rgba(232,224,255,0.5)', lineHeight: '1.7' }}>
             No password needed. After subscribing, visit the Sky tab or Calendars page
-            and enter your email to unlock premium features instantly.
-            Access is remembered for 30 days per browser.
+            and enter your email. We send a one-time link that unlocks premium on that
+            browser for 24 hours. Request a fresh link any time, on any device.
           </p>
         </div>
 
@@ -129,7 +144,7 @@ export default function PricingPage() {
         </div>
       </div>
 
-      <Footer title="Portal Astra Pricing" shareText="Start free, upgrade when you're ready — Portal Astra" />
+      <Footer title="Portal Astra Pricing" shareText="Start free, upgrade when you're ready, Portal Astra" />
     </main>
   )
 }

@@ -1,5 +1,14 @@
 name: Eclipse and Supermoon Alerts
 
+# Re-enabled. The detector now reads the verified eclipse table in
+# src/lib/shared/astronomy.js and fires only when an event is exactly 7 whole
+# UTC days away, so a single daily run can ever match. Verified offline against
+# all four real 2026 eclipse dates.
+#
+# Note: keep this on a once-daily schedule. Because de-duplication relies on
+# "exactly 7 days away" rather than stored state, running the job twice on the
+# same UTC day (for example a manual workflow_dispatch on a day the cron also
+# runs) would send the same alert twice.
 on:
   schedule:
     # Daily at 9:00am UTC

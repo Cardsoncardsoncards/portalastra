@@ -39,7 +39,7 @@ export default function AmazonProductRow({ heading, searchQuery, count = 3 }: Pr
       })
   }, [searchQuery, count])
 
-  // Nothing to show — render nothing so the page layout is unaffected
+  // Nothing to show, render nothing so the page layout is unaffected
   if (!loading && products.length === 0) return null
 
   return (

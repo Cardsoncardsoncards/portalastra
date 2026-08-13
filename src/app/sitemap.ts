@@ -1,7 +1,11 @@
 import type { MetadataRoute } from 'next'
 import { getAllPosts } from '@/lib/posts'
 
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.portalastra.com').replace(/\/$/, '')
+// Apex, no www. Netlify's project record lists https://portalastra.com as the
+// primary site URL, and layout.tsx / robots.ts both already used the apex. This
+// file was the odd one out, emitting www URLs into the sitemap while the
+// canonical tag pointed at the apex.
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://portalastra.com').replace(/\/$/, '')
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()

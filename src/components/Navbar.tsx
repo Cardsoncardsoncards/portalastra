@@ -1,27 +1,24 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { getMoonPhase, formatDateLongAEST } from '@/lib/shared'
 import styles from './Navbar.module.css'
 
-const PHASE_EMOJIS = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘']
-const PHASE_NAMES = [
-  'New Moon', 'Waxing Crescent', 'First Quarter', 'Waxing Gibbous',
-  'Full Moon', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent',
-]
-
-// Current moon phase emoji + name. Runs on the client so the strip reflects
-// the visitor's current date rather than the build time.
-function MoonPhaseIcon() {
-  const age = ((Date.now() / 86400000) - 10592.5) % 29.53059
-  const idx = ((Math.floor((age / 29.53059) * 8) % 8) + 8) % 8
-  return (
-    <span suppressHydrationWarning>
-      {PHASE_EMOJIS[idx]} {PHASE_NAMES[idx]}
-    </span>
-  )
-}
-
 export default function Navbar() {
+  // These two values are time-dependent, and the pages that render this navbar
+  // are statically prerendered. Computing them during the first render would
+  // bake the build date into the HTML and then disagree with the browser on
+  // hydration, which is exactly the mismatch this strip used to produce.
+  // Filling them in after mount means server and client always render the
+  // same initial markup, and the visitor then sees the live AEST values.
+  const [strip, setStrip] = useState<{ date: string; emoji: string; name: string } | null>(null)
+
+  useEffect(() => {
+    const phase = getMoonPhase()
+    setStrip({ date: formatDateLongAEST(), emoji: phase.emoji, name: phase.name })
+  }, [])
+
   return (
     <nav className={styles.navbar} aria-label="Primary">
       <div className={styles.navTop}>
@@ -42,11 +39,11 @@ export default function Navbar() {
       <div className={styles.navStrip}>
         <div className={styles.stripDate}>
           <span className={styles.stripDateLabel}>Date</span>
-          <span className={styles.stripDateValue} suppressHydrationWarning>{new Date().toLocaleDateString('en-AU', {weekday:'long', day:'numeric', month:'long', year:'numeric'})}</span>
+          <span className={styles.stripDateValue}>{strip ? strip.date : ' '}</span>
         </div>
         <span className={styles.stripStar}>✦</span>
         <Link href="/moon" className={styles.stripItem}>
-          <MoonPhaseIcon />
+          <span>{strip ? `${strip.emoji} ${strip.name}` : ' '}</span>
         </Link>
         <span className={styles.stripStar}>✦</span>
         <Link href="/nasa-data" className={styles.stripItem}>Live NASA Data</Link>

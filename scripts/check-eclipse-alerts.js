@@ -1,57 +1,95 @@
 // scripts/check-eclipse-alerts.js
-// Daily GitHub Actions cron. Detects upcoming supermoons and eclipses in the
-// next 60 days and, 7 days before each event, sends a Paid-group-only alert
-// email. Pure JS date math, no external astronomy libraries.
+// Daily GitHub Actions cron. Sends a Paid-group-only alert email exactly seven
+// days before each verified eclipse, and before supermoons.
+//
+// Eclipses come from the shared verified date table (src/lib/shared/astronomy.js),
+// the same table the Moon page displays. They are NOT computed. The previous
+// version derived them from a "syzygy within ±18 days of a mean node crossing"
+// seasonal model, which is not how eclipse prediction works: that model flags
+// roughly a third of all new and full moons as eclipses, and it was untestable
+// against real data because it had no real data to test against.
+//
+// De-duplication: the alert fires only when an event is EXACTLY seven days
+// away, compared at whole-UTC-day granularity. Only one daily run can ever
+// satisfy that, so no state file is needed. The previous version used a ±1-day
+// window plus a JSON state file that is gitignored and lives in a fresh
+// checkout every run, so it never persisted and any detected event would have
+// sent on three consecutive days.
 //
 // The MailerLite create + schedule payload matches scripts/generate-weekly-digest.js
 // exactly (same endpoint, Bearer auth, campaign body and schedule format).
 
-const fs = require('fs')
-const path = require('path')
+const {
+  ECLIPSES,
+  PAID_GROUP_ID,
+  SYNODIC_MONTH,
+  KNOWN_NEW_MOON,
+  ANOMALISTIC_MONTH,
+  KNOWN_PERIGEE,
+  esc,
+  emailFooterHTML,
+  validateFields,
+  STYLE_RULES_PROMPT,
+} = require('../src/lib/shared')
 
 const MAILERLITE_API_KEY = process.env.MAILERLITE_API_KEY
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY
-const NASA_API_KEY = process.env.NASA_API_KEY // reserved; date math needs no external API
-
-// Paid group only — this is a premium alert.
-const PAID_GROUP_ID = '189884548570416247'
 
 const DAY = 86400000
 
-// ─── Orbital constants ───────────────────────────────────────────────────────
-// Synodic month and reference new moon follow the same lunar math pattern as
-// scripts/generate-weekly-digest.js (Jan 6 2000 new moon).
-const SYNODIC = 29.53059
-const REF_NEW_MOON = Date.UTC(2000, 0, 6)
+// Alert lead time, in whole days. Exactly this, not a range.
+const LEAD_DAYS = 7
 
-// Anomalistic (perigee) cycle for supermoon detection.
-const ANOMALISTIC = 27.55455
-const REF_PERIGEE = Date.UTC(2000, 0, 4)
-
-// Eclipse-season cadence: the Sun returns to a lunar node about every 173.31
-// days (half an eclipse year). A syzygy within 18 days of that crossing falls
-// inside an eclipse season. This is a simplified seasonal model with an
-// approximate reference node crossing, so eclipses are flagged as "potential".
-const ECLIPSE_NODE_CYCLE = 173.31
-const REF_NODE = Date.UTC(2000, 0, 6)
-
-const STATE_PATH = path.join(__dirname, 'eclipse-alert-state.json')
+// Supermoon detection is still computed, because a supermoon genuinely is just
+// "full moon near perigee" and mean-motion maths gets that close. Eclipses are
+// not like that.
+//
+// The constants come from the shared moon module rather than being restated
+// here. This script previously used its own epochs (new moon at 2000-01-06
+// 00:00 instead of 18:14, perigee at 2000-01-04 instead of 2024-01-13), so its
+// idea of the next supermoon drifted away from the one the Moon page displays.
+// See DISC-002.
+const SYNODIC = SYNODIC_MONTH
+const REF_NEW_MOON = KNOWN_NEW_MOON
+const ANOMALISTIC = ANOMALISTIC_MONTH
+const REF_PERIGEE = KNOWN_PERIGEE
 
 // ─── Date math helpers ───────────────────────────────────────────────────────
 
-// Return the new and full moons that fall within [startMs, endMs].
-function newAndFullMoons(startMs, endMs) {
+function isoDate(ms) {
+  return new Date(ms).toISOString().split('T')[0]
+}
+
+function labelDate(dateISO) {
+  const [y, m, d] = dateISO.split('-').map(Number)
+  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-AU', {
+    timeZone: 'UTC', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+  })
+}
+
+/** Midnight UTC of the day containing `ms`. */
+function utcMidnight(ms) {
+  const d = new Date(ms)
+  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate())
+}
+
+/** Whole UTC days from the day containing `nowMs` to the day `dateISO`. */
+function daysUntil(dateISO, nowMs) {
+  const [y, m, d] = dateISO.split('-').map(Number)
+  return Math.round((Date.UTC(y, m - 1, d) - utcMidnight(nowMs)) / DAY)
+}
+
+// Return the full moons that fall within [startMs, endMs].
+function fullMoons(startMs, endMs) {
   const daysSinceRef = (startMs - REF_NEW_MOON) / DAY
   const cyclePos = ((daysSinceRef % SYNODIC) + SYNODIC) % SYNODIC
-  const firstNewMoon = startMs - cyclePos * DAY // most recent new moon at/before start
+  const firstNewMoon = startMs - cyclePos * DAY
   const events = []
   for (let k = 0; k <= 4; k++) {
-    const nm = firstNewMoon + k * SYNODIC * DAY
-    const fm = nm + (SYNODIC / 2) * DAY
-    if (nm >= startMs && nm <= endMs) events.push({ phase: 'new', timeMs: nm })
-    if (fm >= startMs && fm <= endMs) events.push({ phase: 'full', timeMs: fm })
+    const fm = firstNewMoon + k * SYNODIC * DAY + (SYNODIC / 2) * DAY
+    if (fm >= startMs && fm <= endMs) events.push(fm)
   }
-  return events.sort((a, b) => a.timeMs - b.timeMs)
+  return events.sort((a, b) => a - b)
 }
 
 // A full moon is a supermoon when it lands within 3 days of perigee.
@@ -62,58 +100,52 @@ function isSupermoon(fullMoonMs) {
   return distToPerigee <= 3
 }
 
-// A syzygy is in an eclipse season when it is within 18 days of a node crossing.
-function inEclipseSeason(syzygyMs) {
-  const d = (syzygyMs - REF_NODE) / DAY
-  const pos = ((d % ECLIPSE_NODE_CYCLE) + ECLIPSE_NODE_CYCLE) % ECLIPSE_NODE_CYCLE
-  const distToNode = Math.min(pos, ECLIPSE_NODE_CYCLE - pos)
-  return distToNode <= 18
-}
-
-function isoDate(ms) {
-  return new Date(ms).toISOString().split('T')[0]
-}
-
-function labelDate(ms) {
-  return new Date(ms).toLocaleDateString('en-AU', {
-    timeZone: 'UTC', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
-  })
-}
-
 // ─── Event detection ─────────────────────────────────────────────────────────
-
-function makeEvent(kind, name, timeMs) {
-  return { kind, name, timeMs, dateISO: isoDate(timeMs), dateLabel: labelDate(timeMs) }
-}
 
 const ASTRO_CONTEXT = {
   'supermoon': 'A full moon near its closest approach to Earth, so it appears slightly larger and brighter.',
   'lunar-eclipse': 'Earth moves between the Sun and Moon, casting its shadow across the full moon.',
   'solar-eclipse': 'The new moon passes between Earth and the Sun, hiding part or all of the solar disc.',
-  'supermoon-lunar-eclipse': 'A lunar eclipse that lands on a supermoon, so the shadowed moon also looks larger.',
 }
 
-// Only supermoons and eclipses are alert-worthy. Ordinary new and full moons
-// are ignored here.
+function makeEvent(kind, name, dateISO) {
+  return { kind, name, dateISO, dateLabel: labelDate(dateISO) }
+}
+
+/**
+ * Every alert-worthy event in the next 60 days: verified eclipses read from
+ * the shared table, plus computed supermoons. Exported for offline testing.
+ */
 function detectEvents(nowMs) {
-  const moons = newAndFullMoons(nowMs, nowMs + 60 * DAY)
+  const horizon = nowMs + 60 * DAY
   const events = []
-  for (const m of moons) {
-    if (m.phase === 'full') {
-      const eclipse = inEclipseSeason(m.timeMs)
-      const supermoon = isSupermoon(m.timeMs)
-      if (eclipse && supermoon) {
-        events.push(makeEvent('supermoon-lunar-eclipse', 'Supermoon Lunar Eclipse', m.timeMs))
-      } else if (eclipse) {
-        events.push(makeEvent('lunar-eclipse', 'Lunar Eclipse', m.timeMs))
-      } else if (supermoon) {
-        events.push(makeEvent('supermoon', 'Supermoon', m.timeMs))
-      }
-    } else if (inEclipseSeason(m.timeMs)) {
-      events.push(makeEvent('solar-eclipse', 'Solar Eclipse', m.timeMs))
+
+  for (const e of ECLIPSES) {
+    const days = daysUntil(e.date, nowMs)
+    if (days >= 0 && days <= 60) {
+      events.push(makeEvent(e.kind, e.label, e.date))
     }
   }
-  return events
+
+  const eclipseDates = new Set(ECLIPSES.map((e) => e.date))
+  for (const fm of fullMoons(nowMs, horizon)) {
+    if (!isSupermoon(fm)) continue
+    const dateISO = isoDate(fm)
+    // A full moon that is already a listed lunar eclipse is announced as the
+    // eclipse, not twice.
+    if (eclipseDates.has(dateISO)) continue
+    events.push(makeEvent('supermoon', 'Supermoon', dateISO))
+  }
+
+  return events.sort((a, b) => a.dateISO.localeCompare(b.dateISO))
+}
+
+/**
+ * The events that should be alerted on for a given run time: exactly
+ * LEAD_DAYS whole UTC days away. Exported for offline testing.
+ */
+function eventsDueOn(nowMs) {
+  return detectEvents(nowMs).filter((e) => daysUntil(e.dateISO, nowMs) === LEAD_DAYS)
 }
 
 // ─── Claude generation ───────────────────────────────────────────────────────
@@ -133,10 +165,7 @@ Write exactly three paragraphs:
 3. Explain what it means energetically, plus one grounded thing to do.
 
 Rules:
-- No em dashes anywhere
-- Never use the words: eternal, forever, tapestry, dance, infinite
-- Sentences under 25 words
-- Mystical but grounded tone, scientific but accessible
+${STYLE_RULES_PROMPT}
 - Mention the event name and the date
 
 Return only JSON with this exact shape:
@@ -169,6 +198,17 @@ Return only JSON with this exact shape:
     if (!parsed.subject || !Array.isArray(parsed.paragraphs) || parsed.paragraphs.length === 0) {
       throw new Error('missing subject or paragraphs')
     }
+
+    // House style check before anything is sent.
+    const check = validateFields(Object.assign(
+      { subject: parsed.subject },
+      ...parsed.paragraphs.map((p, i) => ({ [`paragraph[${i}]`]: p })),
+    ))
+    if (!check.ok) {
+      console.error(`Alert output failed house style: ${check.problems.join('; ')}`)
+      return null
+    }
+
     return parsed
   } catch (err) {
     console.error('Failed to parse Claude JSON:', err.message, '| raw:', text.slice(0, 300))
@@ -184,7 +224,7 @@ function buildAlertHTML(event, alert) {
   const paragraphsHTML = (alert.paragraphs || []).map(p => `
           <tr>
             <td style="padding: 0 0 20px 0;">
-              <p style="margin: 0; font-size: 15px; color: rgba(232,224,255,0.85); line-height: 1.8;">${p}</p>
+              <p style="margin: 0; font-size: 15px; color: rgba(232,224,255,0.85); line-height: 1.8;">${esc(p)}</p>
             </td>
           </tr>`).join('')
 
@@ -193,7 +233,7 @@ function buildAlertHTML(event, alert) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${alert.subject}</title>
+  <title>${esc(alert.subject)}</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #04060f; font-family: 'DM Mono', 'Courier New', monospace;">
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #04060f;">
@@ -206,9 +246,9 @@ function buildAlertHTML(event, alert) {
             <td style="padding: 0 0 32px 0; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.07);">
               <p style="margin: 0 0 8px 0; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,224,255,0.4);">Portal Astra · Premium</p>
               <h1 style="margin: 0 0 6px 0; font-size: 28px; font-weight: 700; color: #e8e0ff; font-family: Georgia, serif; letter-spacing: 0.04em;">
-                ${event.name}
+                ${esc(event.name)}
               </h1>
-              <p style="margin: 0; font-size: 12px; color: #C9A84C; letter-spacing: 0.08em;">${event.dateLabel} · seven days away</p>
+              <p style="margin: 0; font-size: 12px; color: #C9A84C; letter-spacing: 0.08em;">${esc(event.dateLabel)} · seven days away</p>
             </td>
           </tr>
 
@@ -226,18 +266,8 @@ function buildAlertHTML(event, alert) {
             </td>
           </tr>
 
-          <!-- Footer -->
-          <tr>
-            <td style="padding: 24px 0 0 0; border-top: 1px solid rgba(255,255,255,0.07); text-align: center;">
-              <p style="margin: 0 0 6px 0; font-size: 11px; color: rgba(232,224,255,0.3);">
-                <a href="https://portalastra.com" style="color: #9b8aff; text-decoration: none;">portalastra.com</a>
-              </p>
-              <p style="margin: 0; font-size: 10px; color: rgba(232,224,255,0.2);">
-                You received this as an Astra Premium subscriber.
-                <a href="{$unsubscribe}" style="color: rgba(232,224,255,0.3);">Unsubscribe</a>
-              </p>
-            </td>
-          </tr>
+          <!-- Footer (shared across all three generated emails) -->
+          ${emailFooterHTML()}
 
         </table>
       </td>
@@ -251,7 +281,7 @@ function buildAlertHTML(event, alert) {
 // Matches the create + schedule pattern in scripts/generate-weekly-digest.js.
 
 async function createAndScheduleCampaign(name, subject, htmlContent, scheduledAt) {
-  // Step 1 — Create campaign (draft), Paid group only.
+  // Step 1, Create campaign (draft), Paid group only.
   const createRes = await fetch('https://connect.mailerlite.com/api/campaigns', {
     method: 'POST',
     headers: {
@@ -280,7 +310,7 @@ async function createAndScheduleCampaign(name, subject, htmlContent, scheduledAt
   const campaignId = campaign.data.id
   console.log(`Campaign created: ${campaignId}`)
 
-  // Step 2 — Schedule. MailerLite needs schedule.date plus separate
+  // Step 2, Schedule. MailerLite needs schedule.date plus separate
   // schedule.hours and schedule.minutes (UTC), not a single datetime string.
   const scheduleDate = new Date(scheduledAt)
   const scheduleRes = await fetch(`https://connect.mailerlite.com/api/campaigns/${campaignId}/schedule`, {
@@ -309,38 +339,20 @@ async function createAndScheduleCampaign(name, subject, htmlContent, scheduledAt
   return campaignId
 }
 
-// ─── State (sent-alert tracking) ─────────────────────────────────────────────
-
-function loadState() {
-  try {
-    if (fs.existsSync(STATE_PATH)) {
-      return JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'))
-    }
-  } catch (err) {
-    console.error('Could not read state file, starting fresh:', err.message)
-  }
-  // Create as an empty object if it does not exist yet.
-  fs.writeFileSync(STATE_PATH, JSON.stringify({}, null, 2))
-  return {}
-}
-
-function saveState(state) {
-  fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2))
-}
-
 // ─── Main ────────────────────────────────────────────────────────────────────
 
 async function main() {
   console.log('Portal Astra eclipse/supermoon alert check starting...')
 
   const nowMs = Date.now()
-  const state = loadState()
 
-  const events = detectEvents(nowMs)
+  const upcoming = detectEvents(nowMs)
   console.log(
-    `Detected ${events.length} alert-worthy event(s) in the next 60 days: ` +
-    (events.map(e => `${e.name} ${e.dateISO}`).join(', ') || 'none')
+    `${upcoming.length} alert-worthy event(s) in the next 60 days: ` +
+    (upcoming.map(e => `${e.name} ${e.dateISO} (${daysUntil(e.dateISO, nowMs)}d)`).join(', ') || 'none')
   )
+
+  const due = eventsDueOn(nowMs)
 
   // Schedule any sends for today at 11:00 UTC.
   const sendTime = new Date()
@@ -348,34 +360,26 @@ async function main() {
   const scheduledAt = sendTime.toISOString()
 
   let sentCount = 0
-  for (const event of events) {
-    const daysAway = Math.round((event.timeMs - nowMs) / DAY)
-    if (daysAway < 6 || daysAway > 8) continue // 7 days away, +/- 1 day window
-
-    if (state[event.dateISO]) {
-      console.log(`Already alerted for ${event.name} on ${event.dateISO}, skipping.`)
-      continue
-    }
-
-    console.log(`${event.name} is ${daysAway} days away. Generating alert...`)
-    const alert = await generateAlert(event)
+  for (const event of due) {
+    console.log(`${event.name} is exactly ${LEAD_DAYS} days away. Generating alert...`)
+    // One retry, then skip. There is no static fallback worth mailing.
+    let alert = await generateAlert(event)
+    if (!alert) alert = await generateAlert(event)
     if (!alert) {
-      console.error(`Alert generation failed for ${event.name}; will retry on the next run.`)
+      // No retry-tomorrow safety net exists any more, because the exact-7-day
+      // window is what guarantees a single send. A generation failure means
+      // this alert is skipped; that is the deliberate trade for never
+      // double-sending.
+      console.error(`Alert generation failed for ${event.name}; this alert will not be sent.`)
       continue
     }
 
     const html = buildAlertHTML(event, alert)
-    const campaignName = `Sky Alert — ${event.name} ${event.dateISO}`
+    const campaignName = `Sky Alert: ${event.name} ${event.dateISO}`
     const campaignId = await createAndScheduleCampaign(campaignName, alert.subject, html, scheduledAt)
 
-    state[event.dateISO] = {
-      name: event.name,
-      sentAt: new Date().toISOString(),
-      campaignId,
-    }
-    saveState(state)
     sentCount++
-    console.log(`Alert scheduled for ${event.name} (${event.dateISO}).`)
+    console.log(`Alert scheduled for ${event.name} (${event.dateISO}), campaign ${campaignId}.`)
   }
 
   if (sentCount === 0) {
@@ -385,7 +389,13 @@ async function main() {
   }
 }
 
-main().catch(err => {
-  console.error('Eclipse alert check failed:', err)
-  process.exit(1)
-})
+module.exports = { detectEvents, eventsDueOn, daysUntil, LEAD_DAYS }
+
+// Only run when invoked directly, so the detector can be driven offline by the
+// test harness without firing any network calls.
+if (require.main === module) {
+  main().catch(err => {
+    console.error('Eclipse alert check failed:', err)
+    process.exit(1)
+  })
+}

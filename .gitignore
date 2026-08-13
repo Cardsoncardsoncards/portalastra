@@ -39,5 +39,5 @@ next-env.d.ts
 # claude code (per-user)
 .claude/settings.local.json
 
-# cron runtime state
-scripts/eclipse-alert-state.json
+# implementation-run checkpoint (not for commit)
+PROGRESS.md

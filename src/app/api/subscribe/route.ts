@@ -1,18 +1,29 @@
 import { NextResponse } from 'next/server'
+import { FREE_GROUP_ID } from '@/lib/shared'
+import { getClientIp, rateLimit } from '@/lib/rateLimit'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-// Simple in-memory rate limiting: max 3 submissions per IP per 60 minutes.
-// Best-effort only (per server instance, resets on cold start), but enough to
-// blunt automated abuse of the subscribe endpoint.
+// Signup origins the site actually sends. Anything else is recorded as a plain
+// newsletter signup rather than trusted.
+const ALLOWED_SOURCES = new Set(['newsletter', 'planting-waitlist'])
+
+// Max 3 submissions per client IP per 60 minutes, via the shared limiter.
 const RATE_LIMIT = 3
 const RATE_WINDOW_MS = 60 * 60 * 1000
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
 
 export async function POST(req: Request) {
   try {
     const body = await req.json().catch(() => ({}))
     const email = typeof body?.email === 'string' ? body.email.trim() : ''
+
+    // The planting waitlist form in CalendarsClient has always sent
+    // `source: 'planting-waitlist'`, and this route has always thrown it away,
+    // so waitlist signups landed in MailerLite indistinguishable from ordinary
+    // newsletter signups. Allow-listed rather than passed through, so an
+    // arbitrary caller cannot write arbitrary fields onto a subscriber record.
+    const rawSource = typeof body?.source === 'string' ? body.source.trim() : ''
+    const source = ALLOWED_SOURCES.has(rawSource) ? rawSource : 'newsletter'
 
     // Honeypot: real users never fill this hidden field. If it's populated,
     // silently accept (so bots get no signal) but do not subscribe.
@@ -25,20 +36,17 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Please enter a valid email address.' }, { status: 400 })
     }
 
-    // Rate limit per IP before doing any MailerLite work.
-    const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
-    const now = Date.now()
-    const entry = rateLimitMap.get(ip)
-    if (!entry || now > entry.resetAt) {
-      rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS })
-    } else if (entry.count >= RATE_LIMIT) {
-      return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 })
-    } else {
-      entry.count += 1
+    // Rate limit per platform-provided client IP before doing any MailerLite work.
+    const limited = rateLimit(`subscribe:ip:${getClientIp(req)}`, RATE_LIMIT, RATE_WINDOW_MS)
+    if (!limited.ok) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(Math.ceil(limited.retryAfterMs / 1000)) } },
+      )
     }
 
     const apiKey = process.env.MAILERLITE_API_KEY
-    const groupId = process.env.MAILERLITE_GROUP_ID
+    const groupId = process.env.MAILERLITE_GROUP_ID || FREE_GROUP_ID
 
     if (!apiKey) {
       console.error('[subscribe] MAILERLITE_API_KEY is not set')
@@ -55,12 +63,18 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         email,
         ...(groupId ? { groups: [groupId] } : {}),
+        // Segmentable in MailerLite: `signup_source` distinguishes a planting
+        // waitlist signup from a newsletter signup.
+        fields: { signup_source: source },
       }),
     })
 
     if (!res.ok) {
-      const detail = await res.text().catch(() => '')
-      console.error(`[subscribe] MailerLite error ${res.status}: ${detail}`)
+      // Status code only. MailerLite's error body quotes the submitted address
+      // back at you (`"email": "..." is invalid`), which would write every
+      // failed signup's email address into the function logs, where it is
+      // retained and readable by anyone with dashboard access.
+      console.error(`[subscribe] MailerLite error ${res.status}`)
       // 422 from MailerLite typically means the email already exists / is invalid.
       const msg =
         res.status === 422

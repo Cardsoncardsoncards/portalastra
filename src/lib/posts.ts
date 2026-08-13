@@ -12,7 +12,7 @@ export interface BlogPost {
 // "## " is rendered as a section heading; everything else is a paragraph.
 // Cross-references to other posts are plain-text title mentions (the template
 // resolves related posts algorithmically). Inline <a href="...">label</a> anchor
-// tags ARE permitted for internal links (e.g. to /moon or /nasa-data) — the
+// tags ARE permitted for internal links (e.g. to /moon or /nasa-data), the
 // [slug] template parses them into real links via its renderInline helper.
 
 export const BLOG_POSTS: BlogPost[] = [
@@ -20,7 +20,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: 'moon-phases-explained',
     title: 'Moon Phases Explained',
     excerpt:
-      'The full lunar cycle, from new moon to waning crescent — the science behind why the Moon changes shape, and how to track it yourself.',
+      'The full lunar cycle, from new moon to waning crescent, the science behind why the Moon changes shape, and how to track it yourself.',
     date: '2026-05-02',
     category: 'Moon',
     tags: ['moon', 'astronomy', 'observing', 'lunar cycle'],
@@ -245,7 +245,7 @@ A: Tarot is a deck of symbolic images; on its own it carries no inherent power. 
     slug: 'your-zodiac-sign-what-it-really-means',
     title: 'Your Zodiac Sign: What It Really Means',
     excerpt:
-      'Sun signs, elements, modalities, and the difference between the constellations and the zodiac — a grounded guide to what your sign does and does not say.',
+      'Sun signs, elements, modalities, and the difference between the constellations and the zodiac, a grounded guide to what your sign does and does not say.',
     date: '2026-05-23',
     category: 'Astrology',
     tags: ['zodiac', 'astrology', 'sun sign', 'elements'],
@@ -461,7 +461,7 @@ A: With enough warning, yes, and this is no longer just theory. NASA's 2022 DART
     slug: 'moon-phase-rituals-for-each-lunar-stage',
     title: 'Moon Phase Rituals for Each Lunar Stage',
     excerpt:
-      'A gentle, grounded guide to aligning simple reflective practices — intention-setting, review, release — with each stage of the lunar cycle.',
+      'A gentle, grounded guide to aligning simple reflective practices, intention-setting, review, release, with each stage of the lunar cycle.',
     date: '2026-06-05',
     category: 'Moon',
     tags: ['moon', 'rituals', 'reflection', 'lunar cycle', 'intention'],
@@ -703,7 +703,7 @@ A: No. No evidence supports the idea that number sequences carry messages or pre
   },
   {
     slug: 'what-is-a-coronal-mass-ejection',
-    title: 'What Is a Coronal Mass Ejection — And How Does It Affect You?',
+    title: 'What Is a Coronal Mass Ejection, And How Does It Affect You?',
     excerpt:
       'A coronal mass ejection is one of the most powerful events in our solar system. Here is what it is, what causes it, and why it matters.',
     date: '2026-06-10',
@@ -935,7 +935,7 @@ A: No. There is no evidence that number sequences predict events or carry messag
   },
   {
     slug: 'angel-number-555-meaning',
-    title: 'Angel Number 555: Change Is Coming — Here Is How to Work With It',
+    title: 'Angel Number 555: Change Is Coming, Here Is How to Work With It',
     excerpt:
       'Seeing 555 is a clear signal that something significant is shifting. Here is what this number means and how to move with it.',
     date: '2026-06-10',
@@ -1079,11 +1079,11 @@ It is the same effect you see when you pass a slower car on the motorway: for a 
 
 Mercury turns retrograde three times in 2026. The widely published date ranges are:
 
-First retrograde: March 15 to April 7, falling in fiery, impulsive Aries, which colours the period with bold communication and quick decisions.
+First retrograde: February 26 to March 20, falling in dreamy, intuitive Pisces, which colours the period with blurred boundaries, imagination, and a pull toward the unspoken.
 
-Second retrograde: July 18 to August 11, settling in dramatic, expressive Leo, which colours the season with attention to creativity, identity, and self-expression.
+Second retrograde: June 29 to July 23, settling in tender, protective Cancer, which colours the season with attention to home, family, and the conversations we have been avoiding.
 
-Third retrograde: November 9 to November 29, falling in adventurous, philosophical Sagittarius, which colours the weeks with questions about meaning, belief, and the bigger picture.
+Third retrograde: October 24 to November 13, falling in deep, investigative Scorpio, which colours the weeks with questions about trust, secrets, and what lies beneath the surface.
 
 A note on precision: the exact day a retrograde begins or ends can shift by a day depending on your time zone, since the turning points are calculated in universal time. Astrologers also talk about the shadow periods, the couple of weeks before and after each retrograde when Mercury crosses the same stretch of sky, which is why effects are often described as ramping up and fading out rather than switching on and off.
 
@@ -1114,7 +1114,7 @@ The myth worth dropping entirely is the idea that the planet physically causes p
 Frequently asked questions:
 
 Q: What are the Mercury retrograde dates for 2026?
-A: There are three, falling 15 March to 7 April in Aries, 18 July to 11 August in Leo, and 9 November to 29 November in Sagittarius. The exact start and end days can shift by about a day depending on time zone, and astrologers count the shadow weeks on either side as part of the period.
+A: There are three, falling 26 February to 20 March in Pisces, 29 June to 23 July in Cancer, and 24 October to 13 November in Scorpio. The exact start and end days can shift by about a day depending on time zone, and astrologers count the shadow weeks on either side as part of the period.
 
 Q: Does Mercury retrograde actually affect technology and travel?
 A: There is no scientific evidence that it does. Mercury only appears to move backwards, an optical illusion of orbital motion, and exerts no measurable force on Earth. The sense that things go wrong is well explained by confirmation bias, where we notice the glitches that fit the story and forget the smooth days.

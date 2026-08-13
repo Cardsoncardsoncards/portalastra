@@ -32,6 +32,7 @@ export async function GET() {
         date: latest.date,
         caption: latest.caption,
         coords: latest.centroid_coordinates,
+        fetchedAt: new Date().toISOString(),
       },
       { headers: SWR_HEADERS },
     )

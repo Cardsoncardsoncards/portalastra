@@ -5,7 +5,7 @@ import Footer from '@/components/Footer'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
-  title: 'Lost in space — Portal Astra',
+  title: 'Lost in space, Portal Astra',
   description: 'This corner of the cosmos is empty.',
 }
 

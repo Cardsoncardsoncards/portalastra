@@ -1,14 +1,61 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import Link from 'next/link'
-import { getMoonPhase, getAngelNumber, ANGEL_NUMBER_MEANINGS, formatDate, getTodayUTC, SIGNS } from '@/lib/utils'
-import { getDailyCard, getWeeklySpread, TAROT_DECK, type DrawnCard } from '@/lib/tarot'
+import { useSearchParams } from 'next/navigation'
+import { SIGNS } from '@/lib/utils'
+import {
+  getMoonPhase,
+  getAngelNumber,
+  ANGEL_NUMBER_MEANINGS,
+  LIFE_PATHS,
+  getLifePathFromISO,
+  formatDate,
+  getTodayAEST,
+  getDailyCard,
+  getWeeklySpread,
+  drawPersonal,
+  type DrawnCard,
+} from '@/lib/shared'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import PremiumUnlock, { usePremium } from '@/components/PremiumUnlock'
 import styles from './page.module.css'
 
 type Tab = 'space' | 'earth' | 'storm' | 'stars' | 'sky' | 'tarot' | 'neos'
+
+const TAB_IDS: Tab[] = ['space', 'earth', 'storm', 'stars', 'sky', 'tarot', 'neos']
+const VALID_TABS = new Set<string>(TAB_IDS)
+
+// Reads ?tab= and ?unlock= off the URL and hands them to the page.
+//
+// The weekly digest email links to /?tab=tarot and /?tab=sky. Nothing read
+// that parameter, so both deep links dumped the reader on the default Space
+// tab and the email's "Draw your full reading" call to action went nowhere
+// useful.
+//
+// useSearchParams opts the subtree into client-side rendering, so it lives in
+// its own component behind a Suspense boundary, the same way /pricing already
+// wraps CheckoutBanners.
+function QuerySync({
+  onTab,
+  onUnlock,
+}: {
+  onTab: (tab: Tab) => void
+  onUnlock: (state: string) => void
+}) {
+  const params = useSearchParams()
+
+  useEffect(() => {
+    const tab = params.get('tab')
+    if (tab && VALID_TABS.has(tab)) onTab(tab as Tab)
+
+    const unlock = params.get('unlock')
+    if (unlock) onUnlock(unlock)
+  }, [params, onTab, onUnlock])
+
+  return null
+}
 
 const INTENSITY_COLORS: Record<string, string> = {
   extreme: '#ff4040',
@@ -32,31 +79,31 @@ const EVENT_TYPE_NAMES: Record<string, string> = {
 
 // Plain English for intensity levels and NOAA scales
 const INTENSITY_LABELS: Record<string, string> = {
-  low:      'mild \u2014 no significant impact on daily life',
-  moderate: 'moderate \u2014 minor effects on satellites and radio signals possible',
-  high:     'strong \u2014 auroras may be visible at higher latitudes',
-  extreme:  'severe \u2014 potential disruptions to GPS and power grids',
+  low:      'mild, no significant impact on daily life',
+  moderate: 'moderate, minor effects on satellites and radio signals possible',
+  high:     'strong, auroras may be visible at higher latitudes',
+  extreme:  'severe, potential disruptions to GPS and power grids',
   // NOAA geomagnetic storm scale
   G1: 'minor geomagnetic storm',
-  G2: 'moderate geomagnetic storm \u2014 auroras possible at high latitudes',
-  G3: 'strong geomagnetic storm \u2014 auroras may reach mid-latitudes',
-  G4: 'severe geomagnetic storm \u2014 widespread aurora and GPS disruption possible',
-  G5: 'extreme geomagnetic storm \u2014 rare, major infrastructure impacts possible',
+  G2: 'moderate geomagnetic storm, auroras possible at high latitudes',
+  G3: 'strong geomagnetic storm, auroras may reach mid-latitudes',
+  G4: 'severe geomagnetic storm, widespread aurora and GPS disruption possible',
+  G5: 'extreme geomagnetic storm, rare, major infrastructure impacts possible',
   // NOAA solar radiation scale
   S1: 'minor solar radiation storm',
-  S2: 'moderate solar radiation storm \u2014 some satellite issues possible',
-  S3: 'strong solar radiation storm \u2014 passengers on polar flights may receive elevated radiation',
-  S4: 'severe solar radiation storm \u2014 satellite damage possible',
-  S5: 'extreme solar radiation storm \u2014 very rare, widespread satellite disruption',
+  S2: 'moderate solar radiation storm, some satellite issues possible',
+  S3: 'strong solar radiation storm, passengers on polar flights may receive elevated radiation',
+  S4: 'severe solar radiation storm, satellite damage possible',
+  S5: 'extreme solar radiation storm, very rare, widespread satellite disruption',
   // NOAA radio blackout scale
-  R1: 'minor radio blackout \u2014 brief HF radio disruption',
-  R2: 'moderate radio blackout \u2014 limited shortwave radio impact',
-  R3: 'strong radio blackout \u2014 shortwave radio outages on sunlit side of Earth',
-  R4: 'severe radio blackout \u2014 significant disruption to navigation and communication',
-  R5: 'extreme radio blackout \u2014 complete HF radio blackout possible',
+  R1: 'minor radio blackout, brief HF radio disruption',
+  R2: 'moderate radio blackout, limited shortwave radio impact',
+  R3: 'strong radio blackout, shortwave radio outages on sunlit side of Earth',
+  R4: 'severe radio blackout, significant disruption to navigation and communication',
+  R5: 'extreme radio blackout, complete HF radio blackout possible',
 }
 
-// Solar humaniser — converts a raw DONKI event into a plain English sentence
+// Solar humaniser, converts a raw DONKI event into a plain English sentence
 function humaniseSolarEvent(ev: { type?: string; intensity?: string; description?: string } | null): string {
   if (!ev) return 'The sun is calm. Grounding energy is available.'
 
@@ -72,13 +119,42 @@ function humaniseSolarEvent(ev: { type?: string; intensity?: string; description
     return `${typeName} was detected in the past 7 days. Intensity not yet classified by NASA.`
   }
 
-  return `${typeName} was detected in the past 7 days \u2014 ${intensityLabel}.`
+  return `${typeName} was detected in the past 7 days, ${intensityLabel}.`
 }
 
 // Short label for the Sky grid tile (one line only)
 function solarTileLabel(ev: { type?: string } | null): string {
   if (!ev || !ev.type) return 'Solar activity'
   return EVENT_TYPE_NAMES[ev.type.toUpperCase()] || ev.type
+}
+
+// "Data as of ..." note for the NASA-backed panels.
+//
+// These routes are served with `stale-while-revalidate=86400`, so a response
+// can legitimately be up to 24 hours old with nothing on screen saying so.
+// Each route now returns `fetchedAt`; this renders it.
+function DataAsOf({ fetchedAt }: { fetchedAt?: string }) {
+  const [label, setLabel] = useState('')
+
+  // Formatted after mount: the value is relative to the viewer's clock, and
+  // rendering it during the first pass would mismatch on hydration.
+  useEffect(() => {
+    if (!fetchedAt) return setLabel('')
+    const when = new Date(fetchedAt)
+    if (Number.isNaN(when.getTime())) return setLabel('')
+
+    const ageMinutes = Math.max(0, Math.round((Date.now() - when.getTime()) / 60000))
+    const freshness =
+      ageMinutes < 2 ? 'just now'
+        : ageMinutes < 60 ? `${ageMinutes} minutes ago`
+        : ageMinutes < 1440 ? `${Math.round(ageMinutes / 60)} hours ago`
+        : `${Math.round(ageMinutes / 1440)} days ago`
+
+    setLabel(`NASA data as of ${when.toLocaleString('en-AU', { dateStyle: 'medium', timeStyle: 'short' })} (${freshness})`)
+  }, [fetchedAt])
+
+  if (!label) return null
+  return <p className={styles.sublabel} style={{ opacity: 0.55, marginTop: '8px' }}>{label}</p>
 }
 
 // Open a share dialog in a small popup window instead of a full tab.
@@ -178,49 +254,9 @@ function ShareButtons({ text, url }: { text: string; url: string }) {
   )
 }
 
-// Standard numerology reduction to a single digit (1–9).
-function reduceToDigit(n: number): number {
-  while (n > 9) {
-    n = n.toString().split('').reduce((a, b) => a + Number(b), 0)
-  }
-  return n
-}
-
-// Final reduction that preserves the master numbers 11, 22 and 33.
-function reduceKeepMaster(n: number): number {
-  while (n > 9 && n !== 11 && n !== 22 && n !== 33) {
-    n = n.toString().split('').reduce((a, b) => a + Number(b), 0)
-  }
-  return n
-}
-
-function lifePathNumber(dateStr: string): number {
-  const [y, m, d] = dateStr.split('-').map(Number)
-  return reduceKeepMaster(reduceToDigit(y) + reduceToDigit(m) + reduceToDigit(d))
-}
-
-// Draw 3 unique random cards (each random orientation), excluding any names
-// already used by today's daily card and the weekly spread.
-function drawPersonal(exclude: Set<string>): DrawnCard[] {
-  const pool = TAROT_DECK.filter((c) => !exclude.has(c.name))
-  const picked: DrawnCard[] = []
-  const used = new Set<string>()
-  while (picked.length < 3 && used.size < pool.length) {
-    const card = pool[Math.floor(Math.random() * pool.length)]
-    if (used.has(card.name)) continue
-    used.add(card.name)
-    const reversed = Math.random() < 0.5
-    picked.push({
-      ...card,
-      orientation: reversed ? 'Reversed' : 'Upright',
-      meaning: reversed ? card.reversed : card.upright,
-    })
-  }
-  return picked
-}
-
 export default function Home() {
   const [tab, setTab] = useState<Tab>('space')
+  const [unlockState, setUnlockState] = useState('')
 
   // APOD
   const [apod, setApod] = useState<any>(null)
@@ -234,10 +270,12 @@ export default function Home() {
 
   // DONKI
   const [events, setEvents] = useState<any[]>([])
+  const [donkiFetchedAt, setDonkiFetchedAt] = useState<string | undefined>()
   const [donkiLoading, setDonkiLoading] = useState(true)
 
   // NEOs
   const [asteroids, setAsteroids] = useState<any[]>([])
+  const [astFetchedAt, setAstFetchedAt] = useState<string | undefined>()
   const [astLoading, setAstLoading] = useState(true)
 
   // Horoscope
@@ -268,20 +306,21 @@ export default function Home() {
   // Parallax star background
   const starsRef = useRef<HTMLDivElement>(null)
 
-  // Premium access
-  const [isPremium, setIsPremium] = useState(false)
-  const [premiumEmail, setPremiumEmail] = useState('')
+  // Premium access. Server-validated on mount; nothing is read from localStorage.
+  const premium = usePremium()
+  const isPremium = premium.status === 'premium'
   const [showPremiumPrompt, setShowPremiumPrompt] = useState(false)
-  const [premiumLoading, setPremiumLoading] = useState(false)
-  const [premiumError, setPremiumError] = useState('')
 
   // Daily ritual prompt (premium)
   const [ritualPrompt, setRitualPrompt] = useState<string>('')
 
+  // Every "today" on this page is the Australian Eastern date, via the one
+  // shared helper: the header date, the daily tarot card and the angel number
+  // all key off the same string so they can never disagree.
+  const today = getTodayAEST()
   const moon = getMoonPhase()
-  const angelNum = getAngelNumber()
+  const angelNum = getAngelNumber(today)
   const angelMeaning = ANGEL_NUMBER_MEANINGS[angelNum]
-  const today = getTodayUTC()
 
   // Share the live canonical URL (set on client) rather than a hardcoded host.
   const [shareUrl, setShareUrl] = useState('https://portalastra.com')
@@ -291,8 +330,8 @@ export default function Home() {
   const weekly = getWeeklySpread(today)
 
   const birthDateInFuture = !!birthDate && birthDate > today
-  const lifePath = birthDate && !birthDateInFuture ? lifePathNumber(birthDate) : null
-  const lifePathMeaning = lifePath ? ANGEL_NUMBER_MEANINGS[lifePath] : null
+  const lifePath = birthDate && !birthDateInFuture ? getLifePathFromISO(birthDate) : null
+  const lifePathMeaning = lifePath ? LIFE_PATHS[lifePath] : null
 
   // Social sharing: title reflects whichever tab is currently active (and its
   // live data); shareUrl (above) is the live canonical URL.
@@ -303,7 +342,7 @@ export default function Home() {
     stars: sign
       ? `I just read my ${sign} horoscope on Portal Astra`
       : 'I just read my horoscope on Portal Astra',
-    sky: `Tonight is a ${moon.name} moon \u2014 Portal Astra`,
+    sky: `Tonight is a ${moon.name} moon, Portal Astra`,
     tarot: `I drew ${daily.name} in my tarot reading on Portal Astra`,
     neos: 'Tracking near-Earth asteroids live on Portal Astra',
   }
@@ -325,35 +364,22 @@ export default function Home() {
     fetch('/api/apod').then(r => r.json()).then(setApod).catch(() => {}).finally(() => setApodLoading(false))
     fetch('/api/apod-simple').then(r => r.json()).then(d => setApodSimple(d?.simple || null)).catch(() => {})
     fetch('/api/epic').then(r => r.json()).then(setEpic).catch(() => {}).finally(() => setEpicLoading(false))
-    fetch('/api/donki').then(r => r.json()).then(d => setEvents(d.events || [])).catch(() => {}).finally(() => setDonkiLoading(false))
-    fetch('/api/asteroids').then(r => r.json()).then(d => setAsteroids(d.asteroids || [])).catch(() => {}).finally(() => setAstLoading(false))
+    fetch('/api/donki').then(r => r.json()).then(d => { setEvents(d.events || []); setDonkiFetchedAt(d.fetchedAt) }).catch(() => {}).finally(() => setDonkiLoading(false))
+    fetch('/api/asteroids').then(r => r.json()).then(d => { setAsteroids(d.asteroids || []); setAstFetchedAt(d.fetchedAt) }).catch(() => {}).finally(() => setAstLoading(false))
   }, [])
 
-  // Restore a previously verified premium session from localStorage (client only).
+  // Fetch the daily ritual prompt once premium is confirmed. The route
+  // validates the entitlement cookie itself and 401s without it, so this is a
+  // real check rather than a client-side courtesy.
+  const moonName = moon?.name
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('pa_premium_verified')
-      if (stored) {
-        const { verified, expires } = JSON.parse(stored)
-        if (verified && Date.now() < expires) {
-          setIsPremium(true)
-        } else {
-          localStorage.removeItem('pa_premium_verified')
-        }
-      }
-    } catch {}
-  }, [])
-
-  // Fetch the daily ritual prompt once premium is confirmed. moon.name is stable
-  // within a session, so isPremium is the only dependency.
-  useEffect(() => {
-    if (isPremium && moon?.name) {
-      fetch(`/api/ritual-prompt?phase=${encodeURIComponent(moon.name)}`)
+    if (isPremium && moonName) {
+      fetch(`/api/ritual-prompt?phase=${encodeURIComponent(moonName)}`)
         .then(r => r.json())
         .then(d => { if (d.prompt) setRitualPrompt(d.prompt) })
         .catch(() => {})
     }
-  }, [isPremium])
+  }, [isPremium, moonName])
 
   // Parallax: drift the fixed star layer at 0.3x scroll speed
   useEffect(() => {
@@ -402,7 +428,7 @@ export default function Home() {
         setSubscribeNote({ ok: false, msg: d.error || 'Something went wrong.' })
       }
     } catch {
-      setSubscribeNote({ ok: false, msg: 'Network error \u2014 try again.' })
+      setSubscribeNote({ ok: false, msg: 'Network error, try again.' })
     }
     setSubscribing(false)
   }
@@ -421,34 +447,6 @@ export default function Home() {
     setTarotNoticeDismissed(true)
   }
 
-  const handleVerifyPremium = async () => {
-    if (!premiumEmail.includes('@')) {
-      setPremiumError('Please enter a valid email.')
-      return
-    }
-    setPremiumLoading(true)
-    setPremiumError('')
-    try {
-      const res = await fetch('/api/verify-premium', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: premiumEmail }),
-      })
-      const data = await res.json()
-      if (data.isPaid) {
-        const expires = Date.now() + 30 * 24 * 60 * 60 * 1000
-        localStorage.setItem('pa_premium_verified', JSON.stringify({ verified: true, expires }))
-        setIsPremium(true)
-        setShowPremiumPrompt(false)
-      } else {
-        setPremiumError('This email is not linked to an active Astra Premium subscription.')
-      }
-    } catch {
-      setPremiumError('Something went wrong. Please try again.')
-    }
-    setPremiumLoading(false)
-  }
-
   const TABS: { id: Tab; label: string }[] = [
     { id: 'space', label: '🌌 Space' },
     { id: 'earth', label: '🌍 Earth' },
@@ -464,8 +462,29 @@ export default function Home() {
       <div ref={starsRef} className={styles.stars} aria-hidden />
 
       <div className={styles.container}>
+        <Suspense fallback={null}>
+          <QuerySync onTab={setTab} onUnlock={setUnlockState} />
+        </Suspense>
+
         <Navbar />
-        <h1 className={styles.srOnly}>Portal Astra &mdash; your daily cosmic guide</h1>
+        <h1 className={styles.srOnly}>Portal Astra, your daily cosmic guide</h1>
+
+        {unlockState === 'success' && (
+          <div style={{
+            background: '#1a2a1a',
+            border: '1px solid #60d090',
+            borderRadius: '8px',
+            padding: '14px 16px',
+            margin: '0 0 16px',
+            color: '#60d090',
+            fontSize: '13px',
+            lineHeight: 1.7,
+            textAlign: 'center',
+          }}>
+            Astra Premium is unlocked on this browser for the next 24 hours. Your ritual
+            prompt is on the Sky tab.
+          </div>
+        )}
         <header className={styles.header}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <img
@@ -498,7 +517,7 @@ export default function Home() {
         {/* Email capture strip */}
         <div className={styles.emailStrip}>
           <form className={styles.emailForm} onSubmit={subscribe}>
-            {/* Honeypot — hidden from real users, catches bots */}
+            {/* Honeypot, hidden from real users, catches bots */}
             <input
               type="text"
               name="website"
@@ -545,7 +564,7 @@ export default function Home() {
           ))}
         </nav>
 
-        {/* SPACE — APOD */}
+        {/* SPACE, APOD */}
         {tab === 'space' && (
           <div className={styles.panel}>
             {apodLoading && <div className={styles.card}><div className={styles.skeleton} /></div>}
@@ -580,17 +599,18 @@ export default function Home() {
                 ) : (
                   <p className={styles.apodText}>{apod.explanation}</p>
                 )}
+                <DataAsOf fetchedAt={apod.fetchedAt} />
               </div>
             )}
             {!apodLoading && (!apod || apod.error) && (
               <div className={`${styles.card} ${styles.fallbackCard}`}>
                 <p className={styles.fallbackEmoji}>🌌</p>
-                <p className={styles.fallbackMsg}>Imagery temporarily unavailable &mdash; check back shortly</p>
+                <p className={styles.fallbackMsg}>Imagery temporarily unavailable, check back shortly</p>
               </div>
             )}          </div>
         )}
 
-        {/* EARTH — EPIC */}
+        {/* EARTH, EPIC */}
         {tab === 'earth' && (
           <div className={styles.panel}>
             <div className={styles.card}>
@@ -611,7 +631,8 @@ export default function Home() {
                     />
                   </div>
                   <p className={styles.epicDate}>{epic.date}</p>
-                  <p className={styles.epicNote}>EPIC imagery is typically 24&ndash;48 hours delayed</p>
+                  <p className={styles.epicNote}>EPIC imagery is typically 24 to 48 hours delayed</p>
+                  <DataAsOf fetchedAt={epic.fetchedAt} />
                   {epic.caption && <p className={styles.apodText}>{epic.caption}</p>}
                   <div className={styles.epicStats}>
                     {epic.coords && (
@@ -639,7 +660,7 @@ export default function Home() {
             </div>          </div>
         )}
 
-        {/* SOLAR — DONKI */}
+        {/* SOLAR, DONKI */}
         {tab === 'storm' && (
           <div className={styles.panel}>
             <div className={styles.card}>
@@ -670,16 +691,17 @@ export default function Home() {
                   </div>
                 </div>
               ))}
+              {!donkiLoading && <DataAsOf fetchedAt={donkiFetchedAt} />}
             </div>
             <div className={styles.card}>
               <h2 className={styles.label} aria-label="What does this mean?">What does this mean?</h2>
               <p className={styles.infoText}>
-                Solar flares are bursts of radiation from the sun&apos;s surface. Geomagnetic storms occur when solar energy interacts with Earth&apos;s magnetic field &mdash; they can cause aurora displays visible at lower latitudes. Many spiritual traditions interpret periods of high solar activity as times of heightened energy and sensitivity.
+                Solar flares are bursts of radiation from the sun&apos;s surface. Geomagnetic storms occur when solar energy interacts with Earth&apos;s magnetic field, they can cause aurora displays visible at lower latitudes. Many spiritual traditions interpret periods of high solar activity as times of heightened energy and sensitivity.
               </p>
             </div>          </div>
         )}
 
-        {/* STARS — Horoscope */}
+        {/* STARS, Horoscope */}
         {tab === 'stars' && (
           <div className={styles.panel}>
             <div className={styles.card}>
@@ -729,7 +751,7 @@ export default function Home() {
             </div>          </div>
         )}
 
-        {/* SKY — Bridge */}
+        {/* SKY, Bridge */}
         {tab === 'sky' && (
           <div className={styles.panel}>
             <div className={styles.card}>
@@ -775,69 +797,10 @@ export default function Home() {
               )}
 
               {/* Premium unlock entry point */}
-              {!isPremium && (
+              {premium.status === 'guest' && (
                 <div style={{ marginTop: '16px' }}>
                   {showPremiumPrompt ? (
-                    <div style={{
-                      background: 'rgba(155,138,255,0.06)',
-                      border: '1px solid rgba(155,138,255,0.2)',
-                      borderRadius: '12px',
-                      padding: '20px',
-                      marginTop: '16px',
-                    }}>
-                      <p style={{ fontSize: '11px', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#9b8aff', marginBottom: '8px' }}>
-                        Astra Premium
-                      </p>
-                      <p style={{ fontSize: '13px', color: 'rgba(232,224,255,0.6)', marginBottom: '14px', lineHeight: '1.6' }}>
-                        Enter your email to unlock premium features for this browser.
-                      </p>
-                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                        <input
-                          type="email"
-                          placeholder="your@email.com"
-                          value={premiumEmail}
-                          onChange={e => setPremiumEmail(e.target.value)}
-                          onKeyDown={e => e.key === 'Enter' && handleVerifyPremium()}
-                          style={{
-                            flex: 1,
-                            minWidth: '200px',
-                            background: 'rgba(255,255,255,0.05)',
-                            border: '1px solid rgba(155,138,255,0.25)',
-                            borderRadius: '8px',
-                            padding: '10px 14px',
-                            color: '#e8e0ff',
-                            fontSize: '13px',
-                            fontFamily: 'inherit',
-                            outline: 'none',
-                          }}
-                        />
-                        <button
-                          onClick={handleVerifyPremium}
-                          disabled={premiumLoading}
-                          style={{
-                            background: 'linear-gradient(135deg, #7B5EA7, #C9A84C)',
-                            color: '#fff',
-                            border: 'none',
-                            borderRadius: '8px',
-                            padding: '10px 20px',
-                            fontSize: '12px',
-                            fontWeight: 600,
-                            cursor: premiumLoading ? 'not-allowed' : 'pointer',
-                            fontFamily: 'inherit',
-                            letterSpacing: '0.04em',
-                            whiteSpace: 'nowrap',
-                          }}
-                        >
-                          {premiumLoading ? 'Checking...' : 'Unlock'}
-                        </button>
-                      </div>
-                      {premiumError && (
-                        <p style={{ color: '#ff8080', fontSize: '12px', marginTop: '8px' }}>{premiumError}</p>
-                      )}
-                      <p style={{ fontSize: '11px', color: 'rgba(232,224,255,0.25)', marginTop: '10px' }}>
-                        Not a member? <a href="/pricing" style={{ color: '#9b8aff' }}>View Astra Premium</a>
-                      </p>
-                    </div>
+                    <PremiumUnlock blurb="Enter the email you subscribed with and we will send you an unlock link. It works once and expires in 20 minutes." />
                   ) : (
                     <button
                       onClick={() => setShowPremiumPrompt(true)}
@@ -855,7 +818,7 @@ export default function Home() {
                         textTransform: 'uppercase' as const,
                       }}
                     >
-                      Unlock daily ritual prompts — Astra Premium
+                      Unlock daily ritual prompts, Astra Premium
                     </button>
                   )}
                 </div>
@@ -880,6 +843,9 @@ export default function Home() {
                   ) : (
                     <div className={styles.skeleton} style={{ height: '48px' }} />
                   )}
+                  <p style={{ fontSize: '10px', color: 'rgba(232,224,255,0.35)', marginTop: '12px', lineHeight: 1.6 }}>
+                    Ritual prompts are for entertainment and personal reflection only.
+                  </p>
                 </div>
               )}
 
@@ -898,14 +864,14 @@ export default function Home() {
                   />
                 </div>
                 {birthDateInFuture && (
-                  <p className={styles.lifePathError}>Please enter a date in the past &mdash; your birth date can&apos;t be in the future.</p>
+                  <p className={styles.lifePathError}>Please enter a date in the past, your birth date can&apos;t be in the future.</p>
                 )}
                 {lifePath && lifePathMeaning && (
                   <div className={styles.lifePathResult}>
                     <span className={styles.lifePathNum}>{lifePath}</span>
                     <div>
-                      <p className={styles.lifePathTheme}>Life Path {lifePath} · {lifePathMeaning.theme}</p>
-                      <p className={styles.lifePathMsg}>{lifePathMeaning.message}</p>
+                      <p className={styles.lifePathTheme}>Life Path {lifePath} · {lifePathMeaning.name}</p>
+                      <p className={styles.lifePathMsg}>{lifePathMeaning.desc}</p>
                     </div>
                   </div>
                 )}
@@ -945,7 +911,7 @@ export default function Home() {
                 style={{ margin: '0.75rem auto 0', display: 'block' }}
                 onClick={async () => {
                   try {
-                    await navigator.clipboard.writeText(`I drew the ${daily.name} on Portal Astra today — portalastra.com`)
+                    await navigator.clipboard.writeText(`I drew the ${daily.name} on Portal Astra today, portalastra.com`)
                     setCopiedTarot(true)
                     setTimeout(() => setCopiedTarot(false), 2000)
                   } catch {}
@@ -1053,15 +1019,16 @@ export default function Home() {
                   </div>
                 )
               })}
+              {!astLoading && <DataAsOf fetchedAt={astFetchedAt} />}
             </div>
             <div className={styles.card}>
               <h2 className={styles.label} aria-label="What is a hazardous asteroid?">What is &quot;hazardous&quot;?</h2>
-              <p className={styles.infoText}>A potentially hazardous asteroid is larger than ~140 metres and passes within 7.5 million km of Earth&apos;s orbit. This does not mean an impact is imminent &mdash; NASA tracks all such objects continuously and none currently pose a threat.</p>
+              <p className={styles.infoText}>A potentially hazardous asteroid is larger than ~140 metres and passes within 7.5 million km of Earth&apos;s orbit. This does not mean an impact is imminent, NASA tracks all such objects continuously and none currently pose a threat.</p>
             </div>
           </div>
         )}
 
-        {/* Share row — reflects the active tab, rendered at the bottom of every panel */}
+        {/* Share row, reflects the active tab, rendered at the bottom of every panel */}
         <ShareButtons text={shareTitle} url={shareUrl} />
 
         {/* APOD lightbox */}

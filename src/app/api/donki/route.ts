@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { nasaFetch, todayISO } from '@/lib/nasa'
+import { flrIntensity, cmeIntensity, gstIntensity, type Intensity } from '@/lib/shared'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,8 +24,6 @@ interface GstEntry {
   allKpIndex?: Array<{ kpIndex: number; observedTime: string; source: string }>
 }
 
-type Intensity = 'extreme' | 'high' | 'moderate' | 'low'
-
 interface Event {
   type: string
   class: string
@@ -38,28 +37,6 @@ function daysAgoISO(days: number): string {
   const d = new Date()
   d.setUTCDate(d.getUTCDate() - days)
   return d.toISOString().slice(0, 10)
-}
-
-function flrIntensity(classType: string): Intensity {
-  const letter = classType.charAt(0).toUpperCase()
-  if (letter === 'X') return 'extreme'
-  if (letter === 'M') return 'high'
-  if (letter === 'C') return 'moderate'
-  return 'low'
-}
-
-function cmeIntensity(speed?: number): Intensity {
-  if (!speed) return 'low'
-  if (speed > 1500) return 'high'
-  if (speed > 1000) return 'moderate'
-  return 'low'
-}
-
-function gstIntensity(maxKp: number): Intensity {
-  if (maxKp >= 9) return 'extreme'
-  if (maxKp >= 7) return 'high'
-  if (maxKp >= 5) return 'moderate'
-  return 'low'
 }
 
 export async function GET() {
@@ -114,7 +91,7 @@ export async function GET() {
     events.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
 
     return NextResponse.json(
-      { events: events.slice(0, 30) },
+      { events: events.slice(0, 30), fetchedAt: new Date().toISOString() },
       { headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' } },
     )
   } catch (err) {

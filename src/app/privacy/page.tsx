@@ -4,7 +4,7 @@ import Footer from '@/components/Footer'
 import styles from '../page.module.css'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — Portal Astra',
+  title: 'Privacy Policy, Portal Astra',
   description: 'How Portal Astra collects, uses, and protects your information.',
 }
 
