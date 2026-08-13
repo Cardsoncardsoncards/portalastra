@@ -41,10 +41,17 @@ async function refreshQuery(q, count) {
       console.error(`[FAIL] "${q}" responded ${res.status}`)
       return false
     }
+    // With force=1 the route must go to the API. Anything else means either the
+    // force parameter stopped working or the route's catch block ran
+    // (source: 'error'), which it returns with HTTP 200 so the product row can
+    // degrade quietly. This used to be a warning that fell through to [OK],
+    // which is how a run where all three queries failed still went green.
     if (data.source !== 'api') {
-      // With force=1 the route must go to the API. Anything else means the
-      // parameter stopped working again.
-      console.error(`[WARN] "${q}" returned source="${data.source}" despite force=1`)
+      console.error(
+        `[FAIL] "${q}" returned source="${data.source}" despite force=1` +
+          (data.error ? ` (${data.error})` : ''),
+      )
+      return false
     }
     console.log(`[OK] "${q}": ${data.products?.length ?? 0} products refreshed`)
     return true

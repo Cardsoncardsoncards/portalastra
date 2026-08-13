@@ -214,8 +214,12 @@ export async function GET(req: NextRequest) {
     console.error('[amazon-books] Error:', err instanceof Error ? err.message : 'Unknown error')
     // Still 200 with an empty list so the product row simply renders nothing
     // rather than breaking the page around it.
+    //
+    // `source: 'error'` matters: without it this response had no `source` field
+    // at all, so a total failure was indistinguishable from a genuinely empty
+    // result and surfaced to callers as source="undefined".
     return NextResponse.json(
-      { products: [], error: 'Recommendations are temporarily unavailable.' },
+      { products: [], source: 'error', error: 'Recommendations are temporarily unavailable.' },
       { status: 200 },
     )
   }
