@@ -20,13 +20,12 @@ export default function TermsPage() {
         <h1 className={styles.pageTitle}>Terms of Service</h1>
 
         <div className={styles.card}>
-          <p className={styles.legalDate}>Last updated: 13 August 2026</p>
+          <p className={styles.legalDate}>Last updated: 14 August 2026</p>
 
           <p className={styles.infoText}>
-            These terms govern your use of Portal Astra (portalastra.com), operated by Samuel
-            Boadu Kofi Gyimah, trading as Portal Astra, ABN 65 246 763 997, as a sole trader in
-            Australia. By
-            using the site, you agree to these terms.
+            These terms govern your use of Portal Astra (portalastra.com), operated by
+            Voxsanity Pty Ltd, ABN 82 700 348 867. By using the site, you agree to these
+            terms.
           </p>
 
           <h2 className={styles.legalH}>What Portal Astra is</h2>

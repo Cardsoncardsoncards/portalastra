@@ -65,13 +65,13 @@ export default function PrivacyPage() {
         <h1 className={styles.pageTitle}>Privacy Policy</h1>
 
         <div className={styles.card}>
-          <p className={styles.legalDate}>Last updated: 13 August 2026</p>
+          <p className={styles.legalDate}>Last updated: 14 August 2026</p>
 
           <h2 className={styles.legalH}>Who we are</h2>
           <p className={styles.infoText}>
-            Portal Astra (portalastra.com) is operated by Samuel Boadu Kofi Gyimah, trading as
-            Portal Astra, ABN 65 246 763 997, operating as a sole trader in Australia. You can
-            contact us at theportalastra@gmail.com for any privacy question or request.
+            Portal Astra (portalastra.com) is operated by Voxsanity Pty Ltd, ABN
+            82 700 348 867. You can contact us at theportalastra@gmail.com for any
+            privacy question or request.
           </p>
 
           <h2 className={styles.legalH}>What we collect</h2>
