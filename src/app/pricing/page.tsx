@@ -108,6 +108,9 @@ export default function PricingPage() {
             <p style={{ fontSize: '12px', color: 'rgba(201,168,76,0.7)', lineHeight: 1.6, marginTop: '6px', textAlign: 'center' }}>
               Not happy in your first 30 days? Email us and we will refund you in full. No questions asked.
             </p>
+            <p style={{ fontSize: '11px', color: 'rgba(232,224,255,0.4)', lineHeight: 1.6, marginTop: '6px', textAlign: 'center' }}>
+              Full details in our <Link href="/terms" style={{ color: '#9b8aff' }}>Terms of Service</Link>.
+            </p>
           </div>
         </div>
 

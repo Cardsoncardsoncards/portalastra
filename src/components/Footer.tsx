@@ -101,6 +101,8 @@ export default function Footer({ title = 'Portal Astra', shareText }: { title?: 
         <span className={styles.sep}>·</span>
         <Link href="/privacy" className={styles.link}>Privacy</Link>
         <span className={styles.sep}>·</span>
+        <Link href="/terms" className={styles.link}>Terms</Link>
+        <span className={styles.sep}>·</span>
         <a href="mailto:theportalastra@gmail.com" className={styles.link}>theportalastra@gmail.com</a>
       </nav>
 

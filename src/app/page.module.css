@@ -825,6 +825,55 @@
   font-weight: 600;
 }
 
+.legalList {
+  margin: 0.5rem 0 0;
+  padding-left: 1.15rem;
+  color: #c0c0d0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.legalList li {
+  margin-bottom: 0.4rem;
+}
+
+/* The table scrolls inside its own box so the page body never scrolls
+   sideways on a phone. */
+.legalTableWrap {
+  margin-top: 0.75rem;
+  overflow-x: auto;
+}
+
+.legalTable {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  color: #c0c0d0;
+}
+
+.legalTable th,
+.legalTable td {
+  padding: 0.6rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.55;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.legalTable th {
+  color: #9b8aff;
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom-color: rgba(155, 138, 255, 0.25);
+}
+
+.legalTable tr:last-child td {
+  border-bottom: none;
+}
+
 /* Tarot */
 .tarotCardFace {
   display: flex;
