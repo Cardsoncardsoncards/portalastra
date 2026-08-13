@@ -43,6 +43,50 @@ export type ConsumeResult =
   | { ok: true; email: string }
   | { ok: false; reason: 'not_found' | 'expired' | 'already_used' | 'unavailable' }
 
+type LinkRow = { email: string; expires_at: string; used_at: string | null }
+
+/**
+ * Read-only lookup. Shared by `peekMagicLink` and `consumeMagicLink` so the two
+ * cannot drift on what "still valid" means.
+ */
+async function lookupToken(
+  tokenHash: string,
+): Promise<{ ok: true; row: LinkRow } | { ok: false; reason: 'not_found' | 'expired' | 'already_used' | 'unavailable' }> {
+  const { data: row, error } = await getSupabase()
+    .from(TABLE)
+    .select('email, expires_at, used_at')
+    .eq('token_hash', tokenHash)
+    .maybeSingle()
+
+  if (error) {
+    console.error('[magic-link] lookup failed:', error.message)
+    return { ok: false, reason: 'unavailable' }
+  }
+  if (!row) return { ok: false, reason: 'not_found' }
+  if (row.used_at) return { ok: false, reason: 'already_used' }
+  if (new Date(row.expires_at).getTime() <= Date.now()) return { ok: false, reason: 'expired' }
+
+  return { ok: true, row: row as LinkRow }
+}
+
+/**
+ * Check a token WITHOUT burning it.
+ *
+ * This exists because automated email security scanners (Outlook and Hotmail
+ * are the usual culprits) issue a GET against every link in a message to check
+ * it is safe. When the GET itself burned the token, the link was dead before
+ * the subscriber ever saw it. The GET path now only peeks; the burn happens on
+ * the POST that a real click produces.
+ *
+ * Deliberately no mutation of any kind here — not even a "seen at" write.
+ */
+export async function peekMagicLink(token: string): Promise<ConsumeResult> {
+  if (!token) return { ok: false, reason: 'not_found' }
+
+  const result = await lookupToken(hashToken(token))
+  return result.ok ? { ok: true, email: result.row.email } : result
+}
+
 /**
  * Validate and burn a token.
  *
@@ -56,19 +100,8 @@ export async function consumeMagicLink(token: string): Promise<ConsumeResult> {
   const supabase = getSupabase()
   const tokenHash = hashToken(token)
 
-  const { data: row, error } = await supabase
-    .from(TABLE)
-    .select('email, expires_at, used_at')
-    .eq('token_hash', tokenHash)
-    .maybeSingle()
-
-  if (error) {
-    console.error('[magic-link] lookup failed:', error.message)
-    return { ok: false, reason: 'unavailable' }
-  }
-  if (!row) return { ok: false, reason: 'not_found' }
-  if (row.used_at) return { ok: false, reason: 'already_used' }
-  if (new Date(row.expires_at).getTime() <= Date.now()) return { ok: false, reason: 'expired' }
+  const found = await lookupToken(tokenHash)
+  if (!found.ok) return found
 
   const { data: burned, error: burnError } = await supabase
     .from(TABLE)
@@ -85,7 +118,7 @@ export async function consumeMagicLink(token: string): Promise<ConsumeResult> {
   // write.
   if (!burned || burned.length === 0) return { ok: false, reason: 'already_used' }
 
-  return { ok: true, email: row.email }
+  return { ok: true, email: found.row.email }
 }
 
 /**

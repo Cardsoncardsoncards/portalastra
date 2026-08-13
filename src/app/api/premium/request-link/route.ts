@@ -50,7 +50,7 @@ function linkEmailHTML(link: string): string {
         </td></tr>
         <tr><td style="padding:28px 0 16px 0;">
           <p style="margin:0;font-size:15px;color:rgba(232,224,255,0.85);line-height:1.8;">
-            Here is your Astra Premium unlock link. Click it to open premium features on this device.
+            Here is your Astra Premium unlock link. Click it, then confirm on the page that opens, to unlock premium on this device.
           </p>
         </td></tr>
         <tr><td style="padding:0 0 24px 0;text-align:center;">
@@ -132,7 +132,7 @@ export async function POST(req: Request) {
           to: email,
           subject: 'Your Astra Premium unlock link',
           html: linkEmailHTML(link),
-          text: `Your Astra Premium unlock link: ${link}\n\nThis link works once and expires in 20 minutes.`,
+          text: `Your Astra Premium unlock link: ${link}\n\nOpen it, then confirm on the page that appears, to unlock premium on this device.\n\nThis link works once and expires in 20 minutes.`,
         })
         // Fire and forget; a prune failure must not affect the response.
         void pruneExpiredLinks()
