@@ -244,6 +244,7 @@ function buildAlertHTML(event, alert) {
           <!-- Header -->
           <tr>
             <td style="padding: 0 0 32px 0; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.07);">
+              <img src="https://www.portalastra.com/images/portalastralogohorizontal.png" alt="Portal Astra" width="220" style="display:block;margin:0 auto 12px;" />
               <p style="margin: 0 0 8px 0; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,224,255,0.4);">Portal Astra · Premium</p>
               <h1 style="margin: 0 0 6px 0; font-size: 28px; font-weight: 700; color: #e8e0ff; font-family: Georgia, serif; letter-spacing: 0.04em;">
                 ${esc(event.name)}

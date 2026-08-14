@@ -46,7 +46,7 @@ function linkEmailHTML(link: string): string {
     <tr><td align="center" style="padding:40px 20px;">
       <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
         <tr><td style="padding:0 0 24px 0;text-align:center;border-bottom:1px solid rgba(255,255,255,0.07);">
-          <p style="margin:0;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,224,255,0.4);">Portal Astra</p>
+          <img src="https://www.portalastra.com/images/portalastralogohorizontal.png" alt="Portal Astra" width="220" style="display:block;margin:0 auto 12px;" />
         </td></tr>
         <tr><td style="padding:28px 0 16px 0;">
           <p style="margin:0;font-size:15px;color:rgba(232,224,255,0.85);line-height:1.8;">

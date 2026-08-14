@@ -68,6 +68,7 @@ export default function CalendarsClient() {
 
   // Planting waitlist
   const [pEmail, setPEmail] = useState('')
+  const [pHpField, setPHpField] = useState('')
   const [pBusy, setPBusy] = useState(false)
   const [pNote, setPNote] = useState<{ ok: boolean; msg: string } | null>(null)
 
@@ -134,7 +135,7 @@ export default function CalendarsClient() {
       const r = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: pEmail, source: 'planting-waitlist' }),
+        body: JSON.stringify({ email: pEmail, source: 'planting-waitlist', pa_hp_field: pHpField }),
       })
       const dd = await r.json()
       if (r.ok) { setPNote({ ok: true, msg: "You're on the list!" }); setPEmail('') }
@@ -216,6 +217,16 @@ export default function CalendarsClient() {
                     value={pEmail}
                     onChange={(e) => setPEmail(e.target.value)}
                     required
+                  />
+                  <input
+                    type="text"
+                    name="pa_hp_field"
+                    tabIndex={-1}
+                    autoComplete="new-password"
+                    aria-hidden="true"
+                    value={pHpField}
+                    onChange={(e) => setPHpField(e.target.value)}
+                    style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
                   />
                   <button type="submit" className={styles.primaryBtn} disabled={pBusy}>
                     {pBusy ? 'Joining...' : 'Join waitlist'}

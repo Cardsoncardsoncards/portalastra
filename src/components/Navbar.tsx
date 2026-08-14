@@ -23,6 +23,7 @@ export default function Navbar() {
     <nav className={styles.navbar} aria-label="Primary">
       <div className={styles.navTop}>
         <Link href="/" className={styles.brand} aria-label="Portal Astra home">
+          <img src="/images/portalastraicon.png" alt="" width={40} height={40} className={styles.logoMark} />
           <span className={styles.logoText}>PORTAL ASTRA</span>
         </Link>
         <span className={styles.tagline}>Where science meets the stars</span>

@@ -92,7 +92,7 @@ export default function PremiumUnlock({
   // form, deliberately not a second invented pattern.
   //
   // The name is deliberately meaningless. It used to be `website`, which is a
-  // field name password managers recognise and helpfully fill in — with the
+  // field name password managers recognise. They helpfully filled it with the
   // visitor's email, which tripped the honeypot on every real submission.
   const [hpField, setHpField] = useState('')
   const [busy, setBusy] = useState(false)

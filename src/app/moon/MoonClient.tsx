@@ -66,6 +66,7 @@ export default function MoonClient() {
 
   // Subscribe form
   const [email, setEmail] = useState('')
+  const [hpField, setHpField] = useState('')
   const [subscribing, setSubscribing] = useState(false)
   const [subNote, setSubNote] = useState<{ ok: boolean; msg: string } | null>(null)
 
@@ -130,7 +131,7 @@ export default function MoonClient() {
       const r = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, pa_hp_field: hpField }),
       })
       const d = await r.json()
       if (r.ok) {
@@ -306,6 +307,18 @@ export default function MoonClient() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+              />
+              {/* Honeypot, hidden from real users, catches bots. Same field
+                  name and hidden treatment as the homepage subscribe form. */}
+              <input
+                type="text"
+                name="pa_hp_field"
+                tabIndex={-1}
+                autoComplete="new-password"
+                aria-hidden="true"
+                value={hpField}
+                onChange={(e) => setHpField(e.target.value)}
+                style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
               />
               <button type="submit" className={styles.subscribeBtn} disabled={subscribing}>
                 {subscribing ? 'Joining...' : 'Subscribe'}
