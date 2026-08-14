@@ -1,7 +1,7 @@
 # Portal Astra — Full-Spectrum Read-Only Audit
 
 **Repo path used:** `C:\Users\sgyim\Projects\PortalAstra`
-(The path given in the brief, `C:\Users\sgyim\portalastra`, does not exist on this machine. The directory above is the same repository — remote `https://github.com/Cardsoncardsoncards/portalastra.git`.)
+(Remote: `https://github.com/Cardsoncardsoncards/portalastra.git`.)
 
 **Step 0 — commit hash:** `a9a8ea8c92cd54d581a0061b55fa4b242340e515`
 `git pull` → *Already up to date.* Branch `main`, tracking `origin/main`, working tree clean.

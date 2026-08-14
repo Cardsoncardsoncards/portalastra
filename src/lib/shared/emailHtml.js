@@ -63,6 +63,9 @@ function emailFooterHTML() {
               <p style="margin: 0 0 8px 0; font-size: 10px; color: rgba(232,224,255,0.28); line-height: 1.6;">
                 ${esc(ENTERTAINMENT_DISCLAIMER)}
               </p>
+              <p style="margin: 0 0 8px 0; font-size: 10px; color: rgba(232,224,255,0.28);">
+                Portal Astra is operated by Voxsanity Pty Ltd, ABN 82 700 348 867.
+              </p>
               <p style="margin: 0 0 6px 0; font-size: 11px; color: rgba(232,224,255,0.3);">
                 You are receiving this as a Portal Astra subscriber at {$email}.
               </p>

@@ -1,7 +1,7 @@
 # Portal Astra — Blog Expansion Instructions
 # Feed to Claude Code from inside the repo
 
-You are working on Portal Astra. Repo at C:\Users\sgyim\OneDrive\Desktop\portalastra.
+You are working on Portal Astra. Repo at C:\Users\sgyim\Projects\PortalAstra.
 Run git pull origin main before starting.
 
 Read src/lib/posts.ts IN FULL first. Understand the exact BlogPost interface — field names, types, required fields, how the body content is structured (HTML strings, markdown, or plain text). Do not assume — read the actual schema before writing a single post.

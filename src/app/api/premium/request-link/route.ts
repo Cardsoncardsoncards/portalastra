@@ -62,8 +62,11 @@ function linkEmailHTML(link: string): string {
           </p>
         </td></tr>
         <tr><td style="padding:20px 0 0 0;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
-          <p style="margin:0;font-size:10px;color:rgba(232,224,255,0.25);">
+          <p style="margin:0 0 6px 0;font-size:10px;color:rgba(232,224,255,0.25);">
             <a href="${siteUrl()}" style="color:#9b8aff;text-decoration:none;">portalastra.com</a>
+          </p>
+          <p style="margin:0;font-size:10px;color:rgba(232,224,255,0.25);">
+            Portal Astra is operated by Voxsanity Pty Ltd, ABN 82 700 348 867.
           </p>
         </td></tr>
       </table>
@@ -132,7 +135,7 @@ export async function POST(req: Request) {
           to: email,
           subject: 'Your Astra Premium unlock link',
           html: linkEmailHTML(link),
-          text: `Your Astra Premium unlock link: ${link}\n\nOpen it, then confirm on the page that appears, to unlock premium on this device.\n\nThis link works once and expires in 20 minutes.`,
+          text: `Your Astra Premium unlock link: ${link}\n\nOpen it, then confirm on the page that appears, to unlock premium on this device.\n\nThis link works once and expires in 20 minutes.\n\nPortal Astra is operated by Voxsanity Pty Ltd, ABN 82 700 348 867.`,
         })
         // Fire and forget; a prune failure must not affect the response.
         void pruneExpiredLinks()

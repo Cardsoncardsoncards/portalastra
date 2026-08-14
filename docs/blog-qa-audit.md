@@ -1,5 +1,5 @@
 # Portal Astra — Blog QA Audit, Rewrite, and Roundtable Review
-# Run from inside the repo: C:\Users\sgyim\OneDrive\Desktop\portalastra
+# Run from inside the repo: C:\Users\sgyim\Projects\PortalAstra
 
 You are working on Portal Astra. Run git pull origin main before starting.
 
